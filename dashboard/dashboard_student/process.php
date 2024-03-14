@@ -4,6 +4,7 @@ session_start();
 
 if (isset($_POST['submit'])) {
     $process_title = $_POST['title'];
+    $process_course = $_POST['course'];
     // $process_author = $_POST['author'];
     // $process_genre = $_POST['genre'];
     // $process_review = $_POST['review'];
@@ -12,10 +13,10 @@ if (isset($_POST['submit'])) {
     $process_rating = $_POST['rating'];
 
             $insertUserStatement = "INSERT INTO `evaluation`
-                                    (`titles`, 
+                                    (`titles`, `course`,
                                     `feedbacks`, `recommendations`, `rating`)
                                     VALUES
-                                    ('$process_title', 
+                                    ('$process_title', '$process_course', 
                                     '$process_feedback',
                                     '$process_recommendation', '$process_rating')";
             $result = mysqli_query($conn, $insertUserStatement);
