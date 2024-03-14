@@ -351,165 +351,91 @@ if (isset($_GET['logout'])) {
     <div class="row">
         <!-- First card -->
         <div class="col-lg-6 mb-4">
-            <div class="card h-100">
+            <div class="card">
                 <div class="card-body">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        BOOK OF THE DAY</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <?php
-include "conn.php";
+                <?php
+                    // Include database connection
+                    include "conn.php";
 
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-// Get the current date
-$current_date  = date("Y-m-d");
-
-// Query to retrieve the most read book for the current day
-$sql = "SELECT titles, COUNT(*) AS num_reads
-        FROM evaluation
-        WHERE DATE(book_date) = '$current_date '  -- Filter by the current day
-        GROUP BY titles
-        ORDER BY num_reads DESC
-        LIMIT 1";
-
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $bookTitle = $row["titles"];
-    $numReads = $row["num_reads"];
-    echo "Book of the Day: $bookTitle <br><br> Total Reads of the day: $numReads";
-} else {
-    echo "No reads recorded for today.";
-}
-
-mysqli_close($conn);
-?>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Second card -->
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        THE BOOKS READ BY COURSE</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <?php
-                        include "conn.php";
-
-                        // Check connection
-                        if (!$conn) {
-                            die("Connection failed: " . mysqli_connect_error());
-                        }
-
-                        $sql = "SELECT evaluation.course, COUNT(evaluation.course) AS num_books_read
-                                FROM evaluation
-                                GROUP BY evaluation.course
-                                ORDER BY num_books_read DESC
-                                LIMIT 3";
-
-                        $result = mysqli_query($conn, $sql);
-
-                        $count = 1;
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<div>';
-                                echo "TOP " . $count++ . " Course: " . $row["course"] . "<br>Books Read: " . $row["num_books_read"] . "<br><br>";
-                                echo '</div>';                                        
-                            }
-                        } else {
-                            echo "0 results";
-                        }
-
-                        mysqli_close($conn);
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Third card -->
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        MOST REVIEWED BOOKS</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <?php
-                        include "conn.php";
-
-                        // Check connection
-                        if (!$conn) {
-                            die("Connection failed: " . mysqli_connect_error());
-                        }
-
-                        $sql = "SELECT evaluation.titles, COUNT(evaluation.titles) AS num_reviews
-                                FROM evaluation
-                                GROUP BY evaluation.titles
-                                ORDER BY num_reviews DESC
-                                LIMIT 3";
-
-                        $result = mysqli_query($conn, $sql);
-
-                        $count = 1;
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<div>';
-                                echo "TOP " . $count++ . " Book Title: " . $row["titles"] . "<br>Reviews: " . $row["num_reviews"] . "<br><br>";
-                                echo '</div>';
-                            }
-                        } else {
-                            echo "0 results";
-                        }
-
-                        mysqli_close($conn);
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fourth card -->
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        LEAST REVIEWED BOOKS</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <?php
-                include "conn.php";
-
-                // Check connection
-                if (!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
-                $sql = "SELECT evaluation.titles, COUNT(evaluation.titles) AS num_reviews
-                        FROM evaluation
-                        GROUP BY evaluation.titles
-                        ORDER BY num_reviews ASC
-                        LIMIT 3"; // Changed ORDER BY to ASC to get the least reviewed books
-
-                $result = mysqli_query($conn, $sql);
-
-                $count = 1;
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<div>';
-                        echo "TOP " . $count++ . " Book Title: " . $row["titles"] . "<br>Reviews: " . $row["num_reviews"] . "<br><br>";
-                        echo '</div>';
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
                     }
-                } else {
-                    echo "0 results";
-                }
 
-                mysqli_close($conn);
-                ?>
+                    // Fetch a random evaluation record
+                    $sql = "SELECT * FROM evaluation ORDER BY RAND() LIMIT 1";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+
+                        // Extract data from the evaluation record
+                        $title = $row['titles'];
+                        $course = $row['course'];
+                        $feedbacks = $row['feedbacks'];
+                        $recommendations = $row['recommendations'];
+                        $ratings = $row['rating'];
+
+                        // Fetch book details based on the title from the evaluation record
+                        $sql_books = "SELECT * FROM books WHERE title = '$title'";
+                        $result_books = mysqli_query($conn, $sql_books);
+
+                        if (mysqli_num_rows($result_books) > 0) {
+                            $row_books = mysqli_fetch_assoc($result_books);
+
+                            // Display the book details and evaluation data
+                            echo '<h5 class="card-title">Title: ' . $title . '</h5>';
+                            echo '<p class="card-text">Course: ' . $course . '</p>';
+                            echo '<p class="card-text">Feedbacks: ' . $feedbacks . '</p>';
+                            echo '<p class="card-text">Recommendations: ' . $recommendations . '</p>';
+                            echo '<p class="card-text">Ratings: ' . $ratings . ' ';
+                            for ($i = 0; $i < $ratings; $i++) {
+                                echo '<i class="fas fa-star"></i>';
+                            }
+                            echo '</p>';
+
+                            // Display the button to trigger the modal form
+                            echo '<div class="text-right">';
+                            echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookDetailsModal">';
+                            echo '<i class="fas fa-info-circle"></i> Book Details</button>';
+                            echo '</div>';
+
+                            // Modal form for book details
+                            echo '<div class="modal fade" id="bookDetailsModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailsModalLabel" aria-hidden="true">';
+                            echo '<div class="modal-dialog" role="document">';
+                            echo '<div class="modal-content">';
+                            echo '<div class="modal-header">';
+                            echo '<h5 class="modal-title" id="bookDetailsModalLabel">Book Details</h5>';
+                            echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                            echo '<span aria-hidden="true">&times;</span>';
+                            echo '</button>';
+                            echo '</div>';
+                            echo '<div class="modal-body">';
+                            // Display book details
+                            echo '<p>Barcode: ' . $row_books['barcode'] . '</p>';
+                            echo '<p>Call Number: ' . $row_books['call_no1'] . ' - ' . $row_books['call_no2'] . '</p>';
+                            echo '<p>Copyright: ' . $row_books['copyright'] . '</p>';
+                            echo '<p>Title: ' . $row_books['title'] . '</p>';
+                            echo '<p>Author: ' . $row_books['author'] . '</p>';
+                            echo '<p>Location: ' . $row_books['location'] . '</p>';
+                            echo '</div>';
+                            echo '<div class="modal-footer">';
+                            echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                        } else {
+                            echo "No book details found for the selected title.";
+                        }
+                    } else {
+                        echo "No evaluation records found.";
+                    }
+
+                    // Close the database connection
+                    mysqli_close($conn);
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -618,7 +544,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $sql = "INSERT INTO ratee (name,rate) VALUES ('$name','$rating')";
     if (mysqli_query($conn, $sql))
     {
-        echo "New Rate addedddd successfully";
+        echo "New Rate added successfully";
     }
     else
     {
