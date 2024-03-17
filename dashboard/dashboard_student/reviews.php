@@ -159,7 +159,7 @@ if (isset($_GET['logout'])) {
 
     <div class="form-check">
       <input class="form-check-input" type="radio" name="course" id="course_cma" value="CMA-TMNHMBAIS,BSBA" required>
-      <label class="form-check-label" for="course_cma">CMA-TMNHMBAIS,BSBA</label>
+      <label class="form-check-label" for="course_cma">CMA</label>
     </div>
 
     <div class="form-check">
@@ -174,7 +174,7 @@ if (isset($_GET['logout'])) {
 
     <div class="form-check">
       <input class="form-check-input" type="radio" name="course" id="course_mar" value="MAR-E" required>
-      <label class="form-check-label" for="course_mar">MAR-E</label>
+      <label class="form-check-label" for="course_mar">COME</label>
     </div>
 
     <div class="form-check">
@@ -184,7 +184,7 @@ if (isset($_GET['logout'])) {
 
     <div class="form-check">
       <input class="form-check-input" type="radio" name="course" id="course_gschool" value="GRADESCHOOL" required>
-      <label class="form-check-label" for="course_gschool">GRADESCHOOL</label>
+      <label class="form-check-label" for="course_gschool">BEED</label>
     </div>
    
 
@@ -228,7 +228,7 @@ if (isset($_GET['logout'])) {
                 url: 'fetch_titles.php',
                 data: { input: input },
                 success: function (data) {
-                    $('#titleSuggestions').html(data);
+                    $('#titleSuggestions').html(data).addClass('suggestions-styling');
 
                     // Handle click on suggestion
                     $('#titleSuggestions div').on('click', function (e) {
@@ -269,15 +269,37 @@ if (isset($_GET['logout'])) {
 </script>
 
 
-
 <script>
     document.getElementById("clearButton").addEventListener("click", function () {
         // Clear form fields here
-        document.getElementById("review").value = "";
+        document.getElementById("title").value = "";
         document.getElementById("feedback").value = "";
         document.getElementById("recommendation").value = "";
+
+        
+        // Clear title suggestions and remove margin
+        $('#titleSuggestions').empty().removeClass('suggestions-hidden');
     });
 </script>
+
+<style>
+    .suggestions-styling {
+        
+        border: 1px solid #ccc; 
+    }
+
+    .suggestions-styling div {
+        margin-top: 7px;
+        margin-bottom: 7px; 
+        position: relative; /* Necessary for absolute positioning of the icon */
+    }
+
+   
+
+    .suggestions-styling div:hover {
+        background-color: #f0f0f0; /* Background color on hover */
+    }
+</style>
 
 
             <!-- Divider -->
