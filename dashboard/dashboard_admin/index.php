@@ -226,9 +226,7 @@ if (isset($_GET['logout'])) {
                                         <tr>
                                             <th>EVALUATION</th>
                                             <th>TITLES</th>
-                                            <th>AUTHORS</th>
-                                            <th>GENRES</th>
-                                            <th>REVIEWS</th>
+                                            <th>COURSE</th>
                                             <th>FEEDBACKS</th>
                                             <th>RECOMENDATIONS</th>
                                             <th>RATINGS</th>
@@ -239,9 +237,7 @@ if (isset($_GET['logout'])) {
                                         <tr>
                                             <th>EVALUATION</th>
                                             <th>TITLES</th>
-                                            <th>AUTHORS</th>
-                                            <th>GENRES</th>
-                                            <th>REVIEWS</th>
+                                            <th>COURSE</th>
                                             <th>FEEDBACKS</th>
                                             <th>RECOMENDATIONS</th>
                                             <th>RATINGS</th>
@@ -259,9 +255,7 @@ while ($row = mysqli_fetch_array($getdata)) {
 
                 <td> <?php echo $row['evaluationID'] ?> </td>
                 <td> <?php echo $row['titles'] ?> </td>
-                <td> <?php echo $row['authors'] ?> </td>
-                <td> <?php echo $row['genres'] ?></td>
-                <td> <?php echo $row['reviews'] ?> </td>
+                <td> <?php echo $row['course'] ?> </td>
                 <td> <?php echo $row['feedbacks'] ?> </td>
                 <td> <?php echo $row['recommendations'] ?> </td>
                 <td> <?php echo $row['rating'] ?> </td>

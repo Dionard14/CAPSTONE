@@ -107,9 +107,7 @@
                                         <tr>
                                             <th>EVALUATION</th>
                                             <th>TITLES</th>
-                                            <th>AUTHORS</th>
-                                            <th>GENRES</th>
-                                            <th>REVIEWS</th>
+                                            <th>COURSE</th>
                                             <th>FEEDBACKS</th>
                                             <th>RECOMENDATIONS</th>
                                             <th>RATINGS</th>
@@ -120,9 +118,7 @@
                                         <tr>
                                             <th>EVALUATION</th>
                                             <th>TITLES</th>
-                                            <th>AUTHORS</th>
-                                            <th>GENRES</th>
-                                            <th>REVIEWS</th>
+                                            <th>COURSE</th>
                                             <th>FEEDBACKS</th>
                                             <th>RECOMENDATIONS</th>
                                             <th>RATINGS</th>
@@ -140,9 +136,7 @@
 
 <td> <?php echo $row['evaluationID']?> </td>
 <td> <?php echo $row['titles']?> </td>
-<td> <?php echo $row['authors']?> </td>
-<td> <?php echo $row['genres']?></td>
-<td> <?php echo $row['reviews']?> </td>
+<td> <?php echo $row['course']?> </td>
 <td> <?php echo $row['feedbacks']?> </td>
 <td> <?php echo $row['recommendations']?> </td>
 <td> <?php echo $row['rating']?> </td>
