@@ -365,104 +365,194 @@ if (isset($_GET['logout'])) {
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+<div class="row">
+    <div class="container">
+        <div class="row">
+        <!-- Card Example -->
+        <?php
+    // Include database connection
+    include "conn.php";
 
-                        <!--  Card Example -->
-                       
-                        <div class="container">
-    <div class="row">
-        <!-- First card -->
-        <div class="col-lg-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                <?php
-                    // Include database connection
-                    include "conn.php";
+    // Check connection
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
+    // Function to handle like and dislike actions
+    function handleLikeDislike($evaluationID, $action) {
+        global $conn;
+        // Prepare and execute the SQL query to insert like/dislike action
+        $sql = "INSERT INTO evaluation_likes (evaluationID, action) VALUES ('$evaluationID', '$action')";
+        if (mysqli_query($conn, $sql)) {
+            echo "Action recorded successfully.";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
 
-                    // Fetch a random evaluation record
-                    $sql = "SELECT * FROM evaluation ORDER BY RAND() LIMIT 1";
-                    $result = mysqli_query($conn, $sql);
+    // Function to get the count of likes and dislikes for an evaluation
+    function getLikeDislikeCount($evaluationID, $action) {
+        global $conn;
+        $sql = "SELECT COUNT(*) AS count FROM evaluation_likes WHERE evaluationID = '$evaluationID' AND action = '$action'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row['count'];
+    }
 
-                    if (mysqli_num_rows($result) > 0) {
-                        $row = mysqli_fetch_assoc($result);
+    // Fetch all evaluation records
+    $sql = "SELECT * FROM evaluation ORDER BY RAND()";
+    $result = mysqli_query($conn, $sql);
 
-                        // Extract data from the evaluation record
-                        $title = $row['titles'];
-                        $course = $row['course'];
-                        $feedbacks = $row['feedbacks'];
-                        $recommendations = $row['recommendations'];
-                        $ratings = $row['rating'];
+    if (mysqli_num_rows($result) > 0) {
+        // Loop through each evaluation record
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Extract data from the evaluation record
+            $evaluationID = $row['evaluationID'];
+            $title = $row['titles'];
+            $course = $row['course'];
+            $feedbacks = $row['feedbacks'];
+            $recommendations = $row['recommendations'];
+            $ratings = $row['rating'];
 
-                        // Fetch book details based on the title from the evaluation record
-                        $sql_books = "SELECT * FROM books WHERE title = '$title'";
-                        $result_books = mysqli_query($conn, $sql_books);
+            // Fetch book details based on the title from the evaluation record
+            $sql_books = "SELECT * FROM books WHERE title = '$title'";
+            $result_books = mysqli_query($conn, $sql_books);
 
-                        if (mysqli_num_rows($result_books) > 0) {
-                            $row_books = mysqli_fetch_assoc($result_books);
+            if (mysqli_num_rows($result_books) > 0) {
+                $row_books = mysqli_fetch_assoc($result_books);
 
-                            // Display the book details and evaluation data
-                            echo '<h5 class="card-title">Title: ' . $title . '</h5>';
-                            echo '<p class="card-text">Course: ' . $course . '</p>';
-                            echo '<p class="card-text">Feedbacks: ' . $feedbacks . '</p>';
-                            echo '<p class="card-text">Recommendations: ' . $recommendations . '</p>';
-                            echo '<p class="card-text">Ratings: ' . $ratings . ' ';
-                            for ($i = 0; $i < $ratings; $i++) {
-                                echo '<i class="fas fa-star"></i>';
-                            }
-                            echo '</p>';
+                // Display the card with evaluation data
+                echo '<div class="col-lg-6 mb-4">';
+                echo '<div class="card">';
+                echo '<div class="card-body">';
+                echo '<h5 class="card-title">Title: ' . $title . '</h5>';
+                echo '<p class="card-text">Course: ' . $course . '</p>';
+                echo '<p class="card-text">Feedbacks: ' . $feedbacks . '</p>';
+                echo '<p class="card-text">Recommendations: ' . $recommendations . '</p>';
+                echo '<p class="card-text">Ratings: ' . $ratings . ' ';
+                for ($i = 0; $i < $ratings; $i++) {
+                    echo '<i class="fas fa-star"></i>';
+                }
+                echo '</p>';
+                echo '<div class="card-footer">';
+                // Like button with count
+                $likeCount = getLikeDislikeCount($evaluationID, 'like');
+                echo '<button type="button" class="btn btn-success mr-2 likeBtn" data-evaluationid="' . $evaluationID . '">Like (' . $likeCount . ')</button>';
+                // Dislike button with count
+                $dislikeCount = getLikeDislikeCount($evaluationID, 'dislike');
+                echo '<button type="button" class="btn btn-danger dislikeBtn" data-evaluationid="' . $evaluationID . '">Dislike (' . $dislikeCount . ')</button>';
+                // Button to trigger book details modal
+                echo '<button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#bookDetailsModal' . $evaluationID . '">Book Details</button>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
 
-                            // Display the button to trigger the modal form
-                            echo '<div class="text-right">';
-                            echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookDetailsModal">';
-                            echo '<i class="fas fa-info-circle"></i> Book Details</button>';
-                            echo '</div>';
+                // Modal form for book details
+                echo '<div class="modal fade" id="bookDetailsModal' . $evaluationID . '" tabindex="-1" role="dialog" aria-labelledby="bookDetailsModalLabel' . $evaluationID . '" aria-hidden="true">';
+                echo '<div class="modal-dialog" role="document">';
+                echo '<div class="modal-content">';
+                echo '<div class="modal-header">';
+                echo '<h5 class="modal-title" id="bookDetailsModalLabel' . $evaluationID . '">Book Details</h5>';
+                echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                echo '<span aria-hidden="true">&times;</span>';
+                echo '</button>';
+                echo '</div>';
+                echo '<div class="modal-body">';
+                // Display book details
+                echo '<p>Barcode: ' . $row_books['barcode'] . '</p>';
+                echo '<p>Call Number: ' . $row_books['call_no1'] . ' - ' . $row_books['call_no2'] . '</p>';
+                echo '<p>Copyright: ' . $row_books['copyright'] . '</p>';
+                echo '<p>Title: ' . $row_books['title'] . '</p>';
+                echo '<p>Author: ' . $row_books['author'] . '</p>';
+                echo '<p>Location: ' . $row_books['location'] . '</p>';
+                echo '</div>';
+                echo '<div class="modal-footer">';
+                echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            } else {
+                echo "No book details found for the selected title.";
+            }
+        }
+    } else {
+        echo "No evaluation records found.";
+    }
 
-                            // Modal form for book details
-                            echo '<div class="modal fade" id="bookDetailsModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailsModalLabel" aria-hidden="true">';
-                            echo '<div class="modal-dialog" role="document">';
-                            echo '<div class="modal-content">';
-                            echo '<div class="modal-header">';
-                            echo '<h5 class="modal-title" id="bookDetailsModalLabel">Book Details</h5>';
-                            echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-                            echo '<span aria-hidden="true">&times;</span>';
-                            echo '</button>';
-                            echo '</div>';
-                            echo '<div class="modal-body">';
-                            // Display book details
-                            echo '<p>Barcode: ' . $row_books['barcode'] . '</p>';
-                            echo '<p>Call Number: ' . $row_books['call_no1'] . ' - ' . $row_books['call_no2'] . '</p>';
-                            echo '<p>Copyright: ' . $row_books['copyright'] . '</p>';
-                            echo '<p>Title: ' . $row_books['title'] . '</p>';
-                            echo '<p>Author: ' . $row_books['author'] . '</p>';
-                            echo '<p>Location: ' . $row_books['location'] . '</p>';
-                            echo '</div>';
-                            echo '<div class="modal-footer">';
-                            echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                        } else {
-                            echo "No book details found for the selected title.";
-                        }
-                    } else {
-                        echo "No evaluation records found.";
-                    }
+    // Close the database connection
+    mysqli_close($conn);
+?>
+<script>
+    $(document).ready(function() {
+    // Like button click handler
+    $('.likeBtn').click(function() {
+        var evaluationID = $(this).data('evaluationid');
+        var btn = $(this);
+        $.ajax({
+            type: 'POST',
+            url: 'handle_like_dislike.php',
+            data: {
+                evaluationID: evaluationID,
+                action: 'like'
+            },
+            dataType: 'json', // Expect JSON response
+            success: function(data) {
+                // Update the like count on the button
+                btn.html('Like (' + data.likeCount + ')');
+            }
+        });
+    });
 
-                    // Close the database connection
-                    mysqli_close($conn);
-                    ?>
+    // Dislike button click handler
+    $('.dislikeBtn').click(function() {
+        var evaluationID = $(this).data('evaluationid');
+        var btn = $(this);
+        $.ajax({
+            type: 'POST',
+            url: 'handle_like_dislike.php',
+            data: {
+                evaluationID: evaluationID,
+                action: 'dislike'
+            },
+            dataType: 'json', // Expect JSON response
+            success: function(data) {
+                // Update the dislike count on the button
+                btn.html('Dislike (' + data.dislikeCount + ')');
+            }
+        });
+    });
+});
 
-                </div>
-            </div>
-        </div>
+</script>
+
+
+
+
+<script>
+    function handleLikeDislike(evaluationID, action) {
+    // Send AJAX request to handle like/dislike action
+    $.ajax({
+        type: 'POST',
+        url: 'handle_like_dislike.php', // Replace with the actual PHP script URL
+        data: {
+            evaluationID: evaluationID,
+            action: action
+        },
+        success: function(response) {
+            // Update UI based on response (e.g., update like/dislike count)
+            console.log(response); // Log the response for debugging
+        },
+        error: function(xhr, status, error) {
+            console.error(error); // Log any errors for debugging
+        }
+    });
+}
+</script>
     </div>
 </div>
+
 
 
 
