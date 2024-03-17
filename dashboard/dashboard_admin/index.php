@@ -556,8 +556,8 @@ while ($row = mysqli_fetch_array($getdata)) {
       <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
-                 <form method="post" action="import.php">
-                <input type="submit" name="import" class="btn btn-primary btn-import mr-2" value="Import to Database" />
+                 <!-- <form method="post" action="#">
+                <input type="submit" name="import" class="btn btn-primary btn-import mr-2" value="Import to Database" /> -->
                     </form>
                 </div>
 

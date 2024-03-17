@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2024 at 05:51 AM
+-- Generation Time: Mar 17, 2024 at 06:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -147,30 +147,45 @@ INSERT INTO `books` (`barcode`, `call_no1`, `call_no2`, `copyright`, `title`, `a
 CREATE TABLE `evaluation` (
   `evaluationID` int(11) NOT NULL,
   `titles` varchar(255) DEFAULT NULL,
-  `authors` varchar(255) DEFAULT NULL,
-  `genres` varchar(255) DEFAULT NULL,
-  `reviews` text DEFAULT NULL,
+  `course` varchar(255) NOT NULL,
   `feedbacks` text DEFAULT NULL,
   `recommendations` text DEFAULT NULL,
-  `rating` float NOT NULL
+  `rating` float NOT NULL,
+  `book_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation`
 --
 
-INSERT INTO `evaluation` (`evaluationID`, `titles`, `authors`, `genres`, `reviews`, `feedbacks`, `recommendations`, `rating`) VALUES
-(12, 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', 'Educational', '10 stars', 'The best', 'Need second edition', 0),
-(13, 'Book1', 'Author1', 'Action', '5 stars', 'Its nice', 'need part 2', 0),
-(14, 'test1', 'Dionard', 'RomCom', 'nice', 'good', 'none', 4.5),
-(15, 'test2', 'Dionard', 'RomComa', 'good', 'nice', 'none', 3.8),
-(16, 'test3', '1', 'd', 'd', 'd', 'd', 4.9),
-(17, 'title', '', '', '', '', '', 0),
-(18, 'Vector mechanics for engineers : statics', '', '', '', 'ok', 'ok', 4.6),
-(19, 'Algebra & trigonometry', NULL, NULL, NULL, 'ok', 'ok', 4.6),
-(20, 'Quantitative techniques for business management', NULL, NULL, NULL, 'ok', 'ok', 4.7),
-(21, 'Vector mechanics for engineers : statics', NULL, NULL, NULL, 'ok', 'ok', 3.9),
-(22, 'MySQL/PHP database applications', NULL, NULL, NULL, 'ok', 'ok', 4.6);
+INSERT INTO `evaluation` (`evaluationID`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `book_date`) VALUES
+(18, 'Vector mechanics for engineers : statics', 'COE', 'ok', 'ok', 4.6, NULL),
+(19, 'Algebra & trigonometry', 'COED', 'ok', 'ok', 4.6, NULL),
+(20, 'Quantitative techniques for business management', 'CITE', 'ok', 'ok', 4.7, NULL),
+(21, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 3.9, NULL),
+(22, 'MySQL/PHP database applications', 'CITE', 'ok', 'ok', 4.6, NULL),
+(23, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 4.6, '2024-03-14 20:27:14'),
+(24, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 3.6, '2024-03-14 20:28:28'),
+(25, 'MySQL/PHP database applications', 'CCCJE', 'ok', 'ok', 4.6, '2024-03-14 20:30:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `evaluation_likes`
+--
+
+CREATE TABLE `evaluation_likes` (
+  `like_id` int(11) NOT NULL,
+  `evaluationID` int(11) DEFAULT NULL,
+  `action` enum('like','dislike') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `evaluation_likes`
+--
+
+INSERT INTO `evaluation_likes` (`like_id`, `evaluationID`, `action`) VALUES
+(1, 18, 'like');
 
 -- --------------------------------------------------------
 
@@ -253,6 +268,13 @@ ALTER TABLE `evaluation`
   ADD PRIMARY KEY (`evaluationID`);
 
 --
+-- Indexes for table `evaluation_likes`
+--
+ALTER TABLE `evaluation_likes`
+  ADD PRIMARY KEY (`like_id`),
+  ADD KEY `evaluationID` (`evaluationID`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -280,7 +302,13 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `evaluation_likes`
+--
+ALTER TABLE `evaluation_likes`
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -293,6 +321,16 @@ ALTER TABLE `students`
 --
 ALTER TABLE `teachers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `evaluation_likes`
+--
+ALTER TABLE `evaluation_likes`
+  ADD CONSTRAINT `evaluation_likes_ibfk_1` FOREIGN KEY (`evaluationID`) REFERENCES `evaluation` (`evaluationID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
