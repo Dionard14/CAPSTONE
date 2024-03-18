@@ -65,6 +65,8 @@ if (isset($_GET['logout'])) {
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -367,7 +369,7 @@ if (isset($_GET['logout'])) {
                     </div>
 
                     <!-- Content Row -->
-<div class="row">
+                    <div class="row">
     <div class="container">
         <div class="row">
         <!-- Card Example -->
@@ -386,7 +388,11 @@ if (isset($_GET['logout'])) {
         // Prepare and execute the SQL query to insert like/dislike action
         $sql = "INSERT INTO evaluation_likes (evaluationID, action) VALUES ('$evaluationID', '$action')";
         if (mysqli_query($conn, $sql)) {
-            echo "Action recorded successfully.";
+            // Retrieve updated like and dislike counts
+            $likeCount = getLikeDislikeCount($evaluationID, 'like');
+            $dislikeCount = getLikeDislikeCount($evaluationID, 'dislike');
+            // Return JSON response with counts
+            echo json_encode(array('likeCount' => $likeCount, 'dislikeCount' => $dislikeCount));
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
@@ -487,70 +493,32 @@ if (isset($_GET['logout'])) {
     mysqli_close($conn);
 ?>
 <script>
+    // Like and Dislike Button Click Handlers
     $(document).ready(function() {
-    // Like button click handler
-    $('.likeBtn').click(function() {
-        var evaluationID = $(this).data('evaluationid');
-        var btn = $(this);
-        $.ajax({
-            type: 'POST',
-            url: 'handle_like_dislike.php',
-            data: {
-                evaluationID: evaluationID,
-                action: 'like'
-            },
-            dataType: 'json', // Expect JSON response
-            success: function(data) {
-                // Update the like count on the button
-                btn.html('Like (' + data.likeCount + ')');
-            }
+        $('.likeBtn, .dislikeBtn').click(function() {
+            var evaluationID = $(this).data('evaluationid');
+            var action = $(this).hasClass('likeBtn') ? 'like' : 'dislike';
+            var btn = $(this);
+            
+            // Send AJAX request to handle like/dislike action
+            $.ajax({
+                type: 'POST',
+                url: 'handle_like_dislike.php',
+                data: {
+                    evaluationID: evaluationID,
+                    action: action
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // Update like/dislike count on the button
+                    btn.text(action.charAt(0).toUpperCase() + action.slice(1) + ' (' + data[action + 'Count'] + ')');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
     });
-
-    // Dislike button click handler
-    $('.dislikeBtn').click(function() {
-        var evaluationID = $(this).data('evaluationid');
-        var btn = $(this);
-        $.ajax({
-            type: 'POST',
-            url: 'handle_like_dislike.php',
-            data: {
-                evaluationID: evaluationID,
-                action: 'dislike'
-            },
-            dataType: 'json', // Expect JSON response
-            success: function(data) {
-                // Update the dislike count on the button
-                btn.html('Dislike (' + data.dislikeCount + ')');
-            }
-        });
-    });
-});
-
-</script>
-
-
-
-
-<script>
-    function handleLikeDislike(evaluationID, action) {
-    // Send AJAX request to handle like/dislike action
-    $.ajax({
-        type: 'POST',
-        url: 'handle_like_dislike.php', // Replace with the actual PHP script URL
-        data: {
-            evaluationID: evaluationID,
-            action: action
-        },
-        success: function(response) {
-            // Update UI based on response (e.g., update like/dislike count)
-            console.log(response); // Log the response for debugging
-        },
-        error: function(xhr, status, error) {
-            console.error(error); // Log any errors for debugging
-        }
-    });
-}
 </script>
     </div>
 </div>

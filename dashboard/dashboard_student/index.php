@@ -25,6 +25,10 @@ if (isset($_GET['logout'])) {
     header("Location: /capstone/dashboard/dashboard_student/index.php");
     exit();
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -299,7 +303,7 @@ if (isset($_GET['logout'])) {
         margin-bottom: 7px; 
         position: relative; /* Necessary for absolute positioning of the icon */
     }
-
+    
     .suggestions-styling div:hover {
         background-color: #f0f0f0; /* Background color on hover */
         cursor: pointer; /* Change cursor to a pointer when hovering over the title */
