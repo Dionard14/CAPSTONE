@@ -298,6 +298,8 @@ if (isset($_GET['logout'])) {
 
     .suggestions-styling div:hover {
         background-color: #f0f0f0; /* Background color on hover */
+        cursor: pointer; /* Change cursor to a pointer when hovering over the title */
+
     }
 </style>
 
@@ -400,7 +402,7 @@ if (isset($_GET['logout'])) {
     }
 
     // Fetch all evaluation records
-    $sql = "SELECT * FROM evaluation ORDER BY RAND()";
+    $sql = "SELECT * FROM evaluation ORDER BY evaluationID ASC";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {

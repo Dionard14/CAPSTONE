@@ -290,8 +290,7 @@ if (isset($_GET['logout'])) {
 </script>
 
 <style>
-    .suggestions-styling {
-        
+    .suggestions-styling {      
         border: 1px solid #ccc; 
     }
 
@@ -301,10 +300,10 @@ if (isset($_GET['logout'])) {
         position: relative; /* Necessary for absolute positioning of the icon */
     }
 
-   
-
     .suggestions-styling div:hover {
         background-color: #f0f0f0; /* Background color on hover */
+        cursor: pointer; /* Change cursor to a pointer when hovering over the title */
+
     }
 </style>
 
