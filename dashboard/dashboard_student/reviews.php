@@ -369,7 +369,7 @@ if (isset($_GET['logout'])) {
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+<div class="row">
     <div class="container">
         <div class="row">
         <!-- Card Example -->
