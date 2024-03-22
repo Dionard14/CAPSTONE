@@ -2,7 +2,9 @@
 include "conn.php";
 session_start();
 
-if (isset($_POST['submit'])) {
+
+if (isset ($_POST['submit'])) {
+    $process_barcode= $_POST['barcode'];
     $process_title = $_POST['title'];
     $process_course = $_POST['course'];
     // $process_author = $_POST['author'];
@@ -12,33 +14,33 @@ if (isset($_POST['submit'])) {
     $process_recommendation = $_POST['recommendation'];
     $process_rating = $_POST['rating'];
 
-            $insertUserStatement = "INSERT INTO `evaluation`
-                                    (`titles`, `course`,
+    $insertUserStatement = "INSERT INTO `evaluation`
+                                    (`barcode`, `titles`, `course`,
                                     `feedbacks`, `recommendations`, `rating`)
                                     VALUES
-                                    ('$process_title', '$process_course', 
+                                    ('$process_barcode','$process_title', '$process_course', 
                                     '$process_feedback',
                                     '$process_recommendation', '$process_rating')";
-            $result = mysqli_query($conn, $insertUserStatement);
-            if ($result == true) {
-                ?>
-                <script>
-                    alert("Your Submission is Successful!");
-                    window.location.href = "index.php";
-                </script>
-                <?php
+    $result = mysqli_query($conn, $insertUserStatement);
+    if ($result == true) {
+        ?>
+        <script>
+            alert("Your Submission is Successful!");
+            window.location.href = "index.php";
+        </script>
+        <?php
 
-            } else {
-                ?>
-                <script>
-                    alert("Error Submission!\nTry Again!");
-                    window.location.href = "index.php";
-                </script>
-                <?php
-            }
-        }
+    } else {
+        ?>
+        <script>
+            alert("Error Submission!\nTry Again!");
+            window.location.href = "index.php";
+        </script>
+        <?php
+    }
+}
 
 
-        
+
 
 ?>

@@ -5,12 +5,13 @@ include 'conn.php';
 if (isset($_GET['input'])) {
     $input = $_GET['input'];
 
-    // Perform a query to get title suggestions based on the input
-    $query = "SELECT DISTINCT title FROM books WHERE title LIKE '%$input%'";
+    // Perform a query to get barcode and title suggestions based on the input
+    $query = "SELECT DISTINCT barcode, title FROM books WHERE barcode LIKE '%$input%'";
     $result = mysqli_query($conn, $query);
 
     while ($row = mysqli_fetch_assoc($result)) {
-        echo '<div>' . $row['title'] . '</div>';
+        // Modify the response to return the barcode and title
+        echo '<div data-title="' . $row['title'] . '">' . $row['barcode'] . '</div>';
     }
 }
 ?>

@@ -29,6 +29,15 @@ if (isset($_GET['logout'])) {
     header("Location: /capstone/dashboard/dashboard_admin/index.php");
     exit();
 }
+// Check if the user is logged in
+if (isset ($_SESSION['admin_logged_in'])) {
+    $fname = $_SESSION['admin_fname'];
+    $lname = $_SESSION['admin_lname'];
+} else {
+    // Redirect to login page if user is not logged in
+    header("Location: /capstone/dashboard/dashboard_student/index.php");
+    exit();
+}
 ?>
 
 
@@ -169,7 +178,9 @@ if (isset($_GET['logout'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-success sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar"
+            style="background: rgb(3,85,32); background: linear-gradient(305deg, rgba(3,85,32,1) 28%, rgba(9,32,121,1) 60%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%);">
+
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
@@ -199,7 +210,7 @@ if (isset($_GET['logout'])) {
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- Button trigger modal -->
-    <button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#reviewsModal">
+    <button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff; " data-toggle="modal" data-target="#reviewsModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';" onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">EVALUATIONS</span>
 </button>
@@ -217,7 +228,7 @@ if (isset($_GET['logout'])) {
       <div class="modal-body">
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">EVALUATION LISTS</h6>
+                            <h6 class="m-0 font-weight-bold text-success">EVALUATION LISTS</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -283,7 +294,8 @@ while ($row = mysqli_fetch_array($getdata)) {
 
 
 <!-- Attendance -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#attendanceModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2"style="color: #fff" data-toggle="modal" data-target="#attendanceModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">ATTENDANCE</span>
 </button>
@@ -301,7 +313,7 @@ while ($row = mysqli_fetch_array($getdata)) {
       <div class="modal-body">
       <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">ATTENDANCE LISTS</h6>
+            <h6 class="m-0 font-weight-bold text-success">ATTENDANCE LISTS</h6>
             <form method="post" action="export.php">
          <input type="submit" name="export" class="btn btn-success" value="Export to Excel" />
         </div>
@@ -369,7 +381,8 @@ while ($row = mysqli_fetch_array($getdata)) {
 
 
 <!-- students -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#studentModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2"style="color: #fff" data-toggle="modal" data-target="#studentModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">STUDENTS</span>
 </button>
@@ -387,7 +400,7 @@ while ($row = mysqli_fetch_array($getdata)) {
       <div class="modal-body">
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">STUDENT LISTS</h6>
+                            <h6 class="m-0 font-weight-bold text-success">STUDENT LISTS</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -459,7 +472,8 @@ while ($row = mysqli_fetch_array($getdata)) {
 
 
 <!-- TEACHER -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#teacherModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff" data-toggle="modal" data-target="#teacherModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">TEACHERS</span>
 </button>
@@ -477,7 +491,7 @@ while ($row = mysqli_fetch_array($getdata)) {
       <div class="modal-body">
       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">TEACHER LISTS</h6>
+                            <h6 class="m-0 font-weight-bold text-success">TEACHER LISTS</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -536,7 +550,9 @@ while ($row = mysqli_fetch_array($getdata)) {
 
 
 <!-- books -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#booksModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2"  style="color: #fff; " data-toggle="modal" data-target="#booksModal"                onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
+
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">BOOKS</span>
     
@@ -665,7 +681,8 @@ while ($row = mysqli_fetch_array($getdata)) {
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                                <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow"
+                    style="background-color: #0b0667; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
 
                    
                     <!-- Topbar Navbar -->
@@ -680,6 +697,7 @@ while ($row = mysqli_fetch_array($getdata)) {
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
+                                    <?php echo $fname . ' ' . $lname; ?>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -718,11 +736,11 @@ while ($row = mysqli_fetch_array($getdata)) {
 
                         <!-- TOTAL USER Card Example -->
 <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+    <div class="card border-left-dark shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    <div class="text-m font-weight-bold text-success text-uppercase mb-1">
                         TOTAL USERS</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                         <?php
@@ -761,11 +779,11 @@ while ($row = mysqli_fetch_array($getdata)) {
 
                         <!-- DAILY TIME IN Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+    <div class="card border-left-dark shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    <div class="text-m font-weight-bold text-success text-uppercase mb-1">
                         TIME-INS TODAY</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                         <?php
@@ -802,11 +820,11 @@ while ($row = mysqli_fetch_array($getdata)) {
 
                         <!-- MONTLY TIME IN Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+    <div class="card border-left-dark shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    <div class="text-m font-weight-bold text-success text-uppercase mb-1">
                         TIME-INS THIS MONTH</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                         <?php
@@ -843,11 +861,11 @@ while ($row = mysqli_fetch_array($getdata)) {
 
                      <!-- YEARLY TIME IN Card Example -->
                      <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
+    <div class="card border-left-dark shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    <div class="text-m font-weight-bold text-success text-uppercase mb-1">
                         TIME-INS THIS YEAR</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                         <?php

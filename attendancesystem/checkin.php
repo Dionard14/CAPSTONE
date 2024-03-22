@@ -47,7 +47,8 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-success sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar"
+            style="background: rgb(3,85,32); background: linear-gradient(305deg, rgba(3,85,32,1) 28%, rgba(9,32,121,1) 60%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%);">
     
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/capstone/attendancesystem/checkin.php">
@@ -78,7 +79,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#reviewsModal">
+            <button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff; " data-toggle="modal" data-target="#reviewsModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';" onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">EVALUATIONS</span>
 </button>
@@ -162,7 +163,8 @@
 
 
 <!-- Attendance -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#attendanceModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2"style="color: #fff" data-toggle="modal" data-target="#attendanceModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">ATTENDANCE</span>
 </button>
@@ -245,7 +247,8 @@
 
 
 <!-- students -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#studentModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff" data-toggle="modal" data-target="#teacherModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">STUDENTS</span>
 </button>
@@ -321,7 +324,8 @@
 
 
 <!-- TEACHER -->
-<button type="button" class="btn btn-success d-flex justify-content-start mb-2 mt-2" data-toggle="modal" data-target="#teacherModal">
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff" data-toggle="modal" data-target="#teacherModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+                onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">TEACHERS</span>
 </button>

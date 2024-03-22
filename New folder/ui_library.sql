@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2024 at 06:04 PM
+-- Generation Time: Mar 22, 2024 at 03:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -146,27 +146,33 @@ INSERT INTO `books` (`barcode`, `call_no1`, `call_no2`, `copyright`, `title`, `a
 
 CREATE TABLE `evaluation` (
   `evaluationID` int(11) NOT NULL,
+  `barcode` int(11) NOT NULL,
   `titles` varchar(255) DEFAULT NULL,
   `course` varchar(255) NOT NULL,
   `feedbacks` text DEFAULT NULL,
   `recommendations` text DEFAULT NULL,
   `rating` float NOT NULL,
-  `book_date` datetime DEFAULT current_timestamp()
+  `book_date` datetime DEFAULT current_timestamp(),
+  `student_id` varchar(255) DEFAULT NULL,
+  `teacher_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation`
 --
 
-INSERT INTO `evaluation` (`evaluationID`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `book_date`) VALUES
-(18, 'Vector mechanics for engineers : statics', 'COE', 'ok', 'ok', 4.6, NULL),
-(19, 'Algebra & trigonometry', 'COED', 'ok', 'ok', 4.6, NULL),
-(20, 'Quantitative techniques for business management', 'CITE', 'ok', 'ok', 4.7, NULL),
-(21, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 3.9, NULL),
-(22, 'MySQL/PHP database applications', 'CITE', 'ok', 'ok', 4.6, NULL),
-(23, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 4.6, '2024-03-14 20:27:14'),
-(24, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 3.6, '2024-03-14 20:28:28'),
-(25, 'MySQL/PHP database applications', 'CCCJE', 'ok', 'ok', 4.6, '2024-03-14 20:30:14');
+INSERT INTO `evaluation` (`evaluationID`, `barcode`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `book_date`, `student_id`, `teacher_id`) VALUES
+(18, 0, 'Vector mechanics for engineers : statics', 'COE', 'ok', 'ok', 4.6, NULL, NULL, NULL),
+(19, 0, 'Algebra & trigonometry', 'COED', 'ok', 'ok', 4.6, NULL, NULL, NULL),
+(20, 0, 'Quantitative techniques for business management', 'CITE', 'ok', 'ok', 4.7, NULL, NULL, NULL),
+(21, 0, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 3.9, NULL, NULL, NULL),
+(22, 0, 'MySQL/PHP database applications', 'CITE', 'ok', 'ok', 4.6, NULL, NULL, NULL),
+(23, 0, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 4.6, '2024-03-14 20:27:14', NULL, NULL),
+(24, 0, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 3.6, '2024-03-14 20:28:28', NULL, NULL),
+(25, 0, 'MySQL/PHP database applications', 'CCCJE', 'ok', 'ok', 4.6, '2024-03-14 20:30:14', NULL, NULL),
+(26, 0, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 4.7, '2024-03-21 20:50:59', NULL, NULL),
+(29, 0, 'The Indigenous peoples of the Philippines', 'BEED', 'OK', 'OK', 4.3, '2024-03-22 20:05:37', '', ''),
+(37, 2147483647, 'Quantitative techniques for business management', 'BSA', 'ok', 'ok', 3.1, '2024-03-22 21:56:33', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -177,15 +183,19 @@ INSERT INTO `evaluation` (`evaluationID`, `titles`, `course`, `feedbacks`, `reco
 CREATE TABLE `evaluation_likes` (
   `like_id` int(11) NOT NULL,
   `evaluationID` int(11) DEFAULT NULL,
-  `action` enum('like','dislike') DEFAULT NULL
+  `action` enum('like','dislike') DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_likes`
 --
 
-INSERT INTO `evaluation_likes` (`like_id`, `evaluationID`, `action`) VALUES
-(1, 18, 'like');
+INSERT INTO `evaluation_likes` (`like_id`, `evaluationID`, `action`, `user_id`) VALUES
+(1, 29, 'like', NULL),
+(2, 29, 'dislike', NULL),
+(3, 29, 'like', NULL),
+(4, 37, 'like', NULL);
 
 -- --------------------------------------------------------
 
@@ -209,8 +219,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`) VALUES
+(1, '04-1234-5678', 'd', 'd', 'CITE', '3', 'dionard@gmail.com', 'Dionard123'),
 (16, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', 'dionard1@gmail.com', 'Dionard1'),
-(1, '123', 'd', 'd', 'CITE', '3', 'dionard@gmail.com', 'Dionard123'),
 (17, '123123', 'Davien', 'Siva', 'CMA-TMNHMBAIS,BSBA', '3', 'davien@gmail.com', 'Davien123'),
 (18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123');
 
@@ -265,14 +275,17 @@ ALTER TABLE `books`
 -- Indexes for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  ADD PRIMARY KEY (`evaluationID`);
+  ADD PRIMARY KEY (`evaluationID`),
+  ADD KEY `fk_student_id` (`student_id`),
+  ADD KEY `fk_teacher_id` (`teacher_id`);
 
 --
 -- Indexes for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
   ADD PRIMARY KEY (`like_id`),
-  ADD KEY `evaluationID` (`evaluationID`);
+  ADD KEY `evaluationID` (`evaluationID`),
+  ADD KEY `fk_user2` (`user_id`);
 
 --
 -- Indexes for table `students`
@@ -302,13 +315,13 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -330,7 +343,9 @@ ALTER TABLE `teachers`
 -- Constraints for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
-  ADD CONSTRAINT `evaluation_likes_ibfk_1` FOREIGN KEY (`evaluationID`) REFERENCES `evaluation` (`evaluationID`);
+  ADD CONSTRAINT `evaluation_likes_ibfk_1` FOREIGN KEY (`evaluationID`) REFERENCES `evaluation` (`evaluationID`),
+  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `students` (`id_number`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_user2` FOREIGN KEY (`user_id`) REFERENCES `teachers` (`id_number`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

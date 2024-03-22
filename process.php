@@ -2,7 +2,7 @@
 include "conn.php";
 session_start();
 
-if (isset($_POST['regformstudent'])) {
+if (isset ($_POST['regformstudent'])) {
     $process_id = $_POST['regform_id'];
     $process_fname = $_POST['regform_fname'];
     $process_lname = $_POST['regform_lname'];
@@ -12,7 +12,7 @@ if (isset($_POST['regformstudent'])) {
     $process_password = $_POST['regform_password'];
     $process_password2 = $_POST['regform_password2'];
     $tableName = "students";
-} elseif (isset($_POST['regformteacher'])) {
+} elseif (isset ($_POST['regformteacher'])) {
     $process_id = $_POST['regform_id'];
     $process_fname = $_POST['regform_fname'];
     $process_lname = $_POST['regform_lname'];
@@ -22,7 +22,7 @@ if (isset($_POST['regformstudent'])) {
     $tableName = "teachers";
 }
 
-if (isset($tableName)) {
+if (isset ($tableName)) {
     $checkEmailStatement = "SELECT * FROM $tableName WHERE `email`='$process_email'";
     $checkIdNumberStatement = "SELECT * FROM $tableName WHERE `id_number`='$process_id'";
 
@@ -58,7 +58,7 @@ if (isset($tableName)) {
                     window.location.href = "index.php"; 
                 </script>
                 <?php
-                exit; 
+                exit;
             } else {
                 ?>
                 <script>
@@ -93,7 +93,7 @@ if (isset($tableName)) {
 
 
 //ADMIN
-if (isset($_POST['login_admin'])) {
+if (isset ($_POST['login_admin'])) {
     $process_email = $_POST['log_email'];
     $process_password = $_POST['log_password'];
 
@@ -135,7 +135,7 @@ if (isset($_POST['login_admin'])) {
 
 //STUDENT
 
-if (isset($_POST['login_student'])) {
+if (isset ($_POST['login_student'])) {
     $process_email = $_POST['log_email'];
     $process_password = $_POST['log_password'];
 
@@ -177,7 +177,7 @@ if (isset($_POST['login_student'])) {
 
 
 //TEACHER 
-if (isset($_POST['login_teacher'])) {
+if (isset ($_POST['login_teacher'])) {
     $process_email = $_POST['log_email'];
     $process_password = $_POST['log_password'];
 
@@ -205,7 +205,7 @@ if (isset($_POST['login_teacher'])) {
                 window.location.href = "index.php"; 
             </script>
             <?php
-            exit; 
+            exit;
         }
     } else {
         ?>
