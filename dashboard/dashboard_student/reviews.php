@@ -546,72 +546,49 @@ if (isset ($_SESSION['student_logged_in'])) {
                                 // Close the database connection
                                 mysqli_close($conn);
                                 ?>
-                                <script>
-                                    $(document).ready(function () {
-                                        // Like button click handler
-                                        $('.likeBtn').click(function () {
-                                            var evaluationID = $(this).data('evaluationid');
-                                            var btn = $(this);
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: 'handle_like_dislike.php',
-                                                data: {
-                                                    evaluationID: evaluationID,
-                                                    action: 'like'
-                                                },
-                                                dataType: 'json', // Expect JSON response
-                                                success: function (data) {
-                                                    // Update the like count on the button
-                                                    btn.html('Like (' + data.likeCount + ')');
-                                                }
-                                            });
-                                        });
+                                <!-- Like and Dislike Button Click Handlers -->
+<script>
+    $(document).ready(function () {
+        // Like button click handler
+        $('.likeBtn').click(function () {
+            var evaluationID = $(this).data('evaluationid');
+            var btn = $(this);
+            $.ajax({
+                type: 'POST',
+                url: 'handle_like_dislike.php',
+                data: {
+                    evaluationID: evaluationID,
+                    action: 'like'
+                },
+                dataType: 'json', // Expect JSON response
+                success: function (data) {
+                    // Update the like count on the button
+                    btn.html('<i class="fas fa-thumbs-up"></i> Like (' + data.likeCount + ')');
+                }
+            });
+        });
 
-                                        // Dislike button click handler
-                                        $('.dislikeBtn').click(function () {
-                                            var evaluationID = $(this).data('evaluationid');
-                                            var btn = $(this);
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: 'handle_like_dislike.php',
-                                                data: {
-                                                    evaluationID: evaluationID,
-                                                    action: 'dislike'
-                                                },
-                                                dataType: 'json', // Expect JSON response
-                                                success: function (data) {
-                                                    // Update the dislike count on the button
-                                                    btn.html('Dislike (' + data.dislikeCount + ')');
-                                                }
-                                            });
-                                        });
-                                    });
+        // Dislike button click handler
+        $('.dislikeBtn').click(function () {
+            var evaluationID = $(this).data('evaluationid');
+            var btn = $(this);
+            $.ajax({
+                type: 'POST',
+                url: 'handle_like_dislike.php',
+                data: {
+                    evaluationID: evaluationID,
+                    action: 'dislike'
+                },
+                dataType: 'json', // Expect JSON response
+                success: function (data) {
+                    // Update the dislike count on the button
+                    btn.html('<i class="fas fa-thumbs-down"></i> Dislike (' + data.dislikeCount + ')');
+                }
+            });
+        });
+    });
+</script>
 
-                                </script>
-
-
-
-
-                                <script>
-                                    function handleLikeDislike(evaluationID, action) {
-                                        // Send AJAX request to handle like/dislike action
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'handle_like_dislike.php', // Replace with the actual PHP script URL
-                                            data: {
-                                                evaluationID: evaluationID,
-                                                action: action
-                                            },
-                                            success: function (response) {
-                                                // Update UI based on response (e.g., update like/dislike count)
-                                                console.log(response); // Log the response for debugging
-                                            },
-                                            error: function (xhr, status, error) {
-                                                console.error(error); // Log any errors for debugging
-                                            }
-                                        });
-                                    }
-                                </script>
                             </div>
                         </div>
 
