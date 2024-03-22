@@ -33,6 +33,9 @@ if (isset ($_GET['logout'])) {
 if (isset ($_SESSION['student_logged_in'])) {
     $fname = $_SESSION['student_fname'];
     $lname = $_SESSION['student_lname'];
+    $id_number = $_SESSION['id_number'];
+
+    
 } elseif (isset ($_SESSION['teacher_logged_in'])) {
     $fname = $_SESSION['teacher_fname'];
     $lname = $_SESSION['teacher_lname'];
