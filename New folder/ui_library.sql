@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 03:00 PM
+-- Generation Time: Mar 23, 2024 at 05:02 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,6 +41,34 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`adminID`, `fname`, `lname`, `email`, `password`) VALUES
 (0, 'Ma. Leonora', 'Flame', 'ml_flame@phinmaed.com', 'Flame123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `approval_lists`
+--
+
+CREATE TABLE `approval_lists` (
+  `id` int(11) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
+  `course` varchar(255) NOT NULL,
+  `year_level` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `id_front` varchar(255) NOT NULL,
+  `id_back` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `approval_lists`
+--
+
+INSERT INTO `approval_lists` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`) VALUES
+(7, '6', 'xx', 'xx', 'CITE', '3', 'xx1@phinmaed.com', 'XxX12345', 'uploads/jobs180.png', ''),
+(8, '6', 'ruben', 'mallo', 'CITE', '3', 'ruben@phinmaed.com', 'Ruben123', 'uploads/', 'uploads/'),
+(9, '8', 'karen', 'amo', 'CITE', '3', 'karen@phinmaed.com', 'Karen123', 'uploads/wordpressorg.png', 'uploads/7xm.xyz899026.jpg');
 
 -- --------------------------------------------------------
 
@@ -172,7 +200,9 @@ INSERT INTO `evaluation` (`evaluationID`, `barcode`, `titles`, `course`, `feedba
 (25, 0, 'MySQL/PHP database applications', 'CCCJE', 'ok', 'ok', 4.6, '2024-03-14 20:30:14', NULL, NULL),
 (26, 0, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 4.7, '2024-03-21 20:50:59', NULL, NULL),
 (29, 0, 'The Indigenous peoples of the Philippines', 'BEED', 'OK', 'OK', 4.3, '2024-03-22 20:05:37', '', ''),
-(37, 2147483647, 'Quantitative techniques for business management', 'BSA', 'ok', 'ok', 3.1, '2024-03-22 21:56:33', NULL, NULL);
+(37, 2147483647, 'Quantitative techniques for business management', 'BSA', 'ok', 'ok', 3.1, '2024-03-22 21:56:33', NULL, NULL),
+(38, 2147483647, 'Presidential plunder :the quest for the Marcos ill-gotten wealth', 'COE', 'ok', 'ok', 3.4, '2024-03-22 22:19:22', '', NULL),
+(39, 2147483647, 'Vector mechanics for engineers : statics', 'CCCJE', 'ok', 'ok', 3.4, '2024-03-22 22:21:55', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,7 +225,16 @@ INSERT INTO `evaluation_likes` (`like_id`, `evaluationID`, `action`, `user_id`) 
 (1, 29, 'like', NULL),
 (2, 29, 'dislike', NULL),
 (3, 29, 'like', NULL),
-(4, 37, 'like', NULL);
+(4, 37, 'like', NULL),
+(5, 39, 'like', NULL),
+(6, 39, 'like', NULL),
+(7, 37, 'like', NULL),
+(8, 39, 'like', NULL),
+(9, 39, 'like', NULL),
+(10, 39, 'dislike', NULL),
+(11, 39, 'dislike', NULL),
+(12, 39, 'like', NULL),
+(13, 39, 'like', NULL);
 
 -- --------------------------------------------------------
 
@@ -211,18 +250,24 @@ CREATE TABLE `students` (
   `course` varchar(255) NOT NULL,
   `year_level` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `id_front` varchar(255) NOT NULL,
+  `id_back` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`) VALUES
-(1, '04-1234-5678', 'd', 'd', 'CITE', '3', 'dionard@gmail.com', 'Dionard123'),
-(16, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', 'dionard1@gmail.com', 'Dionard1'),
-(17, '123123', 'Davien', 'Siva', 'CMA-TMNHMBAIS,BSBA', '3', 'davien@gmail.com', 'Davien123'),
-(18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123');
+INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`) VALUES
+(1, '04-1234-5678', 'd', 'd', 'CITE', '3', 'dionard@gmail.com', 'Dionard123', '', ''),
+(19, '04-1617-05123', 'Kyle', 'Pama', 'CITE', '3', 'kyle@phinmaed.com', 'Kyle12345', '', ''),
+(16, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', 'dionard1@gmail.com', 'Dionard1', '', ''),
+(20, '1', 'Kyle', 'Pama', 'CITE', '3', 'kyle@phinmaed.com', 'Kyle12345', '', ''),
+(17, '123123', 'Davien', 'Siva', 'CMA-TMNHMBAIS,BSBA', '3', 'davien@gmail.com', 'Davien123', '', ''),
+(18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123', '', ''),
+(21, '2', 'Dionard', 'Antioquia', 'CITE', '3', 'antioquia@phinmaed.com', 'Dionard123', 'uploads/linkedin.png', ''),
+(22, '3', 'x', 'x', 'CITE', '3', 'x@gmail.com', 'Xx12345678', 'uploads/upwork.png', '');
 
 -- --------------------------------------------------------
 
@@ -256,6 +301,12 @@ INSERT INTO `teachers` (`id`, `id_number`, `fname`, `lname`, `email`, `password`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`adminID`);
+
+--
+-- Indexes for table `approval_lists`
+--
+ALTER TABLE `approval_lists`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `attendance`
@@ -306,6 +357,12 @@ ALTER TABLE `teachers`
 --
 
 --
+-- AUTO_INCREMENT for table `approval_lists`
+--
+ALTER TABLE `approval_lists`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
@@ -315,19 +372,19 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `teachers`
