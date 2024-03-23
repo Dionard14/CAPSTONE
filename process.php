@@ -2,7 +2,7 @@
 include "conn.php";
 session_start();
 
-if (isset ($_POST['regformstudent'])) {
+if (isset($_POST['regformstudent'])) {
     $process_id = $_POST['regform_id'];
     $process_fname = $_POST['regform_fname'];
     $process_lname = $_POST['regform_lname'];
@@ -12,7 +12,8 @@ if (isset ($_POST['regformstudent'])) {
     $process_password = $_POST['regform_password'];
     $process_password2 = $_POST['regform_password2'];
     $tableName = "students";
-} elseif (isset ($_POST['regformteacher'])) {
+    $uploadDir = 'uploads/'; // Directory where images will be stored
+} elseif (isset($_POST['regformteacher'])) {
     $process_id = $_POST['regform_id'];
     $process_fname = $_POST['regform_fname'];
     $process_lname = $_POST['regform_lname'];
@@ -20,9 +21,10 @@ if (isset ($_POST['regformstudent'])) {
     $process_password = $_POST['regform_password'];
     $process_password2 = $_POST['regform_password2'];
     $tableName = "teachers";
+    $uploadDir = 'uploads/'; // Directory where images will be stored
 }
 
-if (isset ($tableName)) {
+if (isset($tableName)) {
     $checkEmailStatement = "SELECT * FROM $tableName WHERE `email`='$process_email'";
     $checkIdNumberStatement = "SELECT * FROM $tableName WHERE `id_number`='$process_id'";
 
@@ -33,24 +35,42 @@ if (isset ($tableName)) {
 
     if ($countEmail == 0 && $countIdNumber == 0) {
         if ($process_password == $process_password2) {
-            // Hash the password before storing it in the database for security
-            // $hashed_password = password_hash($process_password, PASSWORD_DEFAULT);
+            // Handle ID picture upload
+            // Handle ID picture upload
+$uploadDir = 'uploads/';
+$FrontuploadFile = $uploadDir . basename($_FILES['reg_idfront']['name']);
+if (move_uploaded_file($_FILES['reg_idfront']['tmp_name'], $FrontuploadFile)) {
+    // File uploaded successfully
+} else {
+    // Error handling if file upload fails
+    echo "Error uploading file.";
+    exit;
+}
+$BackuploadFile = $uploadDir . basename($_FILES['reg_idback']['name']);
+if (move_uploaded_file($_FILES['reg_idback']['tmp_name'], $BackuploadFile)) {
+    // File uploaded successfully
+} else {
+    // Error handling if file upload fails
+    echo "Error uploading file.";
+    exit;
+}
 
-            // Insert user information into the appropriate table
-            if ($tableName === "students") {
-                $insertStatement = "INSERT INTO students
-                (`id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`)
-                VALUES
-                ('$process_id', '$process_fname', '$process_lname', '$process_course', '$process_yearlevel', '$process_email', '$process_password')";
-            } elseif ($tableName === "teachers") {
-                $insertStatement = "INSERT INTO teachers
-                (`id_number`, `fname`, `lname`, `email`, `password`)
-                VALUES
-                ('$process_id', '$process_fname', '$process_lname', '$process_email', '$process_password')";
-            }
+// Insert user information into the appropriate table
+if ($tableName === "students") {
+    $insertStatement = "INSERT INTO approval_lists
+    (`id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`)
+    VALUES
+    ('$process_id', '$process_fname', '$process_lname', '$process_course', '$process_yearlevel', '$process_email', '$process_password', '$FrontuploadFile', '$BackuploadFile')";
+} elseif ($tableName === "teachers") {
+    $insertStatement = "INSERT INTO approval_lists
+    (`id_number`, `fname`, `lname`, `email`, `password`, `id_front`, `id_back`)
+    VALUES
+    ('$process_id', '$process_fname', '$process_lname', '$process_email', '$process_password', '$FrontuploadFile', '$BackuploadFile')";
+}
 
+    
             $result = mysqli_query($conn, $insertStatement);
-
+    
             if ($result) {
                 ?>
                 <script>
@@ -83,12 +103,7 @@ if (isset ($tableName)) {
         </script>
         <?php
     }
-}
-
-
-
-
-
+}    
 
 
 

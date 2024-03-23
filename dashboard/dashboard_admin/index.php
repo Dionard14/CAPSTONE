@@ -633,6 +633,7 @@ while ($row = mysqli_fetch_array($getdata)) {
   </div>
 </div>
 
+
             
 <!-- Divider -->
 <hr class="sidebar-divider">
@@ -659,8 +660,15 @@ while ($row = mysqli_fetch_array($getdata)) {
         <span>ATTENDANCE SYSTEM</span>
     </a>
 </li>
-
-
+<hr class="sidebar-divider mt-3 mb-2">
+<div class="sidebar-heading">
+</div>
+<li class="nav-item">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>APPROVAL LISTS</span>
+    </a>
+</li>
 
 
         <!-- Divider -->
@@ -1025,7 +1033,11 @@ while ($row = mysqli_fetch_array($getdata)) {
     });
     </script>
 
-
+<script>
+    $(document).ready(function() {
+        $('#dataTable5').DataTable();
+    });
+    </script>
 </body>
 
 </html>

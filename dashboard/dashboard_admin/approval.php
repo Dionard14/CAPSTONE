@@ -58,7 +58,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">USERS MANAGEMENT</div>
+                <div class="sidebar-brand-text mx-3">APPROVAL LISTS</div>
             </a>
 
             <!-- Divider -->
@@ -437,6 +437,16 @@
         <span>ATTENDANCE SYSTEM</span>
     </a>
 </li>
+<hr class="sidebar-divider mt-3 mb-2">
+<div class="sidebar-heading">
+</div>
+
+<li class="nav-item">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>APPROVAL LISTS</span>
+    </a>
+</li>
 
 
 
@@ -502,234 +512,133 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">USERS MANAGEMENT</h1>
+                        <h1 class="h3 mb-0 text-gray-800">APPROVAL LISTS</h1>
                     </div>
 
-    <div class="">
-    <!-- Buttons to choose between student and teacher modals -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#regstudentModal">
-        Register a Student
-    </button>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#regteacherModal">
-        Register a Teacher
-    </button>
-    <a href="/capstone/dashboard/dashboard_admin/index.php" class="btn btn-success">Go to ADMIN DASHBOARD</a>
+                    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-success">Lists</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Course</th>
+                        <th>Year Level</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>ID Front Picture</th>
+                        <th>ID Back Picture</th>
+                        <th>Actions</th>
+                        <th>Actions</th>
 
-    <div class="modal fade" id="regstudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Register an Account</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Assuming database connection is established and stored in $conn
+
+                    // Function to fetch pending registrations
+                    function getPendingRegistrations()
+                    {
+                        global $conn;
+                        $query = "SELECT * FROM approval_lists";
+                        $result = mysqli_query($conn, $query);
+                        $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                        return $registrations;
+                    }
+
+                    // Function to approve a registration
+                    function approveRegistration($id)
+                    {
+                        global $conn;
+                        $query = "SELECT * FROM approval_lists WHERE id = $id";
+                        $result = mysqli_query($conn, $query);
+                        $registration = mysqli_fetch_assoc($result);
+
+                        // Insert the approved registration into students table
+                        $insertQuery = "INSERT INTO students (id_number, fname, lname, course, year_level, email, password, id_pic) 
+                                        VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['course']}', '{$registration['year_level']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_pic']}')";
+                        mysqli_query($conn, $insertQuery);
+
+                        // Delete the approved registration from approval_lists table
+                        $deleteQuery = "DELETE FROM approval_lists WHERE id = $id";
+                        mysqli_query($conn, $deleteQuery);
+                    }
+
+                    // Function to disapprove and delete a registration
+                    function disapproveRegistration($id)
+                    {
+                        global $conn;
+                        $deleteQuery = "DELETE FROM approval_lists WHERE id = $id";
+                        mysqli_query($conn, $deleteQuery);
+                    }
+
+                    // Check if form is submitted for approval or disapproval
+                    if (isset($_POST['approve'])) {
+                        $registrationId = $_POST['registration_id'];
+                        approveRegistration($registrationId);
+                    } elseif (isset($_POST['disapprove'])) {
+                        $registrationId = $_POST['registration_id'];
+                        disapproveRegistration($registrationId);
+                    }
+
+                    // Fetch and display pending registrations
+                    $registrations = getPendingRegistrations();
+                    foreach ($registrations as $registration) {
+                        echo "<tr>";
+                        echo "<td>{$registration['id']}</td>";
+                        echo "<td>{$registration['id_number']}</td>";
+                        echo "<td>{$registration['fname']}</td>";
+                        echo "<td>{$registration['lname']}</td>";
+                        echo "<td>{$registration['course']}</td>";
+                        echo "<td>{$registration['year_level']}</td>";
+                        echo "<td>{$registration['email']}</td>";
+                        echo "<td>{$registration['password']}</td>";
+                        echo "<td>";
+                        // Display the id_pic as a clickable link
+                        $imageURL = "/capstone/{$registration['id_front']}";
+                        // Display the id_pic as a clickable link
+                        echo "<a href='$imageURL' target='_blank'> <img src='$imageURL' alt='ID Picture' style='max-width: 100px; max-height: 100px;'> </a>";
+                        echo "</td>";
+                        echo "<td>";
+                        // Display the id_pic as a clickable link
+                        $imageURL = "/capstone/{$registration['id_back']}";
+                        // Display the id_pic as a clickable link
+                        echo "<a href='$imageURL' target='_blank'> <img src='$imageURL' alt='ID Picture' style='max-width: 100px; max-height: 100px;'> </a>";
+                        echo "</td>";
+                        echo "<td>";
+                        // Display approve button
+                        echo "<form method='post'>";
+                        echo "<input type='hidden' name='registration_id' value='{$registration['id']}'>";
+                        echo "<button type='submit' name='approve' class='btn btn-success'><i class='fas fa-check'></i></button>";
+                        echo "</form>";
+                        echo "</td>";
+
+                        echo "<td>";
+                        // Display disapprove button
+                        echo "<form method='post'>";
+                        echo "<input type='hidden' name='registration_id' value='{$registration['id']}'>";
+                        echo "<button type='submit' name='disapprove' class='btn btn-danger'><i class='fas fa-times'></i></button>";
+                        echo "</form>";
+                        echo "</td>";
+                        echo "</tr>";
+
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-
-        <!-- Registration Form/ CREATE ACCOUNT -->
-        <form action="process.php" method="POST">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="idnumber" class="form-label">ID Number:</label>
-              <input type="text" class="form-control" name="regform_id" placeholder="Enter ID number" required>
-            </div>
-            <div class="mb-3">
-              <label for="firstName" class="form-label">First Name:</label>
-              <input type="text" class="form-control" name="regform_fname" placeholder="Enter first name" required>
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Last Name:</label>
-              <input type="text" class="form-control" name="regform_lname" placeholder="Enter last name" required>
-            </div>
-
-  <div class="mb-3">
-  <label for="course" class="form-label">Course:</label>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_ccje" value="CCCJE" required>
-      <label class="form-check-label" for="course_ccje">CCJE</label>
     </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_coe" value="COE" required>
-      <label class="form-check-label" for="course_ccje">COE</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_cite" value="CITE" required>
-      <label class="form-check-label" for="course_cite">CITE</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_bsa" value="BSA" required>
-      <label class="form-check-label" for="course_bsa">BSA</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_cma" value="CMA" required>
-      <label class="form-check-label" for="course_cma">CMA</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_coed" value="COED" required>
-      <label class="form-check-label" for="course_coed">COED</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_cahs" value="CAHS" required>
-      <label class="form-check-label" for="course_cahs">CAHS</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_mar" value="come" required>
-      <label class="form-check-label" for="course_mar">COME</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_shs" value="SHS" required>
-      <label class="form-check-label" for="course_shs">SHS</label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="regform_course" id="course_gschool" value="BEED" required>
-      <label class="form-check-label" for="course_gschool">BEED</label>
-    </div>
-  </div>
-
-            <div class="mb-3">
-      <label for="yearlevel" class="form-label">Year Level:</label>
-      <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="regform_yearlevel[]" value="1" id="yearlevel1">
-          <label class="form-check-label" for="yearlevel1">Year 1</label>
-      </div>
-      <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="regform_yearlevel[]" value="2" id="yearlevel2">
-          <label class="form-check-label" for="yearlevel2">Year 2</label>
-      </div>
-      <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="regform_yearlevel[]" value="3" id="yearlevel3">
-          <label class="form-check-label" for="yearlevel3">Year 3</label>
-      </div>
-      <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="regform_yearlevel[]" value="4" id="yearlevel3">
-          <label class="form-check-label" for="yearlevel3">Year 4</label>
-      </div>
-  </div>
-            <div class="mb-3">
-              <label for="regEmail" class="form-label">Email address:</label>
-              <input type="email" class="form-control" name="regform_email" id="regEmail" placeholder="Enter email here..." required>
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label for="regPassword">Password:</label>
-              <input
-                type="password"
-                value=""
-                name="regform_password"
-                id="regPassword2"
-                class="form-control"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                required
-                placeholder="Enter password here..."
-              >
-            </div>
-            <div class="mb-3">
-              <label for="confirmPassword">Confirm Password:</label>
-              <input
-                type="password"
-                value=""
-                name="regform_password2"
-                id="confirmPassword2"
-                class="form-control"
-                required
-                placeholder="Confirm password"
-              >
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" onclick="myFunction('regPassword2, confirmPassword2')"> Show password
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary">CLEAR</button>
-            <button type="submit" name="regformstudent" class="btn btn-primary">REGISTER</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
- 
-
-    <!-- Teacher Registration Modal -->
-    <div class="modal fade" id="regteacherModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Register an Account</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>        
-        </div>
-
-        <!-- Registration Form/ CREATE ACCOUNT -->
-        <form action="process.php" method="POST">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="idnumber" class="form-label">ID Number:</label>
-              <input type="text" class="form-control" name="regform_id" placeholder="Enter ID number" required>
-            </div>
-            <div class="mb-3">
-              <label for="firstName" class="form-label">First Name:</label>
-              <input type="text" class="form-control" name="regform_fname" placeholder="Enter first name" required>
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Last Name:</label>
-              <input type="text" class="form-control" name="regform_lname" placeholder="Enter last name" required>
-            </div>
-            <div class="mb-3">
-              <label for="regEmail" class="form-label">Email address:</label>
-              <input type="email" class="form-control" name="regform_email" id="regEmail" placeholder="Enter email here..." required>
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label for="regPassword">Password:</label>
-              <input
-                type="password"
-                value=""
-                name="regform_password"
-                id="regPassword"
-                class="form-control"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                required
-                placeholder="Enter password here..."
-              >
-            </div>
-            <div class="mb-3">
-              <label for="confirmPassword">Confirm Password:</label>
-              <input
-                type="password"
-                value=""
-                name="regform_password"
-                id="confirmPassword"
-                class="form-control"
-                required
-                placeholder="Confirm password"
-              >
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" onclick="myFunction('regPassword, confirmPassword')"> Show password
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary">CLEAR</button>
-            <button type="submit" name="regformteacher" class="btn btn-primary">REGISTER</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
+
+
+
  
 
             </div>

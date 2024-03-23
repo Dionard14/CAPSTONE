@@ -139,7 +139,7 @@
         </div>
 
         <!-- Registration Form/ CREATE ACCOUNT -->
-        <form action="process.php" method="POST">
+        <form action="process.php" method="POST"  enctype="multipart/form-data">
           <div class="modal-body">
             <div class="mb-3">
               <label for="idnumber" class="form-label">ID Number:</label>
@@ -242,6 +242,17 @@
                 placeholder="Enter email here..." required>
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
+
+              <div class="mb-3">
+                  <label for="reg_idfront" class="form-label">ID Front Picture:</label>
+                  <input type="file" class="form-control" name="reg_idfront" id="reg_idfront" accept="image/*" required>
+              </div>
+
+              <div class="mb-3">
+                  <label for="reg_idback" class="form-label">ID Back Picture:</label>
+                  <input type="file" class="form-control" name="reg_idback" id="reg_idback" accept="image/*" required>
+              </div>
+
 
             <div class="mb-3">
               <label for="regPassword">Password:</label>
