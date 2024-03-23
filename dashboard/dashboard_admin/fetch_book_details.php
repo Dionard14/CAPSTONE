@@ -18,7 +18,7 @@ if(isset($_POST['barcode'])) {
         // Fetch the book details as an associative array
         $book = mysqli_fetch_assoc($result);
 
-        // Convert the book details to JSON format
+        // Convert the book details to JSON format  
         echo json_encode($book);
     } else {
         // Handle the case where the query fails

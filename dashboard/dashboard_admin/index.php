@@ -685,10 +685,30 @@ while ($row = mysqli_fetch_array($getdata)) {
     });
 </script>
 
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
 
-
-
+<li class="nav-item ">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/book_table.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>BOOK LISTS TABLE</span>
+    </a>
+</li>
             
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+
+<li class="nav-item">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>APPROVAL LISTS</span>
+    </a>
+</li>
+
 <!-- Divider -->
 <hr class="sidebar-divider">
 <div class="sidebar-heading">
@@ -717,12 +737,7 @@ while ($row = mysqli_fetch_array($getdata)) {
 <hr class="sidebar-divider mt-3 mb-2">
 <div class="sidebar-heading">
 </div>
-<li class="nav-item">
-    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>APPROVAL LISTS</span>
-    </a>
-</li>
+
 
 
         <!-- Divider -->
