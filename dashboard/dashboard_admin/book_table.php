@@ -515,6 +515,8 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBookModal">Add Book</button>
+
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -528,7 +530,9 @@
                         <th> BOOK TITLE </th>
                         <th> AUTHOR </th>
                         <th> LOCATION </th>
-                        <th> Actions </th>
+                        <th> ACTION </th>
+                        <th> ACTION </th>
+
                     </tr>
                 </thead>
                 <tfoot>
@@ -540,7 +544,9 @@
                         <th> BOOK TITLE </th>
                         <th> AUTHOR </th>
                         <th> LOCATION </th>
-                        <th> Actions </th>
+                        <th> ACTION </th>
+                        <th> ACTION </th>
+
                     </tr>
                 </tfoot>
                 <tbody>
@@ -560,6 +566,10 @@
                                 <!-- Update Button -->
                                 <button type="button" class="btn btn-primary btn-sm update-btn" data-barcode="<?php echo $row['barcode']; ?>">Update</button>
                             </td>
+                            <td> 
+                                <!-- Delete Button -->
+                                <button type="button" class="btn btn-danger btn-sm delete-btn" data-barcode="<?php echo $row['barcode']; ?>">Delete</button>
+                            </td>
                         </tr>
                     <?php
                     }
@@ -569,6 +579,136 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Delete functionality
+        $('.delete-btn').on('click', function () {
+            var barcode = $(this).data('barcode');
+            if (confirm('Are you sure you want to delete this record?')) {
+                // Perform AJAX request to delete the record with the given barcode
+                $.ajax({
+                    url: 'delete.php', // Specify your PHP file for handling deletion
+                    method: 'POST',
+                    data: { barcode: barcode },
+                    success: function (response) {
+                        // Handle success response
+                        console.log(response);
+                        // Reload the page
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<!-- Add Book Modal -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBookForm">
+                    <div class="form-group">
+                        <label for="barcode">Barcode</label>
+                        <input type="text" class="form-control" id="barcode" name="barcode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="call_no1">Call Number (1)</label>
+                        <input type="text" class="form-control" id="call_no1" name="call_no1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="call_no2">Call Number (2)</label>
+                        <input type="text" class="form-control" id="call_no2" name="call_no2">
+                    </div>
+                    <div class="form-group">
+                        <label for="copyright">Copyright</label>
+                        <input type="text" class="form-control" id="copyright" name="copyright">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Book Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author</label>
+                        <input type="text" class="form-control" id="author" name="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" name="location">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Delete functionality
+        $('.delete-btn').on('click', function () {
+            var barcode = $(this).data('barcode');
+            if (confirm('Are you sure you want to delete this record?')) {
+                // Perform AJAX request to delete the record with the given barcode
+                $.ajax({
+                    url: 'delete.php', // Specify your PHP file for handling deletion
+                    method: 'POST',
+                    data: { barcode: barcode },
+                    success: function (response) {
+                        // Handle success response
+                        console.log(response);
+                        // Reload the page
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+
+        // Add Book form submission
+        $('#addBookForm').submit(function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get form data
+            var formData = $(this).serialize
+            (); // Serialize form data
+
+            // Submit AJAX request to add book
+            $.ajax({
+                url: 'add_book.php', // Specify your PHP file for adding books
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                    // Reload the page
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 
 <!-- Update Book Modal -->
 <div class="modal fade" id="updateBookModal" tabindex="-1" role="dialog" aria-labelledby="updateBookModalLabel" aria-hidden="true">
@@ -755,6 +895,12 @@
     <script>
     $(document).ready(function() {
         $('#dataTable3').DataTable();
+    });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTable4').DataTable();
     });
     </script>
 

@@ -555,77 +555,78 @@ while ($row = mysqli_fetch_array($getdata)) {
     <span class="small">BOOKS</span>
 </button>
 
-<!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">BOOKS LISTS</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th> BARCODE </th>
-                                        <th> CALLNUMBER </th>
-                                        <th> </th>
-                                        <th> COPYRIGHT </th>
-                                        <th> TITLE </th>
-                                        <th> AUTHOR </th>
-                                        <th> LOCATION </th>
-                                        <th> Actions </th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th> BARCODE </th>
-                                        <th> CALLNUMBER </th>
-                                        <th> </th>
-                                        <th> COPYRIGHT </th>
-                                        <th> TITLE </th>
-                                        <th> AUTHOR </th>
-                                        <th> LOCATION </th>
-                                        <th> Actions </th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <?php
-                                    $getdata = mysqli_query($conn, "SELECT * FROM books");
-                                    while ($row = mysqli_fetch_array($getdata)) {
-                                    ?>
-                                        <tr>
-                                            <td> <?php echo $row['barcode'] ?> </td>
-                                            <td> <?php echo $row['call_no1'] ?> </td>
-                                            <td> <?php echo $row['call_no2'] ?> </td>
-                                            <td> <?php echo $row['copyright'] ?></td>
-                                            <td> <?php echo $row['title'] ?></td>
-                                            <td> <?php echo $row['author'] ?></td>
-                                            <td> <?php echo $row['location'] ?></td>
-                                            <td>
-                                                <!-- Update Button -->
-                                                <button type="button" class="btn btn-primary btn-sm update-btn" data-barcode="<?php echo $row['barcode']; ?>">Update</button>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">BOOKS LISTS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
+                 <!-- <form method="post" action="#">
+                <input type="submit" name="import" class="btn btn-primary btn-import mr-2" value="Import to Database" /> -->
+                    </form>
                 </div>
-            </div>
-        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th> BARCODE </th>
+                                        <th> CALLNUMBER </th>
+                                        <th>  </th>
+                                        <th> COPYRIGHT </th>
+                                        <th> TITLE </th>
+                                        <th> AUTHOR </th>
+                                        <th> LOCATION </th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                        <th> BARCODE </th>
+                                        <th> CALLNUMBER </th>
+                                        <th>  </th>
+                                        <th> COPYRIGHT </th>
+                                        <th> TITLE </th>
+                                        <th> AUTHOR </th>
+                                        <th> LOCATION </th>
+                                        </tr>
+                                    </tfoot>
+<tr>
+
+<?php
+$getdata = mysqli_query($conn, "SELECT * FROM books");
+while ($row = mysqli_fetch_array($getdata)) {
+
+
+    ?>
+
+                <td> <?php echo $row['barcode'] ?> </td>
+                <td> <?php echo $row['call_no1'] ?> </td>
+                <td> <?php echo $row['call_no2'] ?> </td>
+                <td> <?php echo $row['copyright'] ?></td>
+                <td> <?php echo $row['title'] ?></td>
+                <td> <?php echo $row['author'] ?></td>
+                <td> <?php echo $row['location'] ?></td>
+                </tr>
+
+                <?php
+}
+?>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+</div>
+</div>
+  </div>
 </div>
 
 <!-- Update Book Modal -->
@@ -653,37 +654,13 @@ while ($row = mysqli_fetch_array($getdata)) {
                         <label for="updateLocation">Location</label>
                         <input type="text" class="form-control" id="updateLocation" name="updateLocation" required>
                     </div>
-                    <input type="hidden" id="updateBookId" name="updateBookId">
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary" name="updateBook">Update Book</button>
-                </form>
+                    
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    // Function to open the update book modal
-    $(document).on("click", ".update-btn", function() {
-        var barcode = $(this).data("barcode");
-        $.ajax({
-            url: 'fetch_book_details.php', // Path to your PHP script to fetch book details
-            type: 'POST',
-            data: { barcode: barcode },
-            success: function(response) {
-                var book = JSON.parse(response);
-                $('#updateTitle').val(book.title);
-                $('#updateAuthor').val(book.author);
-                $('#updateLocation').val(book.location);
-                $('#updateBookId').val(book.id);
-                $('#updateBookModal').modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
-</script>
+
 
 <!-- Divider -->
 <hr class="sidebar-divider">
