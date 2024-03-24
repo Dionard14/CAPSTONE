@@ -14,4 +14,6 @@ if (isset($_GET['input'])) {
         echo '<div data-title="' . $row['title'] . '">' . $row['barcode'] . '</div>';
     }
 }
+
+
 ?>

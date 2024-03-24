@@ -5,21 +5,19 @@ session_start();
 if (isset($_POST['submit'])) {
     $process_barcode = $_POST['barcode'];
     $process_title = $_POST['title'];
+    $process_idnumber = $_POST['id_number'];
     $process_course = $_POST['course'];
     $process_feedback = $_POST['feedback'];
     $process_recommendation = $_POST['recommendation'];
     $process_rating = $_POST['rating'];
 
-    // Check if id_number is set in the session
-    if (isset($_SESSION['student_logged_in'])) {
-        $id_number = $_SESSION['id_number'];
 
         // Insert data into the evaluation table
         $insertEvaluationQuery = "INSERT INTO `evaluation`
-                                (`barcode`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `student_id`)
+                                (`barcode`, `titles`,`id_number`, `course`, `feedbacks`, `recommendations`, `rating`)
                                 VALUES
-                                ('$process_barcode', '$process_title', '$process_course', '$process_feedback',
-                                '$process_recommendation', '$process_rating', '$id_number')";
+                                ('$process_barcode', '$process_title', '$process_idnumber','$process_course', '$process_feedback',
+                                '$process_recommendation', '$process_rating')";
         $result = mysqli_query($conn, $insertEvaluationQuery);
         if ($result) {
             ?>
@@ -44,5 +42,5 @@ if (isset($_POST['submit'])) {
         </script>
         <?php
     }
-}
+
 ?>

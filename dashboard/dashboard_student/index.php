@@ -178,6 +178,12 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     <input type="text" class="form-control" name="title" id="title" autocomplete="off">
                                     <div id="titleSuggestions"></div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="barcode">ID Number:</label>
+                                    <input type="text" class="form-control" name="id_number" id="id_number">
+                                    <div id="IDSuggestions"></div>
+                                </div>
+
 
                                 <div class="mb-3">
                                     <div class="dropdown">
@@ -243,16 +249,16 @@ if (isset ($_SESSION['student_logged_in'])) {
                                 </div>
 
                                 <script>
-                                    // Add event listener to all radio buttons
-                                    document.querySelectorAll('input[name="course"]').forEach(function (input) {
-                                        input.addEventListener('change', function () {
-                                            // Get the selected course
-                                            var selectedCourse = document.querySelector('input[name="course"]:checked').value;
-                                            // Update the dropdown button text with the selected course
-                                            document.getElementById('courseDropdown').innerText = selectedCourse;
-                                        });
+                                // Add event listener to all radio buttons
+                                document.querySelectorAll('input[name="course"]').forEach(function (input) {
+                                    input.addEventListener('change', function () {
+                                        // Get the selected course
+                                        var selectedCourse = document.querySelector('input[name="course"]:checked').value;
+                                        // Update the dropdown button text with the selected course
+                                        document.getElementById('courseDropdown').innerText = selectedCourse;
                                     });
-                                </script>
+                                });
+                            </script>
 
 
 
@@ -341,6 +347,49 @@ if (isset ($_SESSION['student_logged_in'])) {
 
             // Clear suggestions
             $('#barcodeSuggestions').empty();
+        });
+    });
+
+    $(document).ready(function () {
+        // Handle input change for ID number suggestions
+        $('#id_number').on('input', function () {
+            var input = $(this).val();
+
+            // Perform AJAX request to fetch ID number suggestions
+            $.ajax({
+                type: 'GET',
+                url: 'fetch_id_numbers.php',
+                data: { input: input },
+                success: function (data) {
+                    $('#IDSuggestions').html(data).addClass('suggestions-styling');
+
+                    // Handle click on suggestion
+                    $('#IDSuggestions div').on('click', function (e) {
+                        e.stopPropagation(); // Prevent the click from reaching the document click handler
+
+                        var selectedID = $(this).text();
+
+                        // Fill the ID number input with the selected ID number
+                        $('#id_number').val(selectedID);
+
+                        // Fetch the course associated with the selected ID number
+                        $.ajax({
+                            type: 'GET',
+                            url: 'fetch_course.php',
+                            data: { id_number: selectedID },
+                            success: function (course) {
+                                // Select the corresponding radio button based on the fetched course value
+                                $('input[name="course"][value="' + course + '"]').prop('checked', true);
+                                // Update the dropdown button text with the selected course
+                                $('#courseDropdown').text(course);
+                            }
+                        });
+
+                        // Hide the suggestions
+                        $('#IDSuggestions').empty();
+                    });
+                }
+            });
         });
     });
 </script>
@@ -486,11 +535,11 @@ if (isset ($_SESSION['student_logged_in'])) {
 
                                                 // Query to retrieve the most read book for the current day
                                                 $sql = "SELECT titles, COUNT(*) AS num_reads
-        FROM evaluation
-        WHERE DATE(book_date) = '$current_date '  -- Filter by the current day
-        GROUP BY titles
-        ORDER BY num_reads DESC
-        LIMIT 1";
+                                                    FROM evaluation
+                                                    WHERE DATE(book_date) = '$current_date '  -- Filter by the current day
+                                                    GROUP BY titles
+                                                    ORDER BY num_reads DESC
+                                                    LIMIT 1";
 
                                                 $result = mysqli_query($conn, $sql);
 

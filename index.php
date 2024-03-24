@@ -181,7 +181,7 @@
 
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="regform_course" id="course_cma"
-                  value="CMA-TMNHMBAIS,BSBA" required>
+                  value="CMA" required>
                 <label class="form-check-label" for="course_cma">CMA</label>
               </div>
 
@@ -198,7 +198,7 @@
               </div>
 
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="regform_course" id="course_mar" value="MAR-E"
+                <input class="form-check-input" type="radio" name="regform_course" id="course_mar" value="COME"
                   required>
                 <label class="form-check-label" for="course_mar">COME</label>
               </div>
@@ -210,7 +210,7 @@
 
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="regform_course" id="course_gschool"
-                  value="GRADESCHOOL" required>
+                  value="BEED" required>
                 <label class="form-check-label" for="course_gschool">BEED</label>
               </div>
 
