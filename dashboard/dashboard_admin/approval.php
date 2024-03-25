@@ -562,8 +562,10 @@
                         $registration = mysqli_fetch_assoc($result);
 
                         // Insert the approved registration into students table
-                        $insertQuery = "INSERT INTO students (id_number, fname, lname, course, year_level, email, password, id_pic) 
-                                        VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['course']}', '{$registration['year_level']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_pic']}')";
+                        // Insert the approved registration into students table
+                        $insertQuery = "INSERT INTO students (id_number, fname, lname, course, year_level, email, password, id_front, id_back) 
+                        VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['course']}', '{$registration['year_level']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_front']}', '{$registration['id_back']}')";
+
                         mysqli_query($conn, $insertQuery);
 
                         // Delete the approved registration from approval_lists table
