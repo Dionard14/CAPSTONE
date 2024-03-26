@@ -178,87 +178,9 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     <input type="text" class="form-control" name="title" id="title" autocomplete="off">
                                     <div id="titleSuggestions"></div>
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label for="barcode">ID Number:</label>
-                                    <input type="text" class="form-control" name="id_number" id="id_number">
-                                    <div id="IDSuggestions"></div>
-                                </div> -->
 
 
-                                <div class="mb-3">
-                                    <div class="dropdown">
-                                        <label for="course" class="form-label">Course:</label>
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="courseDropdown" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Select Course
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="courseDropdown">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_ccje" value="CCCJE" required>
-                                                <label class="form-check-label" for="course_ccje">CCJE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_coe" value="COE" required>
-                                                <label class="form-check-label" for="course_coe">COE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_cite" value="CITE" required>
-                                                <label class="form-check-label" for="course_cite">CITE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_bsa" value="BSA" required>
-                                                <label class="form-check-label" for="course_bsa">BSA</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_cma" value="CMA" required>
-                                                <label class="form-check-label" for="course_cma">CMA</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_coed" value="COED" required>
-                                                <label class="form-check-label" for="course_coed">COED</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_cahs" value="CAHS" required>
-                                                <label class="form-check-label" for="course_cahs">CAHS</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_mar" value="COME" required>
-                                                <label class="form-check-label" for="course_mar">COME</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_shs" value="SHS" required>
-                                                <label class="form-check-label" for="course_shs">SHS</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_gschool" value="BEED" required>
-                                                <label class="form-check-label" for="course_gschool">BEED</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                // Add event listener to all radio buttons
-                                document.querySelectorAll('input[name="course"]').forEach(function (input) {
-                                    input.addEventListener('change', function () {
-                                        // Get the selected course
-                                        var selectedCourse = document.querySelector('input[name="course"]:checked').value;
-                                        // Update the dropdown button text with the selected course
-                                        document.getElementById('courseDropdown').innerText = selectedCourse;
-                                    });
-                                });
-                            </script>
+                              
 
 
 
@@ -588,10 +510,10 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 }
 
                                                 $sql = "SELECT evaluation.course, COUNT(evaluation.course) AS num_books_read
-        FROM evaluation
-        GROUP BY evaluation.course
-        ORDER BY num_books_read DESC
-        LIMIT 3";
+                                                FROM evaluation
+                                                GROUP BY evaluation.course
+                                                ORDER BY num_books_read DESC
+                                                LIMIT 3";
 
                                                 $result = mysqli_query($conn, $sql);
 
@@ -631,10 +553,10 @@ if (isset ($_SESSION['student_logged_in'])) {
 
 
                                                 $sql = "SELECT evaluation.titles, COUNT(evaluation.titles) AS num_reviews
-                                FROM evaluation
-                                GROUP BY evaluation.titles
-                                ORDER BY num_reviews DESC
-                                LIMIT 3";
+                                                FROM evaluation
+                                                GROUP BY evaluation.titles
+                                                ORDER BY num_reviews DESC
+                                                LIMIT 3";
 
                                                 $result = mysqli_query($conn, $sql);
 
@@ -673,10 +595,10 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 }
 
                                                 $sql = "SELECT evaluation.titles, COUNT(evaluation.titles) AS num_reviews
-                        FROM evaluation
-                        GROUP BY evaluation.titles
-                        ORDER BY num_reviews ASC
-                        LIMIT 3"; // Changed ORDER BY to ASC to get the least reviewed books
+                                                FROM evaluation
+                                                GROUP BY evaluation.titles
+                                                ORDER BY num_reviews ASC
+                                                LIMIT 3"; // Changed ORDER BY to ASC to get the least reviewed books
                                                 
                                                 $result = mysqli_query($conn, $sql);
 

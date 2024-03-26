@@ -165,86 +165,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     <input type="text" class="form-control" name="title" id="title" autocomplete="off">
                                     <div id="titleSuggestions"></div>
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label for="barcode">ID Number:</label>
-                                    <input type="text" class="form-control" name="id_number" id="id_number">
-                                    <div id="IDSuggestions"></div>
-                                </div> -->
-
-                                <div class="mb-3">
-                                    <div class="dropdown">
-                                        <label for="course" class="form-label">Course:</label>
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="courseDropdown" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Select Course
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="courseDropdown">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_ccje" value="CCCJE" required>
-                                                <label class="form-check-label" for="course_ccje">CCJE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_coe" value="COE" required>
-                                                <label class="form-check-label" for="course_coe">COE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_cite" value="CITE" required>
-                                                <label class="form-check-label" for="course_cite">CITE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_bsa" value="BSA" required>
-                                                <label class="form-check-label" for="course_bsa">BSA</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_cma" value="CMA" required>
-                                                <label class="form-check-label" for="course_cma">CMA</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_coed" value="COED" required>
-                                                <label class="form-check-label" for="course_coed">COED</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_cahs" value="CAHS" required>
-                                                <label class="form-check-label" for="course_cahs">CAHS</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_mar" value="COME" required>
-                                                <label class="form-check-label" for="course_mar">COME</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_shs" value="SHS" required>
-                                                <label class="form-check-label" for="course_shs">SHS</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="course"
-                                                    id="course_gschool" value="BEED" required>
-                                                <label class="form-check-label" for="course_gschool">BEED</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                // Add event listener to all radio buttons
-                                document.querySelectorAll('input[name="course"]').forEach(function (input) {
-                                    input.addEventListener('change', function () {
-                                        // Get the selected course
-                                        var selectedCourse = document.querySelector('input[name="course"]:checked').value;
-                                        // Update the dropdown button text with the selected course
-                                        document.getElementById('courseDropdown').innerText = selectedCourse;
-                                    });
-                                });
-                            </script>
 
 
 
@@ -536,7 +456,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                                             echo '<div class="col-lg-6 mb-4">';
                                             echo '<div class="card">';
                                             echo '<div class="card-body">';
-                                            echo '<h5 class="card-title">Title: ' . $title . '</h5>';
+                                            echo '<h3 class="card-title">Title: ' . $title . '</h3>';
                                             echo '<p class="card-text">Course: ' . $course . '</p>';
                                             echo '<p class="card-text">Feedbacks: ' . $feedbacks . '</p>';
                                             echo '<p class="card-text">Recommendations: ' . $recommendations . '</p>';
@@ -547,11 +467,13 @@ if (isset ($_SESSION['student_logged_in'])) {
                                             echo '</p>';
                                             echo '<div class="card-footer">';
                                             // Like button with count
+                                
                                             $likeCount = getLikeDislikeCount($evaluationID, 'like');
-                                            echo '<button type="button" class="btn btn-success mr-2 likeBtn" data-evaluationid="' . $evaluationID . '"><i class="fas fa-thumbs-up"></i> (' . $likeCount . ')</button>';
-                                            // Dislike button with count
+                                            echo '<button type="button" class="btn btn-success mr-2 likeBtn" data-evaluationid="' . $evaluationID . '"><i class="fas fa-thumbs-up"></i> ' . $likeCount . '</button>';
+
                                             $dislikeCount = getLikeDislikeCount($evaluationID, 'dislike');
-                                            echo '<button type="button" class="btn btn-danger dislikeBtn" data-evaluationid="' . $evaluationID . '"><i class="fas fa-thumbs-down"></i> (' . $dislikeCount . ')</button>';
+                                            echo '<button type="button" class="btn btn-danger dislikeBtn" data-evaluationid="' . $evaluationID . '"><i class="fas fa-thumbs-down"></i> ' . $dislikeCount . '</button>';
+
                                             // Button to trigger book details modal
                                             echo '<button type="button" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#bookDetailsModal' . $evaluationID . '">Book Details</button>';
                                             echo '</div>';
@@ -596,49 +518,110 @@ if (isset ($_SESSION['student_logged_in'])) {
                                 // Close the database connection
                                 mysqli_close($conn);
                                 ?>
-                                <!-- Like and Dislike Button Click Handlers -->
-<script>
-    $(document).ready(function () {
-        // Like button click handler
-        $('.likeBtn').click(function () {
-            var evaluationID = $(this).data('evaluationid');
-            var btn = $(this);
-            $.ajax({
-                type: 'POST',
-                url: 'handle_like_dislike.php',
-                data: {
-                    evaluationID: evaluationID,
-                    action: 'like'
-                },
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Update the like count on the button
-                    btn.html('<i class="fas fa-thumbs-up"></i> Like (' + data.likeCount + ')');
-                }
-            });
-        });
+                                <script>
+                                    $(document).ready(function () {
+                                        // Like button click handler
+                                        $('.likeBtn').click(function () {
+                                            var evaluationID = $(this).data('evaluationid');
+                                            var btn = $(this);
 
-        // Dislike button click handler
-        $('.dislikeBtn').click(function () {
-            var evaluationID = $(this).data('evaluationid');
-            var btn = $(this);
-            $.ajax({
-                type: 'POST',
-                url: 'handle_like_dislike.php',
-                data: {
-                    evaluationID: evaluationID,
-                    action: 'dislike'
-                },
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Update the dislike count on the button
-                    btn.html('<i class="fas fa-thumbs-down"></i> Dislike (' + data.dislikeCount + ')');
-                }
-            });
-        });
-    });
-</script>
+                                            // Check if the button already has the 'liked' class
+                                            if (!btn.hasClass('liked')) {
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: 'handle_like_dislike.php',
+                                                    data: {
+                                                        evaluationID: evaluationID,
+                                                        action: 'like'
+                                                    },
+                                                    dataType: 'json', // Expect JSON response
+                                                    success: function (data) {
+                                                        // Update the like count on the button
+                                                        btn.html('<i class="fas fa-thumbs-up"></i> ' + data.likeCount);
 
+                                                        // Add 'liked' class to the button
+                                                        btn.addClass('liked');
+
+                                                        // Check if the dislike button was previously clicked
+                                                        var dislikeBtn = btn.siblings('.dislikeBtn');
+                                                        if (dislikeBtn.hasClass('disliked')) {
+                                                            // Update the dislike count on the dislike button
+                                                            dislikeBtn.removeClass('disliked');
+                                                            dislikeBtn.html('<i class="fas fa-thumbs-down"></i> ' + data.dislikeCount);
+                                                        }
+                                                    },
+                                                    error: function (xhr, status, error) {
+                                                        console.error(error); // Log any errors for debugging
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                        // Dislike button click handler
+                                        $('.dislikeBtn').click(function () {
+                                            var evaluationID = $(this).data('evaluationid');
+                                            var btn = $(this);
+
+                                            // Check if the button already has the 'disliked' class
+                                            if (!btn.hasClass('disliked')) {
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: 'handle_like_dislike.php',
+                                                    data: {
+                                                        evaluationID: evaluationID,
+                                                        action: 'dislike'
+                                                    },
+                                                    dataType: 'json', // Expect JSON response
+                                                    success: function (data) {
+                                                        // Update the dislike count on the button
+                                                        btn.html('<i class="fas fa-thumbs-down"></i> ' + data.dislikeCount);
+
+                                                        // Add 'disliked' class to the button
+                                                        btn.addClass('disliked');
+
+                                                        // Check if the like button was previously clicked
+                                                        var likeBtn = btn.siblings('.likeBtn');
+                                                        if (likeBtn.hasClass('liked')) {
+                                                            // Update the like count on the like button
+                                                            likeBtn.removeClass('liked');
+                                                            likeBtn.html('<i class="fas fa-thumbs-up"></i> ' + data.likeCount);
+                                                        }
+                                                    },
+                                                    error: function (xhr, status, error) {
+                                                        console.error(error); // Log any errors for debugging
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    });
+
+
+
+                                </script>
+
+
+
+
+                                <script>
+                                    function handleLikeDislike(evaluationID, action) {
+                                        // Send AJAX request to handle like/dislike action
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'handle_like_dislike.php', // Replace with the actual PHP script URL
+                                            data: {
+                                                evaluationID: evaluationID,
+                                                action: action
+                                            },
+                                            success: function (response) {
+                                                // Update UI based on response (e.g., update like/dislike count)
+                                                console.log(response); // Log the response for debugging
+                                            },
+                                            error: function (xhr, status, error) {
+                                                console.error(error); // Log any errors for debugging
+                                            }
+                                        });
+                                    }
+                                </script>
                             </div>
                         </div>
 

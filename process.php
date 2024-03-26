@@ -50,7 +50,7 @@ $BackuploadFile = $uploadDir . basename($_FILES['reg_idback']['name']);
 if (move_uploaded_file($_FILES['reg_idback']['tmp_name'], $BackuploadFile)) {
     // File uploaded successfully
 } else {
-    // Error handling if file upload fails
+    // Error handling if file   upload fails
     echo "Error uploading file.";
     exit;
 }
@@ -150,7 +150,7 @@ if (isset ($_POST['login_admin'])) {
 
 //STUDENT
 
-if (isset ($_POST['login_student'])) {
+if (isset($_POST['login_student'])) {
     $process_email = $_POST['log_email'];
     $process_password = $_POST['log_password'];
 
@@ -163,11 +163,16 @@ if (isset ($_POST['login_student'])) {
         $databasePassword = $rowData['password'];
         $fname = $rowData['fname'];
         $lname = $rowData['lname'];
+        $id_number = $rowData['id_number']; // Retrieve id_number from database
+        $course = $rowData['course'];
 
         if ($databasePassword == $process_password) {
             $_SESSION['student_logged_in'] = true;
             $_SESSION['student_fname'] = $fname;
             $_SESSION['student_lname'] = $lname;
+            $_SESSION['id_number'] = $id_number; // Store id_number in session
+            $_SESSION['course'] = $course; 
+            
 
             header("Location: /capstone/dashboard/dashboard_student/index.php");
             exit;

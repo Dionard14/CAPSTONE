@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2024 at 05:02 PM
+-- Generation Time: Mar 26, 2024 at 08:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,9 +66,9 @@ CREATE TABLE `approval_lists` (
 --
 
 INSERT INTO `approval_lists` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`) VALUES
-(7, '6', 'xx', 'xx', 'CITE', '3', 'xx1@phinmaed.com', 'XxX12345', 'uploads/jobs180.png', ''),
-(8, '6', 'ruben', 'mallo', 'CITE', '3', 'ruben@phinmaed.com', 'Ruben123', 'uploads/', 'uploads/'),
-(9, '8', 'karen', 'amo', 'CITE', '3', 'karen@phinmaed.com', 'Karen123', 'uploads/wordpressorg.png', 'uploads/7xm.xyz899026.jpg');
+(679, '10', 'D', 'D', 'CITE', '3', 'dionard14@gmail.com', 'Dionard14', 'uploads/linkedin.png', 'uploads/upwork.png'),
+(680, '04-1617-1234', 'x', 'x', 'CITE', '3', 'dionard14@gmail.com', 'Dionard123', 'uploads/linkedin.png', 'uploads/upwork.png'),
+(682, '', '', '', '', '', 'dionard2313@gmail.com', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -124,6 +124,8 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`barcode`, `call_no1`, `call_no2`, `copyright`, `title`, `author`, `location`) VALUES
+('2', '213', '2', '2', '2', '2', '2'),
+('3', '3', '3', '3', '3', '3', '3'),
 ('4000000260', 'TA351', 'B447', '2004', 'Vector mechanics for engineers : statics', 'Ferdinand P. Beer', 'EL'),
 ('4000000261', 'TA351', 'B447', '2004', 'Vector mechanics for engineers : statics', 'Ferdinand P. Beer', 'EL'),
 ('4000000285', 'QA154.2', 'B638', '2004', 'Algebra & trigonometry', 'Robert Blitzer', 'EL'),
@@ -181,28 +183,18 @@ CREATE TABLE `evaluation` (
   `recommendations` text DEFAULT NULL,
   `rating` float NOT NULL,
   `book_date` datetime DEFAULT current_timestamp(),
-  `student_id` varchar(255) DEFAULT NULL,
-  `teacher_id` varchar(255) DEFAULT NULL
+  `student_fname` varchar(255) NOT NULL,
+  `student_lname` varchar(255) NOT NULL,
+  `id_number` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation`
 --
 
-INSERT INTO `evaluation` (`evaluationID`, `barcode`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `book_date`, `student_id`, `teacher_id`) VALUES
-(18, 0, 'Vector mechanics for engineers : statics', 'COE', 'ok', 'ok', 4.6, NULL, NULL, NULL),
-(19, 0, 'Algebra & trigonometry', 'COED', 'ok', 'ok', 4.6, NULL, NULL, NULL),
-(20, 0, 'Quantitative techniques for business management', 'CITE', 'ok', 'ok', 4.7, NULL, NULL, NULL),
-(21, 0, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 3.9, NULL, NULL, NULL),
-(22, 0, 'MySQL/PHP database applications', 'CITE', 'ok', 'ok', 4.6, NULL, NULL, NULL),
-(23, 0, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 4.6, '2024-03-14 20:27:14', NULL, NULL),
-(24, 0, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 3.6, '2024-03-14 20:28:28', NULL, NULL),
-(25, 0, 'MySQL/PHP database applications', 'CCCJE', 'ok', 'ok', 4.6, '2024-03-14 20:30:14', NULL, NULL),
-(26, 0, 'Macromedia Flash MX 2004 : fast & easy web development', 'CITE', 'ok', 'ok', 4.7, '2024-03-21 20:50:59', NULL, NULL),
-(29, 0, 'The Indigenous peoples of the Philippines', 'BEED', 'OK', 'OK', 4.3, '2024-03-22 20:05:37', '', ''),
-(37, 2147483647, 'Quantitative techniques for business management', 'BSA', 'ok', 'ok', 3.1, '2024-03-22 21:56:33', NULL, NULL),
-(38, 2147483647, 'Presidential plunder :the quest for the Marcos ill-gotten wealth', 'COE', 'ok', 'ok', 3.4, '2024-03-22 22:19:22', '', NULL),
-(39, 2147483647, 'Vector mechanics for engineers : statics', 'CCCJE', 'ok', 'ok', 3.4, '2024-03-22 22:21:55', '', NULL);
+INSERT INTO `evaluation` (`evaluationID`, `barcode`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `book_date`, `student_fname`, `student_lname`, `id_number`) VALUES
+(49, 0, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 2.8, '2024-03-26 15:01:15', 'Dionard', 'Antioquia', '10'),
+(50, 0, 'Algebra & trigonometry', 'CITE', 'ok', 'ok', 4.4, '2024-03-26 15:01:31', 'Dionard', 'Antioquia', '10');
 
 -- --------------------------------------------------------
 
@@ -214,27 +206,18 @@ CREATE TABLE `evaluation_likes` (
   `like_id` int(11) NOT NULL,
   `evaluationID` int(11) DEFAULT NULL,
   `action` enum('like','dislike') DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL
+  `student_fname` varchar(255) NOT NULL,
+  `student_lname` varchar(255) NOT NULL,
+  `id_number` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation_likes`
 --
 
-INSERT INTO `evaluation_likes` (`like_id`, `evaluationID`, `action`, `user_id`) VALUES
-(1, 29, 'like', NULL),
-(2, 29, 'dislike', NULL),
-(3, 29, 'like', NULL),
-(4, 37, 'like', NULL),
-(5, 39, 'like', NULL),
-(6, 39, 'like', NULL),
-(7, 37, 'like', NULL),
-(8, 39, 'like', NULL),
-(9, 39, 'like', NULL),
-(10, 39, 'dislike', NULL),
-(11, 39, 'dislike', NULL),
-(12, 39, 'like', NULL),
-(13, 39, 'like', NULL);
+INSERT INTO `evaluation_likes` (`like_id`, `evaluationID`, `action`, `student_fname`, `student_lname`, `id_number`) VALUES
+(13, 50, 'dislike', 'Dionard', 'Antioquia', 10),
+(14, 49, 'like', 'Dionard', 'Antioquia', 10);
 
 -- --------------------------------------------------------
 
@@ -264,10 +247,15 @@ INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_lev
 (19, '04-1617-05123', 'Kyle', 'Pama', 'CITE', '3', 'kyle@phinmaed.com', 'Kyle12345', '', ''),
 (16, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', 'dionard1@gmail.com', 'Dionard1', '', ''),
 (20, '1', 'Kyle', 'Pama', 'CITE', '3', 'kyle@phinmaed.com', 'Kyle12345', '', ''),
+(30, '10', 'Dionard', 'Antioquia', 'CITE', '3', 'dionard24@gmail.com', 'Dionard123', 'uploads/upwork.png', 'uploads/jobs180.png'),
 (17, '123123', 'Davien', 'Siva', 'CMA-TMNHMBAIS,BSBA', '3', 'davien@gmail.com', 'Davien123', '', ''),
 (18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123', '', ''),
 (21, '2', 'Dionard', 'Antioquia', 'CITE', '3', 'antioquia@phinmaed.com', 'Dionard123', 'uploads/linkedin.png', ''),
-(22, '3', 'x', 'x', 'CITE', '3', 'x@gmail.com', 'Xx12345678', 'uploads/upwork.png', '');
+(25, '233', 'x', 'x', 'Cite', '3', 'dionard2313@gmail.com', 'Dionard14', '', ''),
+(22, '3', 'x', 'x', 'CITE', '3', 'x@gmail.com', 'Xx12345678', 'uploads/upwork.png', ''),
+(23, '6', 'xx', 'xx', 'CITE', '3', 'dionard2313@gmail.com', 'XxX12345', 'uploads/jobs180.png', ''),
+(26, '8', 'karen', 'amo', 'CITE', '3', 'karen@phinmaed.com', 'Karen123', 'uploads/wordpressorg.png', 'uploads/7xm.xyz899026.jpg'),
+(29, '8779', 'x', 'x', 'x', 'x', 'x', 'x', 'uploads/jobs180.png', 'uploads/jobs180.png');
 
 -- --------------------------------------------------------
 
@@ -326,17 +314,14 @@ ALTER TABLE `books`
 -- Indexes for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  ADD PRIMARY KEY (`evaluationID`),
-  ADD KEY `fk_student_id` (`student_id`),
-  ADD KEY `fk_teacher_id` (`teacher_id`);
+  ADD PRIMARY KEY (`evaluationID`);
 
 --
 -- Indexes for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
   ADD PRIMARY KEY (`like_id`),
-  ADD KEY `evaluationID` (`evaluationID`),
-  ADD KEY `fk_user2` (`user_id`);
+  ADD KEY `evaluationID` (`evaluationID`);
 
 --
 -- Indexes for table `students`
@@ -360,7 +345,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `approval_lists`
 --
 ALTER TABLE `approval_lists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=683;
 
 --
 -- AUTO_INCREMENT for table `attendance`
@@ -372,19 +357,19 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `evaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -400,9 +385,7 @@ ALTER TABLE `teachers`
 -- Constraints for table `evaluation_likes`
 --
 ALTER TABLE `evaluation_likes`
-  ADD CONSTRAINT `evaluation_likes_ibfk_1` FOREIGN KEY (`evaluationID`) REFERENCES `evaluation` (`evaluationID`),
-  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `students` (`id_number`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_user2` FOREIGN KEY (`user_id`) REFERENCES `teachers` (`id_number`) ON DELETE CASCADE;
+  ADD CONSTRAINT `evaluation_likes_ibfk_1` FOREIGN KEY (`evaluationID`) REFERENCES `evaluation` (`evaluationID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

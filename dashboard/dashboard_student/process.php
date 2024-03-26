@@ -2,45 +2,40 @@
 include "conn.php";
 session_start();
 
-if (isset($_POST['submit'])) {
-    $process_barcode = $_POST['barcode'];
-    $process_title = $_POST['title'];
-    $process_idnumber = $_POST['id_number'];
-    $process_course = $_POST['course'];
-    $process_feedback = $_POST['feedback'];
-    $process_recommendation = $_POST['recommendation'];
-    $process_rating = $_POST['rating'];
+if (isset($_POST['submit'], $_SESSION['student_fname'], $_SESSION['student_lname'], $_SESSION['id_number'], $_SESSION['course'])) {
+
+    $student_fname = $_SESSION['student_fname'];
+    $student_lname = $_SESSION['student_lname']; 
+    $id_number = $_SESSION['id_number'];
+    $course = $_SESSION['course'];
 
 
-        // Insert data into the evaluation table
-        $insertEvaluationQuery = "INSERT INTO `evaluation`
-                                (`barcode`, `titles`,`id_number`, `course`, `feedbacks`, `recommendations`, `rating`)
-                                VALUES
-                                ('$process_barcode', '$process_title', '$process_idnumber','$process_course', '$process_feedback',
-                                '$process_recommendation', '$process_rating')";
-        $result = mysqli_query($conn, $insertEvaluationQuery);
-        if ($result) {
-            ?>
-            <script>
-                alert("Your Submission is Successful!");
-                window.location.href = "index.php";
-            </script>
-            <?php
-        } else {
-            ?>
-            <script>
-                alert("Error Submission!\nTry Again!");
-                window.location.href = "index.php";
-            </script>
-            <?php
-        }
+    $process_title = mysqli_real_escape_string($conn, $_POST['title']);
+    $process_feedback = mysqli_real_escape_string($conn, $_POST['feedback']);
+    $process_recommendation = mysqli_real_escape_string($conn, $_POST['recommendation']);
+    $process_rating = mysqli_real_escape_string($conn, $_POST['rating']);
+
+    $insertUserStatement = "INSERT INTO `evaluation`
+                            (`student_fname`, `student_lname`, `id_number`, `titles`, `course`,
+                            `feedbacks`, `recommendations`, `rating`)
+                            VALUES
+                            ('$student_fname', '$student_lname', '$id_number',
+                            '$process_title', '$course', 
+                            '$process_feedback', '$process_recommendation', '$process_rating')";
+    $result = mysqli_query($conn, $insertUserStatement);
+    if ($result) {
+        ?>
+        <script>
+            alert("Your Submission is Successful!");
+            window.location.href = "index.php";
+        </script>
+        <?php
     } else {
         ?>
         <script>
-            alert("Session not set!\nTry logging in again!");
+            alert("Error Submission!\nTry Again!");
             window.location.href = "index.php";
         </script>
         <?php
     }
-
-?>
+}
