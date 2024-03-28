@@ -248,7 +248,7 @@
 
 
 <!-- students -->
-<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff" data-toggle="modal" data-target="#teacherModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff" data-toggle="modal" data-target="#studentModal"onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';"
                 onmouseout="this.style.background=''; this.style.color='#fff';">
     <i class="fas fa-fw fa-book mr-2"></i>
     <span class="small">STUDENTS</span>
@@ -540,101 +540,107 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    // Assuming database connection is established and stored in $conn
+                <?php
+                // Assuming database connection is established and stored in $conn
 
-                    // Function to fetch pending registrations
-                    function getPendingRegistrations()
-                    {
-                        global $conn;
-                        $query = "SELECT * FROM approval_lists";
-                        $result = mysqli_query($conn, $query);
-                        $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                        return $registrations;
-                    }
+                // Function to fetch pending registrations
+                function getPendingRegistrations()
+                {
+                    global $conn;
+                    $query = "SELECT * FROM approval_lists";
+                    $result = mysqli_query($conn, $query);
+                    $registrations = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    return $registrations;
+                }
 
-                    // Function to approve a registration
-                    function approveRegistration($id)
-                    {
-                        global $conn;
-                        $query = "SELECT * FROM approval_lists WHERE id = $id";
-                        $result = mysqli_query($conn, $query);
-                        $registration = mysqli_fetch_assoc($result);
+                // Function to approve a registration
+                function approveRegistration($id)
+                {
+                    global $conn;
+                    $query = "SELECT * FROM approval_lists WHERE id = $id";
+                    $result = mysqli_query($conn, $query);
+                    $registration = mysqli_fetch_assoc($result);
 
-                        // Insert the approved registration into students table
-                        // Insert the approved registration into students table
+                    // Insert the approved registration into students or teachers table based on course and year_level
+                    if (empty($registration['course']) && empty($registration['year_level'])) {
+                        // If no course or year level, insert into teachers table
+                        $insertQuery = "INSERT INTO teachers (id_number, fname, lname, email, password, id_front, id_back) 
+                                        VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_front']}', '{$registration['id_back']}')";
+                    } else {
+                        // Otherwise, insert into students table
                         $insertQuery = "INSERT INTO students (id_number, fname, lname, course, year_level, email, password, id_front, id_back) 
-                        VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['course']}', '{$registration['year_level']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_front']}', '{$registration['id_back']}')";
-
-                        mysqli_query($conn, $insertQuery);
-
-                        // Delete the approved registration from approval_lists table
-                        $deleteQuery = "DELETE FROM approval_lists WHERE id = $id";
-                        mysqli_query($conn, $deleteQuery);
+                                        VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['course']}', '{$registration['year_level']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_front']}', '{$registration['id_back']}')";
                     }
 
-                    // Function to disapprove and delete a registration
-                    function disapproveRegistration($id)
-                    {
-                        global $conn;
-                        $deleteQuery = "DELETE FROM approval_lists WHERE id = $id";
-                        mysqli_query($conn, $deleteQuery);
-                    }
+                    mysqli_query($conn, $insertQuery);
 
-                    // Check if form is submitted for approval or disapproval
-                    if (isset($_POST['approve'])) {
-                        $registrationId = $_POST['registration_id'];
-                        approveRegistration($registrationId);
-                    } elseif (isset($_POST['disapprove'])) {
-                        $registrationId = $_POST['registration_id'];
-                        disapproveRegistration($registrationId);
-                    }
+                    // Delete the approved registration from approval_lists table
+                    $deleteQuery = "DELETE FROM approval_lists WHERE id = $id";
+                    mysqli_query($conn, $deleteQuery);
+                }
 
-                    // Fetch and display pending registrations
-                    $registrations = getPendingRegistrations();
-                    foreach ($registrations as $registration) {
-                        echo "<tr>";
-                        echo "<td>{$registration['id']}</td>";
-                        echo "<td>{$registration['id_number']}</td>";
-                        echo "<td>{$registration['fname']}</td>";
-                        echo "<td>{$registration['lname']}</td>";
-                        echo "<td>{$registration['course']}</td>";
-                        echo "<td>{$registration['year_level']}</td>";
-                        echo "<td>{$registration['email']}</td>";
-                        echo "<td>{$registration['password']}</td>";
-                        echo "<td>";
-                        // Display the id_pic as a clickable link
-                        $imageURL = "/capstone/{$registration['id_front']}";
-                        // Display the id_pic as a clickable link
-                        echo "<a href='$imageURL' target='_blank'> <img src='$imageURL' alt='ID Picture' style='max-width: 100px; max-height: 100px;'> </a>";
-                        echo "</td>";
-                        echo "<td>";
-                        // Display the id_pic as a clickable link
-                        $imageURL = "/capstone/{$registration['id_back']}";
-                        // Display the id_pic as a clickable link
-                        echo "<a href='$imageURL' target='_blank'> <img src='$imageURL' alt='ID Picture' style='max-width: 100px; max-height: 100px;'> </a>";
-                        echo "</td>";
-                        echo "<td>";
-                        // Display approve button
-                        echo "<form method='post'>";
-                        echo "<input type='hidden' name='registration_id' value='{$registration['id']}'>";
-                        echo "<button type='submit' name='approve' class='btn btn-success'><i class='fas fa-check'></i></button>";
-                        echo "</form>";
-                        echo "</td>";
+                // Function to disapprove and delete a registration
+                function disapproveRegistration($id)
+                {
+                    global $conn;
+                    $deleteQuery = "DELETE FROM approval_lists WHERE id = $id";
+                    mysqli_query($conn, $deleteQuery);
+                }
 
-                        echo "<td>";
-                        // Display disapprove button
-                        echo "<form method='post'>";
-                        echo "<input type='hidden' name='registration_id' value='{$registration['id']}'>";
-                        echo "<button type='submit' name='disapprove' class='btn btn-danger'><i class='fas fa-times'></i></button>";
-                        echo "</form>";
-                        echo "</td>";
-                        echo "</tr>";
+                // Check if form is submitted for approval or disapproval
+                if (isset($_POST['approve'])) {
+                    $registrationId = $_POST['registration_id'];
+                    approveRegistration($registrationId);
+                } elseif (isset($_POST['disapprove'])) {
+                    $registrationId = $_POST['registration_id'];
+                    disapproveRegistration($registrationId);
+                }
 
-                    }
-                    ?>
+                // Fetch and display pending registrations
+                $registrations = getPendingRegistrations();
+                foreach ($registrations as $registration) {
+                    echo "<tr>";
+                    echo "<td>{$registration['id']}</td>";
+                    echo "<td>{$registration['id_number']}</td>";
+                    echo "<td>{$registration['fname']}</td>";
+                    echo "<td>{$registration['lname']}</td>";
+                    echo "<td>{$registration['course']}</td>";
+                    echo "<td>{$registration['year_level']}</td>";
+                    echo "<td>{$registration['email']}</td>";
+                    echo "<td>{$registration['password']}</td>";
+                    echo "<td>";
+                    // Display the id_pic as a clickable link
+                    $imageURL = "/capstone/{$registration['id_front']}";
+                    // Display the id_pic as a clickable link
+                    echo "<a href='$imageURL' target='_blank'> <img src='$imageURL' alt='ID Picture' style='max-width: 100px; max-height: 100px;'> </a>";
+                    echo "</td>";
+                    echo "<td>";
+                    // Display the id_pic as a clickable link
+                    $imageURL = "/capstone/{$registration['id_back']}";
+                    // Display the id_pic as a clickable link
+                    echo "<a href='$imageURL' target='_blank'> <img src='$imageURL' alt='ID Picture' style='max-width: 100px; max-height: 100px;'> </a>";
+                    echo "</td>";
+                    echo "<td>";
+                    // Display approve button
+                    echo "<form method='post'>";
+                    echo "<input type='hidden' name='registration_id' value='{$registration['id']}'>";
+                    echo "<button type='submit' name='approve' class='btn btn-success'><i class='fas fa-check'></i></button>";
+                    echo "</form>";
+                    echo "</td>";
+
+                    echo "<td>";
+                    // Display disapprove button
+                    echo "<form method='post'>";
+                    echo "<input type='hidden' name='registration_id' value='{$registration['id']}'>";
+                    echo "<button type='submit' name='disapprove' class='btn btn-danger'><i class='fas fa-times'></i></button>";
+                    echo "</form>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+                ?>
                 </tbody>
-            </table>
+                </table>
+
         </div>
     </div>
 </div>
