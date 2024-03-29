@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>BOOK LISTS</title>
+    <title>USERS MANAGEMENT</title>
 
     <!-- Favicons -->
     <link href="img/ui.ico" rel="icon">
@@ -58,7 +58,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">BOOKS LISTS</div>
+                <div class="sidebar-brand-text mx-3">USERS MANAGEMENT</div>
             </a>
 
             <!-- Divider -->
@@ -280,7 +280,6 @@
                                         <th> COURSE </th>
                                         <th> YEAR LEVEL </th>
                                         <th> EMAIL </th>
-                                        <th> ACTION </th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -291,7 +290,6 @@
                                         <th> COURSE </th>
                                         <th> YEAR LEVEL </th>
                                         <th> EMAIL </th>
-                                        <th> ACTION </th>
                                         </tr>
                                     </tfoot>
 <tr>
@@ -309,12 +307,7 @@
 <td> <?php echo $row['year_level']?> </td>
 <td> <?php echo $row['email']?></td>
 
-<td>
-    <form action="delete.php" method="GET" style="margin: 0; padding: 0;">
-        <input type="hidden" name="id" value="<?php echo $row['id_number']; ?>">
-        <button type="submit" class="btn btn-danger">DELETE</button>
-    </form>
-</td>
+
 </tr>
 
 <?php
@@ -514,65 +507,59 @@
 <!-- Table without Modal -->
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
-        <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBookModal">Add Book</button>
-
+        <h6 class="m-0 font-weight-bold text-primary">STUDENT LISTS</h6>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addstudentModal">Add Student</button>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable5" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th> BARCODE </th>
-                        <th> CALLNUMBER (1) </th>
-                        <th> CALLNUMBER (2) </th>
-                        <th> COPYRIGHT </th>
-                        <th> BOOK TITLE </th>
-                        <th> AUTHOR </th>
-                        <th> LOCATION </th>
+                        <th> ID-NUMBER </th>
+                        <th> FIRST NAME </th>
+                        <th> LAST NAME </th>
+                        <th> COURSE </th>
+                        <th> YEAR LEVEL </th>
+                        <th> EMAIL </th>
                         <th> ACTION </th>
                         <th> ACTION </th>
-
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th> BARCODE </th>
-                        <th> CALLNUMBER (1) </th>
-                        <th> CALLNUMBER (2) </th>
-                        <th> COPYRIGHT </th>
-                        <th> BOOK TITLE </th>
-                        <th> AUTHOR </th>
-                        <th> LOCATION </th>
+                        <th> ID-NUMBER </th>
+                        <th> FIRST NAME </th>
+                        <th> LAST NAME </th>
+                        <th> COURSE </th>
+                        <th> YEAR LEVEL </th>
+                        <th> EMAIL </th>
                         <th> ACTION </th>
                         <th> ACTION </th>
-
                     </tr>
                 </tfoot>
                 <tbody>
                     <?php
-                    $getdata = mysqli_query($conn, "SELECT * FROM books");
-                    while ($row = mysqli_fetch_array($getdata)) {
+                        $getdata = mysqli_query($conn, "SELECT * FROM students");
+                        while ($row = mysqli_fetch_array($getdata)) {
                     ?>
-                        <tr>
-                            <td> <?php echo $row['barcode'] ?> </td>
-                            <td> <?php echo $row['call_no1'] ?> </td>
-                            <td> <?php echo $row['call_no2'] ?> </td>
-                            <td> <?php echo $row['copyright'] ?></td>
-                            <td> <?php echo $row['title'] ?></td>
-                            <td> <?php echo $row['author'] ?></td>
-                            <td> <?php echo $row['location'] ?></td>
-                            <td>
-                                <!-- Update Button -->
-                                <button type="button" class="btn btn-primary btn-sm update-btn" data-barcode="<?php echo $row['barcode']; ?>">Update</button>
-                            </td>
-                            <td> 
-                                <!-- Delete Button -->
-                                <button type="button" class="btn btn-danger btn-sm delete-btn" data-barcode="<?php echo $row['barcode']; ?>">Delete</button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td> <?php echo $row['id_number'] ?> </td>
+                        <td> <?php echo $row['fname'] ?> </td>
+                        <td> <?php echo $row['lname'] ?> </td>
+                        <td> <?php echo $row['course'] ?></td>
+                        <td> <?php echo $row['year_level'] ?></td>
+                        <td> <?php echo $row['email'] ?></td>
+                        <td>
+                            <!-- Update Button -->
+                            <button type="button" class="btn btn-primary btn-sm update-btn" data-id_number="<?php echo $row['id_number']; ?>">Update</button>
+                        </td>
+                        <td> 
+                            <!-- Delete Button -->
+                            <button type="button" class="btn btn-danger btn-sm delete-btn" data-id_number="<?php echo $row['id_number']; ?>">Delete</button>
+                        </td>
+                    </tr>
                     <?php
-                    }
+                        }
                     ?>
                 </tbody>
             </table>
@@ -580,18 +567,19 @@
     </div>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         // Delete functionality
         $('.delete-btn').on('click', function () {
-            var barcode = $(this).data('barcode');
+            var id_number = $(this).data('id_number');
             if (confirm('Are you sure you want to delete this record?')) {
-                // Perform AJAX request to delete the record with the given barcode
+                // Perform AJAX request to delete the record with the given id_number
                 $.ajax({
-                    url: 'delete.php', // Specify your PHP file for handling deletion
+                    url: 'delete_student.php', // Specify your PHP file for handling deletion
                     method: 'POST',
-                    data: { barcode: barcode },
+                    data: { id_number: id_number },
                     success: function (response) {
                         // Handle success response
                         console.log(response);
@@ -608,47 +596,44 @@
     });
 </script>
 
-<!-- Add Book Modal -->
-<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+
+<!-- Add Student Modal -->
+<div class="modal fade" id="addstudentModal" tabindex="-1" role="dialog" aria-labelledby="addstudentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
+                <h5 class="modal-title" id="addstudentModal">Add Student</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addBookForm">
+                <form id="addstudentForm">
                     <div class="form-group">
-                        <label for="barcode">Barcode</label>
-                        <input type="text" class="form-control" id="barcode" name="barcode" required>
+                        <label for="id_number">ID Number:</label>
+                        <input type="text" class="form-control" id="id_number" name="id_number" required>
                     </div>
                     <div class="form-group">
-                        <label for="call_no1">Call Number (1)</label>
-                        <input type="text" class="form-control" id="call_no1" name="call_no1" required>
+                        <label for="fname">First Name:</label>
+                        <input type="text" class="form-control" id="fname" name="fname" required>
                     </div>
                     <div class="form-group">
-                        <label for="call_no2">Call Number (2)</label>
-                        <input type="text" class="form-control" id="call_no2" name="call_no2">
+                        <label for="lname">Last Name:</label>
+                        <input type="text" class="form-control" id="lname" name="lname">
                     </div>
                     <div class="form-group">
-                        <label for="copyright">Copyright</label>
-                        <input type="text" class="form-control" id="copyright" name="copyright">
+                        <label for="course">Course:</label>
+                        <input type="text" class="form-control" id="course" name="course">
                     </div>
                     <div class="form-group">
-                        <label for="title">Book Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
+                        <label for="year_level">Year Level:</label>
+                        <input type="text" class="form-control" id="yearlevel" name="yearlevel" required>
                     </div>
                     <div class="form-group">
-                        <label for="author">Author</label>
-                        <input type="text" class="form-control" id="author" name="author">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email" name="email">
                     </div>
-                    <div class="form-group">
-                        <label for="location">Location</label>
-                        <input type="text" class="form-control" id="location" name="location">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Book</button>
+                    <button type="submit" class="btn btn-primary">Add Student</button>
                 </form>
             </div>
         </div>
@@ -656,34 +641,11 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // Delete functionality
-        $('.delete-btn').on('click', function () {
-            var barcode = $(this).data('barcode');
-            if (confirm('Are you sure you want to delete this record?')) {
-                // Perform AJAX request to delete the record with the given barcode
-                $.ajax({
-                    url: 'delete.php', // Specify your PHP file for handling deletion
-                    method: 'POST',
-                    data: { barcode: barcode },
-                    success: function (response) {
-                        // Handle success response
-                        console.log(response);
-                        // Reload the page
-                        location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle error response
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-        });
+   
 
         // Add Book form submission
-        $('#addBookForm').submit(function (e) {
+        $('#addstudentForm').submit(function (e) {
             e.preventDefault(); // Prevent form submission
 
             // Get form data
@@ -692,7 +654,7 @@
 
             // Submit AJAX request to add book
             $.ajax({
-                url: 'add_book.php', // Specify your PHP file for adding books
+                url: 'add_student_ajax.php', // Specify your PHP file for adding books
                 method: 'POST',
                 data: formData,
                 success: function (response) {
@@ -707,108 +669,103 @@
                 }
             });
         });
-    });
+ 
 </script>
-
-<!-- Update Book Modal -->
-<div class="modal fade" id="updateBookModal" tabindex="-1" role="dialog" aria-labelledby="updateBookModalLabel" aria-hidden="true">
+<!-- Update Student Modal -->
+<div class="modal fade" id="updatestudentModal" tabindex="-1" role="dialog" aria-labelledby="updatestudentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateBookModalLabel">Update Book Details</h5>
+                <h5 class="modal-title" id="updatestudentModalLabel">Update Student Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateBookForm" method="post">
-                    <!-- Book details input fields -->
+                <form id="updatestudentForm" method="post">
+                    <!-- Student details input fields -->
                     <div class="form-group">
-                        <label for="updateBarcode">Barcode</label>
-                        <input type="text" class="form-control" id="updateBarcode" name="updateBarcode" required>
+                        <label for="updateid_number">ID Number:</label>
+                        <input type="text" class="form-control" id="updateid_number" name="updateid_number">
                     </div>
                     <div class="form-group">
-                        <label for="updateCallnumber1">Callnumber 1</label>
-                        <input type="text" class="form-control" id="updateCallnumber1" name="updateCallnumber1" required>
+                        <label for="updatefname">First name:</label>
+                        <input type="text" class="form-control" id="updatefname" name="updatefname">
                     </div>
                     <div class="form-group">
-                        <label for="updateCallnumber2">Callnumber 2</label>
-                        <input type="text" class="form-control" id="updateCallnumber2" name="updateCallnumber2" required>
+                        <label for="updatelname">Last name:</label>
+                        <input type="text" class="form-control" id="updatelname" name="updatelname">
                     </div>
 
                     <div class="form-group">
-                        <label for="updateCopyright">Copyright</label>
-                        <input type="text" class="form-control" id="updateCopyright" name="updateCopyright" required>
+                        <label for="updatecourse">Course:</label>
+                        <input type="text" class="form-control" id="updatecourse" name="updatecourse">
                     </div>
                     <div class="form-group">
-                        <label for="updateTitle">Book Title</label>
-                        <input type="text" class="form-control" id="updateTitle" name="updateTitle" required>
+                        <label for="updateyear_level">Year Level:</label>
+                        <input type="text" class="form-control" id="updateyear_level" name="updateyear_level">
                     </div>
                     <div class="form-group">
-                        <label for="updateAuthor">Author</label>
-                        <input type="text" class="form-control" id="updateAuthor" name="updateAuthor" required>
+                        <label for="updateemail">Email:</label>
+                        <input type="text" class="form-control" id="updateemail" name="updateemail">
                     </div>
-                    <div class="form-group">
-                        <label for="updateLocation">Location</label>
-                        <input type="text" class="form-control" id="updateLocation" name="updateLocation" required>
-                    </div>
-                    <input type="hidden" id="updateBookId" name="updateBookId">
+                    <input type="hidden" id="updatestudentId" name="updatestudentId">
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary" name="updateBook">Update Book</button>
-                </form>
+                    <button type="submit" class="btn btn-primary" name="updatestudent">Update Student</button>
+                </form> 
             </div>
         </div>
     </div>
 </div>
-
 <script>
-    // Function to open the update book modal and fetch old data
+    // Function to open the update student modal and fetch old data
     $(document).on("click", ".update-btn", function() {
-        var barcode = $(this).data("barcode");
+        var id_number = $(this).data("id_number");
         $.ajax({
-            url: 'fetch_book_details.php', // Path to your PHP script to fetch book details
+            url: 'fetch_student_details.php',
             type: 'POST',
-            data: { barcode: barcode },
+            data: { id_number: id_number },
             success: function(response) {
-                var book = JSON.parse(response);
-                $('#updateBarcode').val(book.barcode);
-                $('#updateCallnumber1').val(book.call_no1); // Set call_no1 value
-                $('#updateCallnumber2').val(book.call_no2); // Set call_no2 value
-                $('#updateCopyright').val(book.copyright);
-                $('#updateTitle').val(book.title);
-                $('#updateAuthor').val(book.author);
-                $('#updateLocation').val(book.location);
-                $('#updateBookId').val(book.id);
-                $('#updateBookModal').modal('show');
+                var student = JSON.parse(response);
+                $('#updateid_number').val(student.id_number); // Corrected ID selector
+                $('#updatefname').val(student.fname);
+                $('#updatelname').val(student.lname);
+                $('#updatecourse').val(student.course);
+                $('#updateyear_level').val(student.year_level);
+                $('#updateemail').val(student.email);
+                $('#updatestudentId').val(student.id_number); // Corrected ID selector
+                $('#updatestudentModal').modal('show');
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
             }
         });
     });
+// AJAX form submission to update student details
+$('#updatestudentForm').submit(function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    $.ajax({
+        url: 'process_update_student.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            console.log(response);
+            window.location.reload(); // Reload the page after successful update
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+});
 
-    // AJAX form submission to update book details
-    $('#updateBookForm').submit(function(e) {
-        e.preventDefault(); // Prevent default form submission
-        var formData = $(this).serialize(); // Serialize form data
-        $.ajax({
-            url: 'process_update.php', // Path to your PHP script to update book details
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                // Handle success response
-                // For example, display a success message or reload the page
-                console.log(response);
-                // Optionally reload the page or update the table data dynamically
-                window.location.reload();
-            },
-            error: function(xhr, status, error) {
-                // Handle error response
-                console.error(xhr.responseText);
-            }
-        });
-    });
-</script>
+// Handling form submission by name
+$('button[name="updatestudent"]').on('click', function(e) {
+    e.preventDefault();
+    $('#updatestudentForm').submit(); // Trigger form submission
+});
+
+    </script>
 
             </div>
             <!-- End of Main Content -->
@@ -901,6 +858,12 @@
 <script>
     $(document).ready(function() {
         $('#dataTable4').DataTable();
+    });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTable5').DataTable();
     });
     </script>
 

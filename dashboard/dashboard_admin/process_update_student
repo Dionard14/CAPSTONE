@@ -1,0 +1,33 @@
+<?php
+// Include your database connection file
+include('conn.php');
+
+// Check if the student and other necessary parameters are set in the POST request
+if(isset($_POST['updateid_number']) && isset($_POST['updatefname']) && isset($_POST['updatelname']) && isset($_POST['updatecourse']) && isset($_POST['updateyear_level']) && isset($_POST['updateemail'])) {
+    // Sanitize the input to prevent SQL injection
+    $id_number = mysqli_real_escape_string($conn, $_POST['updateid_number']);
+    $fname = mysqli_real_escape_string($conn, $_POST['updatefname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['updatelname']);
+    $course = mysqli_real_escape_string($conn, $_POST['updatecourse']);
+    $year_level = mysqli_real_escape_string($conn, $_POST['updateyear_level']);
+    $email = mysqli_real_escape_string($conn, $_POST['updateemail']);
+
+    // Query to update student details based on Barcode
+    $query = "UPDATE students SET id_number='$id_number', fname='$fname', lname='$lname', course='$course', year_level='$year_level', email='$email' WHERE id_number='$id_number'";
+
+    // Perform the update query
+    $result = mysqli_query($conn, $query);
+
+    // Check if the query was successful
+    if($result) {
+        // Output success message
+        echo json_encode(array('success' => 'Student details updated successfully.'));
+    } else {
+        // Output error message
+        echo json_encode(array('error' => 'Failed to update Student details.'));
+    }
+} else {
+    // Handle the case where required parameters are missing
+    echo json_encode(array('error' => 'Required parameters are missing.'));
+}
+?>

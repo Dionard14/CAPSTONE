@@ -100,7 +100,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <form action="process.php" method="POST"> <!-- Opening <form> tag here -->
+        <form action="process_admin.php" method="POST"> <!-- Opening <form> tag here -->
           <div class="modal-body">
             <div class="mb-3">
               <label for="adminEmail" class="form-label">Email address: </label>

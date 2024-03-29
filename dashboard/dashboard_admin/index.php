@@ -399,8 +399,9 @@ while ($row = mysqli_fetch_array($getdata)) {
       </div>
       <div class="modal-body">
       <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-success">STUDENT LISTS</h6>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addstudentModal">Add Student</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -413,7 +414,6 @@ while ($row = mysqli_fetch_array($getdata)) {
                                         <th> COURSE </th>
                                         <th> YEAR LEVEL </th>
                                         <th> EMAIL </th>
-                                        <th> ACTION </th>
  
                                         </tr>
                                     </thead>
@@ -425,7 +425,6 @@ while ($row = mysqli_fetch_array($getdata)) {
                                         <th> COURSE </th>
                                         <th> YEAR LEVEL </th>
                                         <th> EMAIL </th>
-                                        <th> ACTION </th>
 
                                         </tr>
                                     </tfoot>
@@ -444,12 +443,7 @@ while ($row = mysqli_fetch_array($getdata)) {
                 <td> <?php echo $row['year_level'] ?></td>
                 <td> <?php echo $row['email'] ?></td>
 
-                <td>
-                    <form action="delete.php" method="GET" style="margin: 0; padding: 0;">
-                        <input type="hidden" name="id" value="<?php echo $row['id_number']; ?>">
-                        <button type="submit" class="btn btn-danger">DELETE</button>
-                    </form>
-                </td>
+              
 
                 </tr>
 
@@ -666,6 +660,17 @@ while ($row = mysqli_fetch_array($getdata)) {
 <hr class="sidebar-divider">
 <div class="sidebar-heading">
 </div>
+<li class="nav-item ">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/add_student.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>STUDENT LISTS TABLE</span>
+    </a>
+</li>
+            
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
 
 <li class="nav-item ">
     <a class="nav-link" href="/capstone/dashboard/dashboard_admin/book_table.php">
@@ -717,8 +722,6 @@ while ($row = mysqli_fetch_array($getdata)) {
 
 
 
-        <!-- Divider -->
-            <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2024 at 08:04 AM
+-- Generation Time: Mar 29, 2024 at 05:02 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
   `adminID` int(255) NOT NULL,
   `fname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
@@ -39,8 +40,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`adminID`, `fname`, `lname`, `email`, `password`) VALUES
-(0, 'Ma. Leonora', 'Flame', 'ml_flame@phinmaed.com', 'Flame123');
+INSERT INTO `admin` (`id`, `adminID`, `fname`, `lname`, `email`, `password`) VALUES
+(1, 0, 'Ma. Leonora', 'Flame', 'ml_flame@phinmaed.com', 'Flame123');
 
 -- --------------------------------------------------------
 
@@ -60,15 +61,6 @@ CREATE TABLE `approval_lists` (
   `id_front` varchar(255) NOT NULL,
   `id_back` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `approval_lists`
---
-
-INSERT INTO `approval_lists` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`) VALUES
-(679, '10', 'D', 'D', 'CITE', '3', 'dionard14@gmail.com', 'Dionard14', 'uploads/linkedin.png', 'uploads/upwork.png'),
-(680, '04-1617-1234', 'x', 'x', 'CITE', '3', 'dionard14@gmail.com', 'Dionard123', 'uploads/linkedin.png', 'uploads/upwork.png'),
-(682, '', '', '', '', '', 'dionard2313@gmail.com', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -124,8 +116,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`barcode`, `call_no1`, `call_no2`, `copyright`, `title`, `author`, `location`) VALUES
-('2', '213', '2', '2', '2', '2', '2'),
-('3', '3', '3', '3', '3', '3', '3'),
+('2', '2134', '2', '2', '2', '2', '2'),
 ('4000000260', 'TA351', 'B447', '2004', 'Vector mechanics for engineers : statics', 'Ferdinand P. Beer', 'EL'),
 ('4000000261', 'TA351', 'B447', '2004', 'Vector mechanics for engineers : statics', 'Ferdinand P. Beer', 'EL'),
 ('4000000285', 'QA154.2', 'B638', '2004', 'Algebra & trigonometry', 'Robert Blitzer', 'EL'),
@@ -243,19 +234,15 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`) VALUES
+(33, '0123', 'x', 'x', 'CITE', '3', 'x0@gmail.com', '$2y$10$i26TjW9EN9uV3WjXlYzmue2Z3t.bZFOLbJL2a9xb9EZeaBq2xRDBe', 'uploads/jobs180.png', 'uploads/upwork.png'),
 (1, '04-1234-5678', 'd', 'd', 'CITE', '3', 'dionard@gmail.com', 'Dionard123', '', ''),
-(19, '04-1617-05123', 'Kyle', 'Pama', 'CITE', '3', 'kyle@phinmaed.com', 'Kyle12345', '', ''),
 (16, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', 'dionard1@gmail.com', 'Dionard1', '', ''),
-(20, '1', 'Kyle', 'Pama', 'CITE', '3', 'kyle@phinmaed.com', 'Kyle12345', '', ''),
+(35, '04-1617-1234', 'x', 'x', 'CITE', '3', 'dionard14@gmail.com', 'Dionard123', 'uploads/linkedin.png', 'uploads/upwork.png'),
 (30, '10', 'Dionard', 'Antioquia', 'CITE', '3', 'dionard24@gmail.com', 'Dionard123', 'uploads/upwork.png', 'uploads/jobs180.png'),
-(17, '123123', 'Davien', 'Siva', 'CMA-TMNHMBAIS,BSBA', '3', 'davien@gmail.com', 'Davien123', '', ''),
 (18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123', '', ''),
 (21, '2', 'Dionard', 'Antioquia', 'CITE', '3', 'antioquia@phinmaed.com', 'Dionard123', 'uploads/linkedin.png', ''),
 (25, '233', 'x', 'x', 'Cite', '3', 'dionard2313@gmail.com', 'Dionard14', '', ''),
-(22, '3', 'x', 'x', 'CITE', '3', 'x@gmail.com', 'Xx12345678', 'uploads/upwork.png', ''),
-(23, '6', 'xx', 'xx', 'CITE', '3', 'dionard2313@gmail.com', 'XxX12345', 'uploads/jobs180.png', ''),
-(26, '8', 'karen', 'amo', 'CITE', '3', 'karen@phinmaed.com', 'Karen123', 'uploads/wordpressorg.png', 'uploads/7xm.xyz899026.jpg'),
-(29, '8779', 'x', 'x', 'x', 'x', 'x', 'x', 'uploads/jobs180.png', 'uploads/jobs180.png');
+(26, '8', 'karen', 'amo', 'CITE', '3', 'karen@phinmaed.com', 'Karen123', 'uploads/wordpressorg.png', 'uploads/7xm.xyz899026.jpg');
 
 -- --------------------------------------------------------
 
@@ -269,16 +256,20 @@ CREATE TABLE `teachers` (
   `fname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `id_front` varchar(255) NOT NULL,
+  `id_back` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`id`, `id_number`, `fname`, `lname`, `email`, `password`) VALUES
-(4, '123123', 'Nicole', 'Lampa', 'nicole@gmail.com', 'Nicole123'),
-(3, '123123123', 'Dionard123', 'Antioquia123', '123123123@gmail.com', 'Dionard123');
+INSERT INTO `teachers` (`id`, `id_number`, `fname`, `lname`, `email`, `password`, `id_front`, `id_back`) VALUES
+(5, '', '', '', 'dionard2313@gmail.com', '', '', ''),
+(4, '123123', 'Nicole', 'Lampa', 'nicole@gmail.com', 'Nicole123', '', ''),
+(3, '123123123', 'Dionard123', 'Antioquia123', '123123123@gmail.com', 'Dionard123', '', ''),
+(6, '3454', 'x', 'x', 'dionard2313@gmail.com', 'Dionard123', '', '');
 
 --
 -- Indexes for dumped tables
@@ -288,7 +279,8 @@ INSERT INTO `teachers` (`id`, `id_number`, `fname`, `lname`, `email`, `password`
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`adminID`);
+  ADD PRIMARY KEY (`adminID`),
+  ADD UNIQUE KEY `UNIQUE` (`id`);
 
 --
 -- Indexes for table `approval_lists`
@@ -342,10 +334,16 @@ ALTER TABLE `teachers`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `approval_lists`
 --
 ALTER TABLE `approval_lists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=683;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65465;
 
 --
 -- AUTO_INCREMENT for table `attendance`
@@ -369,13 +367,13 @@ ALTER TABLE `evaluation_likes`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
