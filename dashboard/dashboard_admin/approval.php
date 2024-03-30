@@ -144,7 +144,7 @@
 <td> <?php echo $row['rating']?> </td>
 <td>
     <form action="delete.php" method="GET" style="margin: 0; padding: 0;">
-        <input type="hidden" name="id" value="<?php echo $row['evaluationID']; ?>">
+        <input type="hidden" name="evaluationID" value="<?php echo $row['evaluationID']; ?>">
         <button type="submit" class="btn btn-danger">DELETE</button>
     </form>
 </td>
@@ -311,7 +311,7 @@
 
 <td>
     <form action="delete.php" method="GET" style="margin: 0; padding: 0;">
-        <input type="hidden" name="id" value="<?php echo $row['id_number']; ?>">
+        <input type="hidden" name="id_number" value="<?php echo $row['id_number']; ?>">
         <button type="submit" class="btn btn-danger">DELETE</button>
     </form>
 </td>
@@ -389,7 +389,7 @@
 <td> <?php echo $row['email']?></td>
 <td>
     <form action="delete.php" method="GET" style="margin: 0; padding: 0;">
-        <input type="hidden" name="id" value="<?php echo $row['id_number']; ?>">
+        <input type="hidden" name="id_number" value="<?php echo $row['id_number']; ?>">
         <button type="submit" class="btn btn-danger">DELETE</button>
     </form>
 </td>
@@ -407,9 +407,125 @@
 </div>
   </div>
 </div>
+
+
+<!-- books -->
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff; " data-toggle="modal" data-target="#booksModal" onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';" onmouseout="this.style.background=''; this.style.color='#fff';">
+    <i class="fas fa-fw fa-book mr-2"></i>
+    <span class="small">BOOKS</span>
+</button>
+
+<div class="modal fade bd-example-modal-lg" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">BOOKS LISTS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
+                 <!-- <form method="post" action="#">
+                <input type="submit" name="import" class="btn btn-primary btn-import mr-2" value="Import to Database" /> -->
+                    </form>
+                </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable5" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th> BARCODE </th>
+                                        <th> CALLNUMBER </th>
+                                        <th>  </th>
+                                        <th> COPYRIGHT </th>
+                                        <th> BOOK TITLE </th>
+                                        <th> AUTHOR </th>
+                                        <th> LOCATION </th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                        <th> BARCODE </th>
+                                        <th> CALLNUMBER </th>
+                                        <th>  </th>
+                                        <th> COPYRIGHT </th>
+                                        <th> BOOK TITLE </th>
+                                        <th> AUTHOR </th>
+                                        <th> LOCATION </th>
+                                        </tr>
+                                    </tfoot>
+<tr>
+
+<?php
+$getdata = mysqli_query($conn, "SELECT * FROM books");
+while ($row = mysqli_fetch_array($getdata)) {
+
+
+    ?>
+
+                <td> <?php echo $row['barcode'] ?> </td>
+                <td> <?php echo $row['call_no1'] ?> </td>
+                <td> <?php echo $row['call_no2'] ?> </td>
+                <td> <?php echo $row['copyright'] ?></td>
+                <td> <?php echo $row['title'] ?></td>
+                <td> <?php echo $row['author'] ?></td>
+                <td> <?php echo $row['location'] ?></td>
+                </tr>
+
+                <?php
+}
+?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </div>
+</div>
             
 <!-- Divider -->
-<hr class="sidebar-divider">/
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+<li class="nav-item ">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/add_student.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>USERS LISTS TABLE</span>
+    </a>
+</li>
+            
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+
+<li class="nav-item ">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/book_table.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>BOOK LISTS TABLE</span>
+    </a>
+</li>
+            
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+
+<li class="nav-item">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>APPROVAL LISTS</span>
+    </a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
 <div class="sidebar-heading">
 </div>
 
@@ -420,10 +536,6 @@
         <span>USERS MANAGEMENT</span>
     </a>
 </li>
-
-
-
-
 
  <!-- Divider -->
 <hr class="sidebar-divider mt-3 mb-2">
@@ -441,20 +553,7 @@
 <div class="sidebar-heading">
 </div>
 
-<li class="nav-item">
-    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>APPROVAL LISTS</span>
-    </a>
-</li>
 
-
-
-
-        <!-- Divider -->
-        <hr class="sidebar-divider mt-3 mb-2">
-        <!-- Divider -->
-       <!-- <hr class="sidebar-divider d-none d-md-block">  -->
 
            
 
@@ -721,11 +820,17 @@
 
     <script>
     $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+    </script>
+
+    <script>
+    $(document).ready(function() {
         $('#dataTable1').DataTable();
     });
     </script>
 
-<script>
+    <script>
     $(document).ready(function() {
         $('#dataTable2').DataTable();
     });
@@ -737,6 +842,11 @@
     });
     </script>
 
+    <script>
+    $(document).ready(function() {
+        $('#dataTable5').DataTable();
+    });
+    </script>
 <script>
 function myFunction(ids) {
   var idArray = ids.split(',');

@@ -68,16 +68,16 @@
           <li><a class="nav-link scrollto" href="#services"> Library Services</a></li>
           <li><a class="nav-link scrollto " href="#portfolio">Library Sections</a></li>
           <li><a class="nav-link scrollto" href="#team">Librarians</a></li>
-          <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginadmin">Login as Admin</a></li>
           <li class="dropdown"><a href="#"><span>Log in as</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginstudent">Login as Student</a></li>
               <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginteacher">Login as Teacher</a></li>
-              <li class="dropdown"><a href="#"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>
+              <li class="dropdown">
+              <a href="#"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
+              <ul style="left: 0;"> <!-- Apply inline style for left alignment -->
                   <li><a href="#" data-bs-toggle="modal" data-bs-target="#createstudent">Register as Student</a></li>
                   <li><a href="#" data-bs-toggle="modal" data-bs-target="#createteacher">Register as Teacher</a></li>
-                </ul>
+              </ul>
               </li>
             </ul>
           </li>
@@ -90,44 +90,7 @@
   </header><!-- End Header -->
 
 
-  <!-- Modal for login admin -->
-  <div class="modal fade" id="loginadmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Log in as Admin</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <form action="process_admin.php" method="POST"> <!-- Opening <form> tag here -->
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="adminEmail" class="form-label">Email address: </label>
-              <input type="email" class="form-control" name="log_email" id="adminEmail"
-                placeholder="Enter email here..." required>
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label for="adminPassword">Password: </label>
-              <input type="password" value="" name="log_password" id="adminPassword" class="form-control"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                required placeholder="Enter password here...">
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" onclick="myFunction('adminPassword')"> Show password
-            </div>
-          </div>
-          <div class="modal-footer">
-            <input type="reset" class="btn btn-secondary" value="CLEAR">
-            <input type="submit" name="login_admin" class="btn btn-primary" value="LOGIN">
-          </div>
-        </form> <!-- Closing </form> tag here -->
-      </div>
-    </div>
-  </div>
-
+ 
   <!-- Modal for registration for students -->
   <div class="modal fade" id="createstudent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>USERS MANAGEMENT</title>
+    <title>USERS</title>
 
     <!-- Favicons -->
     <link href="img/ui.ico" rel="icon">
@@ -40,7 +40,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-
+    
 </head>
 
 <body id="page-top">
@@ -58,7 +58,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-bookmark"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">USERS MANAGEMENT</div>
+                <div class="sidebar-brand-text mx-3">USERS</div>
             </a>
 
             <!-- Divider -->
@@ -400,9 +400,125 @@
 </div>
   </div>
 </div>
+ 
+<!-- books -->
+<button type="button" class="btn btn- d-flex justify-content-start mb-2 mt-2" style="color: #fff; " data-toggle="modal" data-target="#booksModal" onmouseover="this.style.background='linear-gradient(305deg, rgba(9,32,121,1) 75%, rgba(2,0,36,1) 100%, rgba(255,255,255,0.2413340336134454) 100%, #444)';" onmouseout="this.style.background=''; this.style.color='#fff';">
+    <i class="fas fa-fw fa-book mr-2"></i>
+    <span class="small">BOOKS</span>
+</button>
+
+<div class="modal fade bd-example-modal-lg" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">BOOKS LISTS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
+                 <!-- <form method="post" action="#">
+                <input type="submit" name="import" class="btn btn-primary btn-import mr-2" value="Import to Database" /> -->
+                    </form>
+                </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th> BARCODE </th>
+                                        <th> CALLNUMBER </th>
+                                        <th>  </th>
+                                        <th> COPYRIGHT </th>
+                                        <th> BOOK TITLE </th>
+                                        <th> AUTHOR </th>
+                                        <th> LOCATION </th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                        <th> BARCODE </th>
+                                        <th> CALLNUMBER </th>
+                                        <th>  </th>
+                                        <th> COPYRIGHT </th>
+                                        <th> BOOK TITLE </th>
+                                        <th> AUTHOR </th>
+                                        <th> LOCATION </th>
+                                        </tr>
+                                    </tfoot>
+<tr>
+
+<?php
+$getdata = mysqli_query($conn, "SELECT * FROM books");
+while ($row = mysqli_fetch_array($getdata)) {
+
+
+    ?>
+
+                <td> <?php echo $row['barcode'] ?> </td>
+                <td> <?php echo $row['call_no1'] ?> </td>
+                <td> <?php echo $row['call_no2'] ?> </td>
+                <td> <?php echo $row['copyright'] ?></td>
+                <td> <?php echo $row['title'] ?></td>
+                <td> <?php echo $row['author'] ?></td>
+                <td> <?php echo $row['location'] ?></td>
+                </tr>
+
+                <?php
+}
+?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>      
+
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+<li class="nav-item ">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/add_student.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>USERS LISTS TABLE</span>
+    </a>
+</li>
             
 <!-- Divider -->
-<hr class="sidebar-divider">/
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+
+<li class="nav-item ">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/book_table.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>BOOK LISTS TABLE</span>
+    </a>
+</li>
+            
+<!-- Divider -->
+<hr class="sidebar-divider">
+<div class="sidebar-heading">
+</div>
+
+<li class="nav-item">
+    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>APPROVAL LISTS</span>
+    </a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
 <div class="sidebar-heading">
 </div>
 
@@ -413,10 +529,6 @@
         <span>USERS MANAGEMENT</span>
     </a>
 </li>
-
-
-
-
 
  <!-- Divider -->
 <hr class="sidebar-divider mt-3 mb-2">
@@ -434,20 +546,9 @@
 <div class="sidebar-heading">
 </div>
 
-<li class="nav-item">
-    <a class="nav-link" href="/capstone/dashboard/dashboard_admin/approval.php">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>APPROVAL LISTS</span>
-    </a>
-</li>
 
 
 
-
-        <!-- Divider -->
-        <hr class="sidebar-divider mt-3 mb-2">
-        <!-- Divider -->
-       <!-- <hr class="sidebar-divider d-none d-md-block">  -->
 
            
 
@@ -508,7 +609,7 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">STUDENT LISTS</h6>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addstudentModal">Add Student</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">Add Student</button>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -598,42 +699,76 @@
 
 
 <!-- Add Student Modal -->
-<div class="modal fade" id="addstudentModal" tabindex="-1" role="dialog" aria-labelledby="addstudentModalLabel" aria-hidden="true">
+<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addstudentModal">Add Student</h5>
+                <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addstudentForm">
+                <!-- Form for adding a new student -->
+                <form action="add_student_ajax.php" method="post">
+                    <!-- Input fields for student details -->
                     <div class="form-group">
-                        <label for="id_number">ID Number:</label>
-                        <input type="text" class="form-control" id="id_number" name="id_number" required>
+                        <label for="studentIdNumber">ID Number:</label>
+                        <input type="text" class="form-control" id="studentIdNumber" name="studentIdNumber">
                     </div>
                     <div class="form-group">
-                        <label for="fname">First Name:</label>
-                        <input type="text" class="form-control" id="fname" name="fname" required>
+                        <label for="studentFirstName">First Name:</label>
+                        <input type="text" class="form-control" id="studentFirstName" name="studentFirstName">
                     </div>
                     <div class="form-group">
-                        <label for="lname">Last Name:</label>
-                        <input type="text" class="form-control" id="lname" name="lname">
+                        <label for="studentLastName">Last Name:</label>
+                        <input type="text" class="form-control" id="studentLastName" name="studentLastName">
                     </div>
                     <div class="form-group">
-                        <label for="course">Course:</label>
-                        <input type="text" class="form-control" id="course" name="course">
+                        <label for="studentCourse">Course:</label>
+                        <input type="text" class="form-control" id="studentCourse" name="studentCourse">
                     </div>
                     <div class="form-group">
-                        <label for="year_level">Year Level:</label>
-                        <input type="text" class="form-control" id="yearlevel" name="yearlevel" required>
+                        <label for="studentYearLevel">Year Level:</label>
+                        <input type="text" class="form-control" id="studentYearLevel" name="studentYearLevel">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" id="email" name="email">
+                        <label for="studentEmail">Email:</label>
+                        <input type="email" class="form-control" id="studentEmail" name="studentEmail">
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Student</button>
+                    <div class="form-group">
+                        <label for="studentPassword">Password:</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="studentPassword" name="studentPassword">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="showPasswordBtn">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                            $(document).ready(function() {
+                            $('#showPasswordBtn').click(function() {
+                                var passwordInput = $('#studentPassword');
+                                var icon = $(this).find('i');
+
+                                if (passwordInput.attr('type') === 'password') {
+                                    passwordInput.attr('type', 'text');
+                                    icon.removeClass('fa-eye');
+                                    icon.addClass('fa-eye-slash');
+                                } else {
+                                    passwordInput.attr('type', 'password');
+                                    icon.removeClass('fa-eye-slash');
+                                    icon.addClass('fa-eye');
+                                }
+                            });
+                        });
+                    </script>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary" name="addStudent">Add Student</button>
                 </form>
             </div>
         </div>
@@ -641,26 +776,71 @@
 </div>
 
 
+<!-- Update Student Modal -->
+<div class="modal fade" id="updateStudentModal" tabindex="-1" role="dialog" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateStudentModalLabel">Update Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for updating an existing student -->
+                <form id="updateStudentForm" method="post">
+                    <!-- Hidden input field for student ID -->
+                    <input type="hidden" id="updateStudentId" name="updateStudentId">
+                    <!-- Input fields for student details -->
+                    <div class="form-group">
+                        <label for="updateStudentIdNumber">ID Number:</label>
+                        <input type="text" class="form-control" id="updateStudentIdNumber" name="updateStudentIdNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStudentFirstName">First Name:</label>
+                        <input type="text" class="form-control" id="updateStudentFirstName" name="updateStudentFirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStudentLastName">Last Name:</label>
+                        <input type="text" class="form-control" id="updateStudentLastName" name="updateStudentLastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStudentCourse">Course:</label>
+                        <input type="text" class="form-control" id="updateStudentCourse" name="updateStudentCourse">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStudentYearLevel">Year Level:</label>
+                        <input type="text" class="form-control" id="updateStudentYearLevel" name="updateStudentYearLevel">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStudentEmail">Email:</label>
+                        <input type="email" class="form-control" id="updateStudentEmail" name="updateStudentEmail">
+                    </div>
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary" name="updateStudent">Update Student</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-   
-
-        // Add Book form submission
-        $('#addstudentForm').submit(function (e) {
-            e.preventDefault(); // Prevent form submission
-
-            // Get form data
-            var formData = $(this).serialize
-            (); // Serialize form data
-
-            // Submit AJAX request to add book
+    $(document).ready(function () {
+        // Add Student modal process
+        $('#addStudentForm').submit(function (event) {
+            event.preventDefault(); // Prevent default form submission
+            var formData = $(this).serialize(); // Serialize form data
             $.ajax({
-                url: 'add_student_ajax.php', // Specify your PHP file for adding books
+                url: 'add_student_ajax.php', // PHP endpoint for adding a new student
                 method: 'POST',
                 data: formData,
                 success: function (response) {
                     // Handle success response
                     console.log(response);
-                    // Reload the page
+                    // Optionally, you can close the modal or perform any other action
+                    $('#addStudentModal').modal('hide');
+                    // Reload the page or update the student list as needed
                     location.reload();
                 },
                 error: function (xhr, status, error) {
@@ -669,89 +849,24 @@
                 }
             });
         });
- 
-</script>
-<!-- Update Student Modal -->
-<div class="modal fade" id="updatestudentModal" tabindex="-1" role="dialog" aria-labelledby="updatestudentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updatestudentModalLabel">Update Student Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="updatestudentForm" method="post">
-                    <!-- Student details input fields -->
-                    <div class="form-group">
-                        <label for="updateid_number">ID Number:</label>
-                        <input type="text" class="form-control" id="updateid_number" name="updateid_number">
-                    </div>
-                    <div class="form-group">
-                        <label for="updatefname">First name:</label>
-                        <input type="text" class="form-control" id="updatefname" name="updatefname">
-                    </div>
-                    <div class="form-group">
-                        <label for="updatelname">Last name:</label>
-                        <input type="text" class="form-control" id="updatelname" name="updatelname">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="updatecourse">Course:</label>
-                        <input type="text" class="form-control" id="updatecourse" name="updatecourse">
-                    </div>
-                    <div class="form-group">
-                        <label for="updateyear_level">Year Level:</label>
-                        <input type="text" class="form-control" id="updateyear_level" name="updateyear_level">
-                    </div>
-                    <div class="form-group">
-                        <label for="updateemail">Email:</label>
-                        <input type="text" class="form-control" id="updateemail" name="updateemail">
-                    </div>
-                    <input type="hidden" id="updatestudentId" name="updatestudentId">
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary" name="updatestudent">Update Student</button>
-                </form> 
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    // Function to open the update student modal and fetch old data
-    $(document).on("click", ".update-btn", function() {
-        var id_number = $(this).data("id_number");
-        $.ajax({
-            url: 'fetch_student_details.php',
-            type: 'POST',
-            data: { id_number: id_number },
-            success: function(response) {
-                var student = JSON.parse(response);
-                $('#updateid_number').val(student.id_number); // Corrected ID selector
-                $('#updatefname').val(student.fname);
-                $('#updatelname').val(student.lname);
-                $('#updatecourse').val(student.course);
-                $('#updateyear_level').val(student.year_level);
-                $('#updateemail').val(student.email);
-                $('#updatestudentId').val(student.id_number); // Corrected ID selector
-                $('#updatestudentModal').modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
     });
-// AJAX form submission to update student details
-$('#updatestudentForm').submit(function(e) {
-    e.preventDefault();
-    var formData = $(this).serialize();
+    // Function to fetch old data and populate the update form
+    $(document).on("click", ".update-btn", function() {
+    var id_number = $(this).data("id_number");
     $.ajax({
-        url: 'process_update_student.php',
+        url: 'fetch_student_details.php',
         type: 'POST',
-        data: formData,
+        data: { id_number: id_number },
         success: function(response) {
-            console.log(response);
-            window.location.reload(); // Reload the page after successful update
+            var student = JSON.parse(response);
+            $('#updateStudentId').val(student.id); // Set the student ID in a hidden field
+            $('#updateStudentIdNumber').val(student.id_number);
+            $('#updateStudentFirstName').val(student.fname);
+            $('#updateStudentLastName').val(student.lname);
+            $('#updateStudentCourse').val(student.course);
+            $('#updateStudentYearLevel').val(student.year_level);
+            $('#updateStudentEmail').val(student.email);
+            $('#updateStudentModal').modal('show'); // Show the update student modal
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -759,13 +874,32 @@ $('#updatestudentForm').submit(function(e) {
     });
 });
 
-// Handling form submission by name
-$('button[name="updatestudent"]').on('click', function(e) {
-    e.preventDefault();
-    $('#updatestudentForm').submit(); // Trigger form submission
-});
 
-    </script>
+        // Update Student modal process
+        $('#updateStudentForm').submit(function (event) {
+            event.preventDefault(); // Prevent default form submission
+            var formData = $(this).serialize(); // Serialize form data
+            $.ajax({
+                url: 'process_update_student.php', // PHP endpoint for updating student details
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                    // Optionally, you can close the modal or perform any other action
+                    $('#updateStudentModal').modal('hide');
+                    // Reload the page or update the student list as needed
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
 
             </div>
             <!-- End of Main Content -->

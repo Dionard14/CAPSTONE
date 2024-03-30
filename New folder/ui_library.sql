@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2024 at 05:02 PM
+-- Generation Time: Mar 30, 2024 at 03:53 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -81,20 +81,6 @@ CREATE TABLE `attendance` (
   `teacher_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `attendance`
---
-
-INSERT INTO `attendance` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `checkin_time`, `checkout_time`, `student_id`, `teacher_id`) VALUES
-(1, '123', 'd', 'd', 'CITE', '3', NULL, NULL, 0, 0),
-(78, '123', 'd', 'd', 'CITE', '3', '2024-01-26 17:59:35', '2024-01-26 17:59:47', 0, 0),
-(79, '123', 'd', 'd', 'CITE', '3', '2024-01-26 18:02:52', NULL, 0, 0),
-(80, '123', 'd', 'd', 'CITE', '3', '2024-01-26 18:03:04', '2024-01-26 18:03:08', 0, 0),
-(81, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', '2024-01-26 18:04:48', '2024-01-26 18:04:54', 0, 0),
-(82, '123', 'd', 'd', 'CITE', '3', '2024-01-26 18:47:24', NULL, 0, 0),
-(83, '123', 'd', 'd', 'CITE', '3', '2024-01-26 18:47:26', NULL, 0, 0),
-(84, '123', 'd', 'd', 'CITE', '3', '2024-01-26 18:47:58', '2024-01-26 18:48:01', 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -116,7 +102,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`barcode`, `call_no1`, `call_no2`, `copyright`, `title`, `author`, `location`) VALUES
-('2', '2134', '2', '2', '2', '2', '2'),
+('1', '11', '1', '1', '1', '1', '1'),
 ('4000000260', 'TA351', 'B447', '2004', 'Vector mechanics for engineers : statics', 'Ferdinand P. Beer', 'EL'),
 ('4000000261', 'TA351', 'B447', '2004', 'Vector mechanics for engineers : statics', 'Ferdinand P. Beer', 'EL'),
 ('4000000285', 'QA154.2', 'B638', '2004', 'Algebra & trigonometry', 'Robert Blitzer', 'EL'),
@@ -179,14 +165,6 @@ CREATE TABLE `evaluation` (
   `id_number` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `evaluation`
---
-
-INSERT INTO `evaluation` (`evaluationID`, `barcode`, `titles`, `course`, `feedbacks`, `recommendations`, `rating`, `book_date`, `student_fname`, `student_lname`, `id_number`) VALUES
-(49, 0, 'Vector mechanics for engineers : statics', 'CITE', 'ok', 'ok', 2.8, '2024-03-26 15:01:15', 'Dionard', 'Antioquia', '10'),
-(50, 0, 'Algebra & trigonometry', 'CITE', 'ok', 'ok', 4.4, '2024-03-26 15:01:31', 'Dionard', 'Antioquia', '10');
-
 -- --------------------------------------------------------
 
 --
@@ -236,7 +214,6 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_level`, `email`, `password`, `id_front`, `id_back`) VALUES
 (33, '0123', 'x', 'x', 'CITE', '3', 'x0@gmail.com', '$2y$10$i26TjW9EN9uV3WjXlYzmue2Z3t.bZFOLbJL2a9xb9EZeaBq2xRDBe', 'uploads/jobs180.png', 'uploads/upwork.png'),
 (1, '04-1234-5678', 'd', 'd', 'CITE', '3', 'dionard@gmail.com', 'Dionard123', '', ''),
-(16, '04-1617-05234', 'Dionard', 'Antioquia', 'COE', '2', 'dionard1@gmail.com', 'Dionard1', '', ''),
 (35, '04-1617-1234', 'x', 'x', 'CITE', '3', 'dionard14@gmail.com', 'Dionard123', 'uploads/linkedin.png', 'uploads/upwork.png'),
 (30, '10', 'Dionard', 'Antioquia', 'CITE', '3', 'dionard24@gmail.com', 'Dionard123', 'uploads/upwork.png', 'uploads/jobs180.png'),
 (18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123', '', ''),
@@ -266,10 +243,8 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `id_number`, `fname`, `lname`, `email`, `password`, `id_front`, `id_back`) VALUES
-(5, '', '', '', 'dionard2313@gmail.com', '', '', ''),
 (4, '123123', 'Nicole', 'Lampa', 'nicole@gmail.com', 'Nicole123', '', ''),
-(3, '123123123', 'Dionard123', 'Antioquia123', '123123123@gmail.com', 'Dionard123', '', ''),
-(6, '3454', 'x', 'x', 'dionard2313@gmail.com', 'Dionard123', '', '');
+(3, '123123123', 'Dionard123', 'Antioquia123', '123123123@gmail.com', 'Dionard123', '', '');
 
 --
 -- Indexes for dumped tables
@@ -367,23 +342,13 @@ ALTER TABLE `evaluation_likes`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `evaluation_likes`
---
-ALTER TABLE `evaluation_likes`
-  ADD CONSTRAINT `evaluation_likes_ibfk_1` FOREIGN KEY (`evaluationID`) REFERENCES `evaluation` (`evaluationID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

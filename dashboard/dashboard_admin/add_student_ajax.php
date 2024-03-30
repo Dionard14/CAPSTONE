@@ -1,35 +1,39 @@
 <?php
+// Include your database connection file
 include "conn.php";
 
-// Check if form is submitted
+// Check if the form is submitted via POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
-    $id_number = $_POST['id_number'];
-    $fname = $_POST['fname']; 
-    $lname = $_POST['lname'];
-    $course = $_POST['course'];
-    $year_level = $_POST['year_level'];
-    $email = $_POST['email'];
+    // Extract form data
+    $idNumber = $_POST['studentIdNumber'];
+    $firstName = $_POST['studentFirstName'];
+    $lastName = $_POST['studentLastName'];
+    $course = $_POST['studentCourse'];
+    $yearLevel = $_POST['studentYearLevel'];
+    $email = $_POST['studentEmail'];
+    $password = $_POST['studentPassword'];
 
-    // Validate form data (you may add more validation as needed)
-    if (empty($id_number)) {
-        echo "ID Number is required.";
-        exit; // Stop further execution
-    }
+    // Encrypt the password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert data into database
-    $insertQuery = "INSERT INTO students (id_number, fname, lname, course,  year_level, email)
-                    VALUES ('$id_number', '$fname', '$lname', '$course', '$year_level', '$email', '$location')";
-    
-    if (mysqli_query($conn, $insertQuery)) {
-        echo "Student added successfully.";
+    // Prepare SQL statement to insert student data into the database
+    $sql = "INSERT INTO students (id_number, fname, lname, course, year_level, email, password)
+            VALUES ('$idNumber', '$firstName', '$lastName', '$course', '$yearLevel', '$email', '$hashedPassword')";
+
+    // Execute SQL statement
+    if (mysqli_query($conn, $sql)) {
+        // If the record is inserted successfully, return success response
+        header("Location: /capstone/dashboard/dashboard_admin/add_student.php");
     } else {
-        echo "Error: " . $insertQuery . "<br>" . mysqli_error($conn);
+        // If an error occurred while inserting the record, return error response
+        echo "Error: " . mysqli_error($conn);
     }
-
-    mysqli_close($conn);
 } else {
-    // If the form is not submitted via POST method, show an error message
-    echo "Error: Form not submitted.";
+    // Redirect to an error page if accessed directly without form submission
+    header("Location: error.php");
+    exit();
 }
+
+// Close database connection
+mysqli_close($conn);
 ?>

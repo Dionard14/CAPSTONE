@@ -576,7 +576,7 @@ while ($row = mysqli_fetch_array($getdata)) {
                                         <th> CALLNUMBER </th>
                                         <th>  </th>
                                         <th> COPYRIGHT </th>
-                                        <th> TITLE </th>
+                                        <th> BOOK TITLE </th>
                                         <th> AUTHOR </th>
                                         <th> LOCATION </th>
                                         </tr>
@@ -587,7 +587,7 @@ while ($row = mysqli_fetch_array($getdata)) {
                                         <th> CALLNUMBER </th>
                                         <th>  </th>
                                         <th> COPYRIGHT </th>
-                                        <th> TITLE </th>
+                                        <th> BOOK TITLE </th>
                                         <th> AUTHOR </th>
                                         <th> LOCATION </th>
                                         </tr>
@@ -623,39 +623,6 @@ while ($row = mysqli_fetch_array($getdata)) {
   </div>
 </div>
 
-<!-- Update Book Modal -->
-<div class="modal fade" id="updateBookModal" tabindex="-1" role="dialog" aria-labelledby="updateBookModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateBookModalLabel">Update Book Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="updateBookForm" method="post">
-                    <!-- Book details input fields -->
-                    <div class="form-group">
-                        <label for="updateTitle">Title</label>
-                        <input type="text" class="form-control" id="updateTitle" name="updateTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="updateAuthor">Author</label>
-                        <input type="text" class="form-control" id="updateAuthor" name="updateAuthor" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="updateLocation">Location</label>
-                        <input type="text" class="form-control" id="updateLocation" name="updateLocation" required>
-                    </div>
-                    
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 <!-- Divider -->
 <hr class="sidebar-divider">
 <div class="sidebar-heading">
@@ -663,7 +630,7 @@ while ($row = mysqli_fetch_array($getdata)) {
 <li class="nav-item ">
     <a class="nav-link" href="/capstone/dashboard/dashboard_admin/add_student.php">
         <i class="fas fa-fw fa-wrench"></i>
-        <span>STUDENT LISTS TABLE</span>
+        <span>USERS LISTS TABLE</span>
     </a>
 </li>
             
