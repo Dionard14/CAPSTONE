@@ -155,10 +155,8 @@ if ($studentResult->num_rows > 0) {
     $studentData = [['Course', 'Count']];
 }
 
-// Output the JSON encoded data for both attendance and students
 echo json_encode(['attendance' => $attendanceData, 'students' => $studentData]);
 
-// Close the connection
 $conn->close();
 
 

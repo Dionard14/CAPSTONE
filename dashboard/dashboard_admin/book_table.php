@@ -428,8 +428,6 @@
       <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">BOOKS LISTS</h6>
-                 <!-- <form method="post" action="#">
-                <input type="submit" name="import" class="btn btn-primary btn-import mr-2" value="Import to Database" /> -->
                     </form>
                 </div>
 
@@ -687,17 +685,15 @@ while ($row = mysqli_fetch_array($getdata)) {
             if (confirm('Are you sure you want to delete this record?')) {
                 // Perform AJAX request to delete the record with the given barcode
                 $.ajax({
-                    url: 'barcode_delete.php', // Specify your PHP file for handling deletion
+                    url: 'barcode_delete.php',
                     method: 'POST',
                     data: { barcode: barcode },
                     success: function (response) {
                         // Handle success response
                         console.log(response);
-                        // Reload the page
                         location.reload();
                     },
                     error: function (xhr, status, error) {
-                        // Handle error response
                         console.error(xhr.responseText);
                     }
                 });
@@ -764,21 +760,19 @@ while ($row = mysqli_fetch_array($getdata)) {
 
             // Get form data
             var formData = $(this).serialize
-            (); // Serialize form data
+            (); 
 
             // Submit AJAX request to add book
             $.ajax({
-                url: 'add_book.php', // Specify your PHP file for adding books
+                url: 'add_book.php', 
                 method: 'POST',
                 data: formData,
                 success: function (response) {
                     // Handle success response
                     console.log(response);
-                    // Reload the page
                     location.reload();
                 },
                 error: function (xhr, status, error) {
-                    // Handle error response
                     console.error(xhr.responseText);
                 }
             });
@@ -842,14 +836,14 @@ while ($row = mysqli_fetch_array($getdata)) {
     $(document).on("click", ".update-btn", function() {
         var barcode = $(this).data("barcode");
         $.ajax({
-            url: 'fetch_book_details.php', // Path to your PHP script to fetch book details
+            url: 'fetch_book_details.php', 
             type: 'POST',
             data: { barcode: barcode },
             success: function(response) {
                 var book = JSON.parse(response);
                 $('#updateBarcode').val(book.barcode);
-                $('#updateCallnumber1').val(book.call_no1); // Set call_no1 value
-                $('#updateCallnumber2').val(book.call_no2); // Set call_no2 value
+                $('#updateCallnumber1').val(book.call_no1);
+                $('#updateCallnumber2').val(book.call_no2); 
                 $('#updateCopyright').val(book.copyright);
                 $('#updateTitle').val(book.title);
                 $('#updateAuthor').val(book.author);
@@ -866,20 +860,17 @@ while ($row = mysqli_fetch_array($getdata)) {
     // AJAX form submission to update book details
     $('#updateBookForm').submit(function(e) {
         e.preventDefault(); // Prevent default form submission
-        var formData = $(this).serialize(); // Serialize form data
+        var formData = $(this).serialize(); 
         $.ajax({
-            url: 'process_update.php', // Path to your PHP script to update book details
+            url: 'process_update.php', 
             type: 'POST',
             data: formData,
             success: function(response) {
                 // Handle success response
-                // For example, display a success message or reload the page
                 console.log(response);
-                // Optionally reload the page or update the table data dynamically
                 window.location.reload();
             },
             error: function(xhr, status, error) {
-                // Handle error response
                 console.error(xhr.responseText);
             }
         });

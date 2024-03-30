@@ -10,14 +10,12 @@ if (isset($_POST['regformstudent']) || isset($_POST['regformteacher'])) {
     $process_password = $_POST['regform_password'];
     $process_password2 = $_POST['regform_password2'];
     $tableName = isset($_POST['regformstudent']) ? "students" : "teachers";
-    $uploadDir = 'uploads/'; // Directory where images will be stored
+    $uploadDir = 'uploads/'; // Directory of id pictures will be stored
 
-    // Check if passwords match
     if ($process_password == $process_password2) {
         // Hash the password
         $hashed_password = password_hash($process_password, PASSWORD_DEFAULT);
 
-        // Check if email and ID number are unique
         $checkEmailStatement = "SELECT * FROM $tableName WHERE `email`='$process_email'";
         $checkIdNumberStatement = "SELECT * FROM $tableName WHERE `id_number`='$process_id'";
 
@@ -27,34 +25,30 @@ if (isset($_POST['regformstudent']) || isset($_POST['regformteacher'])) {
         $countIdNumber = mysqli_num_rows($checkIdNumberQuery);
 
         if ($countEmail == 0 && $countIdNumber == 0) {
-            // Handle ID picture upload (if needed)
+            // Handle ID picture upload
             if (isset($_FILES['reg_idfront']) && isset($_FILES['reg_idback'])) {
                 // Handle ID picture upload for teachers
                 $FrontuploadFile = $uploadDir . basename($_FILES['reg_idfront']['name']);
                 if (move_uploaded_file($_FILES['reg_idfront']['tmp_name'], $FrontuploadFile)) {
-                    // File uploaded successfully
                 } else {
-                    // Error handling if file upload fails
                     echo "Error uploading file.";
                     exit;
                 }
                 $BackuploadFile = $uploadDir . basename($_FILES['reg_idback']['name']);
                 if (move_uploaded_file($_FILES['reg_idback']['tmp_name'], $BackuploadFile)) {
-                    // File uploaded successfully
                 } else {
-                    // Error handling if file upload fails
                     echo "Error uploading file.";
                     exit;
                 }
             } else {
                 // Set default values if ID images are not uploaded
-                $FrontuploadFile = ''; // Set default empty string
-                $BackuploadFile = ''; // Set default empty string
+                $FrontuploadFile = ''; // empty string
+                $BackuploadFile = ''; //empty string
             }
 
             // Insert user information into the appropriate table
             if ($tableName === "students") {
-                // For students
+                // For students table
                 $process_course = $_POST['regform_course'];
                 $process_yearlevel = implode(",", $_POST['regform_yearlevel']);
 
@@ -63,7 +57,7 @@ if (isset($_POST['regformstudent']) || isset($_POST['regformteacher'])) {
                     VALUES
                     ('$process_id', '$process_fname', '$process_lname', '$process_course', '$process_yearlevel', '$process_email', '$hashed_password', '$FrontuploadFile', '$BackuploadFile')";
             } else {
-                // For teachers
+                // For teachers table
                 $insertStatement = "INSERT INTO approval_lists
                     (`id_number`, `fname`, `lname`, `email`, `password`, `id_front`, `id_back`)
                     VALUES
@@ -125,7 +119,6 @@ if (isset($_POST['login_admin'])) {
 
         // Verify the password
         if (password_verify($process_password, $databasePassword)) {
-            // Password is correct, proceed with login
             $fname = $rowData['fname'];
             $lname = $rowData['lname'];
 
@@ -136,7 +129,6 @@ if (isset($_POST['login_admin'])) {
             header("Location: /capstone/dashboard/dashboard_admin/index.php");
             exit;
         } else {
-            // Password is incorrect
             ?>
             <script>
                 alert("Incorrect Password. Please try again.");
@@ -145,7 +137,6 @@ if (isset($_POST['login_admin'])) {
             <?php
         }
     } else {
-        // User not found
         ?>
         <script>
             alert("No account found. Please create an account.");
@@ -158,7 +149,6 @@ if (isset($_POST['login_admin'])) {
 
 //STUDENT
 
-// Student Login
 if (isset($_POST['login_student'])) {
     $process_email = $_POST['log_email'];
     $process_password = $_POST['log_password'];
@@ -172,22 +162,20 @@ if (isset($_POST['login_student'])) {
         $databasePassword = $rowData['password'];
         $fname = $rowData['fname'];
         $lname = $rowData['lname'];
-        $id_number = $rowData['id_number']; // Retrieve id_number from database
+        $id_number = $rowData['id_number']; 
         $course = $rowData['course'];
 
         // Verify the password
         if (password_verify($process_password, $databasePassword)) {
-            // Password is correct, proceed with login
             $_SESSION['student_logged_in'] = true;
             $_SESSION['student_fname'] = $fname;
             $_SESSION['student_lname'] = $lname;
-            $_SESSION['id_number'] = $id_number; // Store id_number in session
+            $_SESSION['id_number'] = $id_number; 
             $_SESSION['course'] = $course; 
 
             header("Location: /capstone/dashboard/dashboard_student/index.php");
             exit;
         } else {
-            // Password is incorrect
             ?>
             <script>
                 alert("Incorrect Password. Please try again.");
@@ -196,7 +184,6 @@ if (isset($_POST['login_student'])) {
             <?php
         }
     } else {
-        // User not found
         ?>
         <script>
             alert("No account found. Please create an account.");
@@ -225,15 +212,13 @@ if (isset($_POST['login_teacher'])) {
 
         // Verify the password
         if (password_verify($process_password, $databasePassword)) {
-            // Password is correct, proceed with login
             $_SESSION['teacher_logged_in'] = true;
             $_SESSION['teacher_fname'] = $fname;
             $_SESSION['teacher_lname'] = $lname;
 
-            header("Location: /capstone/dashboard/dashboard_teacher/index.php");
+            header("Location: /capstone/dashboard/dashboard_student/index.php");
             exit;
         } else {
-            // Password is incorrect
             ?>
             <script>
                 alert("Incorrect Password. Please try again.");
@@ -243,7 +228,6 @@ if (isset($_POST['login_teacher'])) {
             exit;
         }
     } else {
-        // User not found
         ?>
         <script>
             alert("No account found. Please create an account.");

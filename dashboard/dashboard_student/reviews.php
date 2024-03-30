@@ -206,7 +206,7 @@ if (isset ($_SESSION['student_logged_in'])) {
             // Perform AJAX request to fetch barcode suggestions
             $.ajax({
                 type: 'GET',
-                url: 'fetch_titles.php', // Adjust the URL to your PHP script that fetches barcode suggestions
+                url: 'fetch_titles.php', //  URL PHP script fetches barcode suggestions
                 data: { input: input },
                 success: function (data) {
                     $('#barcodeSuggestions').html(data).addClass('suggestions-styling');
@@ -220,7 +220,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                         // Fill the barcode input with the selected barcode
                         $('#barcodeInput').val(selectedBarcode);
 
-                        // Perform additional action to autofill the title
+                        // If barcode fill it will autofill the title
                         var selectedTitle = $(this).data('title');
                         $('#title').val(selectedTitle);
 
@@ -236,14 +236,13 @@ if (isset ($_SESSION['student_logged_in'])) {
             $('#barcodeSuggestions').empty();
         });
 
-        // Prevent hiding suggestions when clicking inside the suggestions div
+        // Prevent hiding suggestions when clicking
         $('#barcodeSuggestions').on('click', function (e) {
             e.stopPropagation(); // Prevent the click from reaching the document click handler
         });
 
-        // Clear button functionality
+        // Clear button
         $('#clearButton').on('click', function () {
-            // Clear form fields
             $('#barcodeInput').val('');
             $('#title').val('');
             $('input[name="course"]').prop('checked', false);
@@ -255,51 +254,6 @@ if (isset ($_SESSION['student_logged_in'])) {
             $('#barcodeSuggestions').empty();
         });
     });
-
-
-    // $(document).ready(function () {
-    //     // Handle input change for ID number suggestions
-    //     $('#id_number').on('input', function () {
-    //         var input = $(this).val();
-
-    //         // Perform AJAX request to fetch ID number suggestions
-    //         $.ajax({
-    //             type: 'GET',
-    //             url: 'fetch_id_numbers.php',
-    //             data: { input: input },
-    //             success: function (data) {
-    //                 $('#IDSuggestions').html(data).addClass('suggestions-styling');
-
-    //                 // Handle click on suggestion
-    //                 $('#IDSuggestions div').on('click', function (e) {
-    //                     e.stopPropagation(); // Prevent the click from reaching the document click handler
-
-    //                     var selectedID = $(this).text();
-
-    //                     // Fill the ID number input with the selected ID number
-    //                     $('#id_number').val(selectedID);
-
-    //                     // Fetch the course associated with the selected ID number
-    //                     $.ajax({
-    //                         type: 'GET',
-    //                         url: 'fetch_course.php',
-    //                         data: { id_number: selectedID },
-    //                         success: function (course) {
-    //                             // Select the corresponding radio button based on the fetched course value
-    //                             $('input[name="course"][value="' + course + '"]').prop('checked', true);
-    //                             // Update the dropdown button text with the selected course
-    //                             $('#courseDropdown').text(course);
-    //                         }
-    //                     });
-
-    //                     // Hide the suggestions
-    //                     $('#IDSuggestions').empty();
-    //                 });
-    //             }
-    //         });
-    //     });
-    // });
-
 
 </script>
 
@@ -314,14 +268,11 @@ if (isset ($_SESSION['student_logged_in'])) {
         margin-top: 7px;
         margin-bottom: 7px;
         position: relative;
-        /* Necessary for absolute positioning of the icon */
     }
 
     .suggestions-styling div:hover {
         background-color: #f0f0f0;
-        /* Background color on hover */
         cursor: pointer;
-        /* Change cursor to a pointer when hovering over the suggestion */
     }
 </style>
 
@@ -399,19 +350,15 @@ if (isset ($_SESSION['student_logged_in'])) {
                             <div class="row">
                                 <!-- Card Example -->
                                 <?php
-                                // Include database connection
                                 include "conn.php";
 
-                                // Check connection
                                 if (!$conn) {
                                     die ("Connection failed: " . mysqli_connect_error());
                                 }
 
-                                // Function to handle like and dislike actions
                                 function handleLikeDislike($evaluationID, $action)
                                 {
                                     global $conn;
-                                    // Prepare and execute the SQL query to insert like/dislike action
                                     $sql = "INSERT INTO evaluation_likes (evaluationID, action) VALUES ('$evaluationID', '$action')";
                                     if (mysqli_query($conn, $sql)) {
                                         echo "Action recorded successfully.";
@@ -420,7 +367,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     }
                                 }
 
-                                // Function to get the count of likes and dislikes for an evaluation
                                 function getLikeDislikeCount($evaluationID, $action)
                                 {
                                     global $conn;
@@ -430,14 +376,11 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     return $row['count'];
                                 }
 
-                                // Fetch all evaluation records
                                 $sql = "SELECT * FROM evaluation ORDER BY evaluationID DESC";
                                 $result = mysqli_query($conn, $sql);
 
                                 if (mysqli_num_rows($result) > 0) {
-                                    // Loop through each evaluation record
                                     while ($row = mysqli_fetch_assoc($result)) {
-                                        // Extract data from the evaluation record
                                         $evaluationID = $row['evaluationID'];
                                         $title = $row['titles'];
                                         $course = $row['course'];
@@ -445,7 +388,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                         $recommendations = $row['recommendations'];
                                         $ratings = $row['rating'];
 
-                                        // Fetch book details based on the title from the evaluation record
                                         $sql_books = "SELECT * FROM books WHERE title = '$title'";
                                         $result_books = mysqli_query($conn, $sql_books);
 
@@ -515,7 +457,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     echo "No evaluation records found.";
                                 }
 
-                                // Close the database connection
                                 mysqli_close($conn);
                                 ?>
                                 <script>
@@ -534,15 +475,13 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                         evaluationID: evaluationID,
                                                         action: 'like'
                                                     },
-                                                    dataType: 'json', // Expect JSON response
+                                                    dataType: 'json', 
                                                     success: function (data) {
                                                         // Update the like count on the button
                                                         btn.html('<i class="fas fa-thumbs-up"></i> ' + data.likeCount);
 
-                                                        // Add 'liked' class to the button
                                                         btn.addClass('liked');
 
-                                                        // Check if the dislike button was previously clicked
                                                         var dislikeBtn = btn.siblings('.dislikeBtn');
                                                         if (dislikeBtn.hasClass('disliked')) {
                                                             // Update the dislike count on the dislike button
@@ -551,7 +490,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                         }
                                                     },
                                                     error: function (xhr, status, error) {
-                                                        console.error(error); // Log any errors for debugging
+                                                        console.error(error); 
                                                     }
                                                 });
                                             }
@@ -571,15 +510,13 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                         evaluationID: evaluationID,
                                                         action: 'dislike'
                                                     },
-                                                    dataType: 'json', // Expect JSON response
+                                                    dataType: 'json',
                                                     success: function (data) {
                                                         // Update the dislike count on the button
                                                         btn.html('<i class="fas fa-thumbs-down"></i> ' + data.dislikeCount);
 
-                                                        // Add 'disliked' class to the button
                                                         btn.addClass('disliked');
 
-                                                        // Check if the like button was previously clicked
                                                         var likeBtn = btn.siblings('.likeBtn');
                                                         if (likeBtn.hasClass('liked')) {
                                                             // Update the like count on the like button
@@ -588,7 +525,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                         }
                                                     },
                                                     error: function (xhr, status, error) {
-                                                        console.error(error); // Log any errors for debugging
+                                                        console.error(error); 
                                                     }
                                                 });
                                             }
@@ -604,20 +541,19 @@ if (isset ($_SESSION['student_logged_in'])) {
 
                                 <script>
                                     function handleLikeDislike(evaluationID, action) {
-                                        // Send AJAX request to handle like/dislike action
                                         $.ajax({
                                             type: 'POST',
-                                            url: 'handle_like_dislike.php', // Replace with the actual PHP script URL
+                                            url: 'handle_like_dislike.php', 
                                             data: {
                                                 evaluationID: evaluationID,
                                                 action: action
                                             },
                                             success: function (response) {
-                                                // Update UI based on response (e.g., update like/dislike count)
-                                                console.log(response); // Log the response for debugging
+                                                // update like/dislike count
+                                                console.log(response); 
                                             },
                                             error: function (xhr, status, error) {
-                                                console.error(error); // Log any errors for debugging
+                                                console.error(error); 
                                             }
                                         });
                                     }

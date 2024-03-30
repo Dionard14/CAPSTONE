@@ -640,9 +640,8 @@ while ($row = mysqli_fetch_array($getdata)) {
                 </thead>
                 <tbody>
                 <?php
-                // Assuming database connection is established and stored in $conn
 
-               // Include PHPMailer library
+            // Include PHPMailer library
             use PHPMailer\PHPMailer\PHPMailer;
             use PHPMailer\PHPMailer\SMTP;
             use PHPMailer\PHPMailer\Exception;
@@ -668,7 +667,6 @@ function approveRegistration($id, $email)
 {
     global $conn;
 
-    // Fetch registration details
     $query = "SELECT * FROM approval_lists WHERE id = $id";
     $result = mysqli_query($conn, $query);
     $registration = mysqli_fetch_assoc($result);
@@ -679,11 +677,10 @@ function approveRegistration($id, $email)
         $insertQuery = "INSERT INTO teachers (id_number, fname, lname, email, password, id_front, id_back) 
                         VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_front']}', '{$registration['id_back']}')";
     } else {
-        // Otherwise, insert into students table
+        // if theres course and year_level, insert into students table
         $insertQuery = "INSERT INTO students (id_number, fname, lname, course, year_level, email, password, id_front, id_back) 
                         VALUES ('{$registration['id_number']}', '{$registration['fname']}', '{$registration['lname']}', '{$registration['course']}', '{$registration['year_level']}', '{$registration['email']}', '{$registration['password']}', '{$registration['id_front']}', '{$registration['id_back']}')";
     }
-
     // Execute insertion query
     mysqli_query($conn, $insertQuery);
 

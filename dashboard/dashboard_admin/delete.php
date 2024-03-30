@@ -7,7 +7,6 @@ if (isset($_GET['evaluationID'])) {
     $deleteEvaluation = mysqli_query($conn, "DELETE FROM evaluation WHERE evaluationID='$evaluationID'");
     if ($deleteEvaluation) {
         echo "Record deleted successfully from evaluation table. ";
-        // Redirect back to the previous page
         header("Location: {$_SERVER['HTTP_REFERER']}");
         exit();
     } else {
@@ -48,7 +47,6 @@ if (isset($_GET['id_number'])) {
         echo "Error deleting record from teachers table: " . mysqli_error($conn);
     }
 
-    // Redirect back to the previous page
     header("Location: {$_SERVER['HTTP_REFERER']}");
     exit();
 }

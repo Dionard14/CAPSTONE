@@ -179,11 +179,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                     <div id="titleSuggestions"></div>
                                 </div>
 
-
-                              
-
-
-
                                 <div class="form-group">
                                     <label for="feedback">FEEDBACKS:</label>
                                     <textarea class="form-control" name="feedback" id="feedback" rows="3"></textarea>
@@ -207,7 +202,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                         <button type="button" class="btn btn-secondary" id="clearButton">CLEAR</button>
                         <button type="submit" name="submit" class="btn btn-success">SUBMIT</button>
                     </div>
-                </form> <!-- Closing the form tag here -->
+                </form>
             </div>
         </div>
     </div>
@@ -222,7 +217,7 @@ if (isset ($_SESSION['student_logged_in'])) {
             // Perform AJAX request to fetch barcode suggestions
             $.ajax({
                 type: 'GET',
-                url: 'fetch_titles.php', // Adjust the URL to your PHP script that fetches barcode suggestions
+                url: 'fetch_titles.php',
                 data: { input: input },
                 success: function (data) {
                     $('#barcodeSuggestions').html(data).addClass('suggestions-styling');
@@ -236,7 +231,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                         // Fill the barcode input with the selected barcode
                         $('#barcodeInput').val(selectedBarcode);
 
-                        // Perform additional action to autofill the title
+                        //When barcode selected it autofill the title
                         var selectedTitle = $(this).data('title');
                         $('#title').val(selectedTitle);
 
@@ -252,14 +247,13 @@ if (isset ($_SESSION['student_logged_in'])) {
             $('#barcodeSuggestions').empty();
         });
 
-        // Prevent hiding suggestions when clicking inside the suggestions div
+        // Prevent hiding suggestions when clicking inside 
         $('#barcodeSuggestions').on('click', function (e) {
             e.stopPropagation(); // Prevent the click from reaching the document click handler
         });
 
         // Clear button functionality
         $('#clearButton').on('click', function () {
-            // Clear form fields
             $('#barcodeInput').val('');
             $('#title').val('');
             $('input[name="course"]').prop('checked', false);
@@ -272,48 +266,6 @@ if (isset ($_SESSION['student_logged_in'])) {
         });
     });
 
-//     $(document).ready(function () {
-//         // Handle input change for ID number suggestions
-//         $('#id_number').on('input', function () {
-//             var input = $(this).val();
-
-//             // Perform AJAX request to fetch ID number suggestions
-//             $.ajax({
-//                 type: 'GET',
-//                 url: 'fetch_id_numbers.php',
-//                 data: { input: input },
-//                 success: function (data) {
-//                     $('#IDSuggestions').html(data).addClass('suggestions-styling');
-
-//                     // Handle click on suggestion
-//                     $('#IDSuggestions div').on('click', function (e) {
-//                         e.stopPropagation(); // Prevent the click from reaching the document click handler
-
-//                         var selectedID = $(this).text();
-
-//                         // Fill the ID number input with the selected ID number
-//                         $('#id_number').val(selectedID);
-
-//                         // Fetch the course associated with the selected ID number
-//                         $.ajax({
-//                             type: 'GET',
-//                             url: 'fetch_course.php',
-//                             data: { id_number: selectedID },
-//                             success: function (course) {
-//                                 // Select the corresponding radio button based on the fetched course value
-//                                 $('input[name="course"][value="' + course + '"]').prop('checked', true);
-//                                 // Update the dropdown button text with the selected course
-//                                 $('#courseDropdown').text(course);
-//                             }
-//                         });
-
-//                         // Hide the suggestions
-//                         $('#IDSuggestions').empty();
-//                     });
-//                 }
-//             });
-//         });
-//     });
 </script>
 
 
@@ -326,15 +278,11 @@ if (isset ($_SESSION['student_logged_in'])) {
                     margin-top: 7px;
                     margin-bottom: 7px;
                     position: relative;
-                    /* Necessary for absolute positioning of the icon */
                 }
 
                 .suggestions-styling div:hover {
                     background-color: #f0f0f0;
-                    /* Background color on hover */
                     cursor: pointer;
-                    /* Change cursor to a pointer when hovering over the title */
-
                 }
             </style>
 
@@ -447,15 +395,12 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 <?php
                                                 include "conn.php";
 
-                                                // Check connection
                                                 if (!$conn) {
                                                     die ("Connection failed: " . mysqli_connect_error());
                                                 }
 
-                                                // Get the current date
                                                 $current_date = date("Y-m-d");
 
-                                                // Query to retrieve the most read book for the current day
                                                 $sql = "SELECT titles, COUNT(*) AS num_reads
                                                     FROM evaluation
                                                     WHERE DATE(book_date) = '$current_date '  -- Filter by the current day
@@ -493,12 +438,10 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 <?php
                                                 include "conn.php";
 
-                                                // Check connection
                                                 if (!$conn) {
                                                     die ("Connection failed: " . mysqli_connect_error());
                                                 }
 
-                                                // Function to get the ordinal suffix for a number
                                                 function ordinal_suffix($number)
                                                 {
                                                     $suffix = array('th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th');
@@ -546,7 +489,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 <?php
                                                 include "conn.php";
 
-                                                // Check connection
                                                 if (!$conn) {
                                                     die ("Connection failed: " . mysqli_connect_error());
                                                 }
@@ -589,7 +531,6 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 <?php
                                                 include "conn.php";
 
-                                                // Check connection
                                                 if (!$conn) {
                                                     die ("Connection failed: " . mysqli_connect_error());
                                                 }
@@ -598,7 +539,7 @@ if (isset ($_SESSION['student_logged_in'])) {
                                                 FROM evaluation
                                                 GROUP BY evaluation.titles
                                                 ORDER BY num_reviews ASC
-                                                LIMIT 3"; // Changed ORDER BY to ASC to get the least reviewed books
+                                                LIMIT 3";
                                                 
                                                 $result = mysqli_query($conn, $sql);
 

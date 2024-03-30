@@ -1,7 +1,7 @@
 <?php
 include "conn.php";
 session_start();
-// Admin Login
+
 // Admin Login without Hashing
 if (isset($_POST['admin_login'])) {
     $process_email = $_POST['log_email'];
@@ -17,7 +17,6 @@ if (isset($_POST['admin_login'])) {
 
         // Compare the passwords without hashing
         if ($process_password === $databasePassword) {
-            // Password is correct, proceed with login
             $fname = $rowData['fname'];
             $lname = $rowData['lname'];
 
@@ -28,7 +27,6 @@ if (isset($_POST['admin_login'])) {
             header("Location: /capstone/dashboard/dashboard_admin/index.php");
             exit;
         } else {
-            // Password is incorrect
             ?>
             <script>
                 alert("Incorrect Password. Please try again.");
@@ -37,7 +35,6 @@ if (isset($_POST['admin_login'])) {
             <?php
         }
     } else {
-        // User not found
         ?>
         <script>
             alert("No account found. Please create an account.");
@@ -59,15 +56,11 @@ if (isset($_POST['admin_register'])) {
     $result = mysqli_query($conn, $insertQuery);
 
     if ($result) {
-        // Registration successful
         echo "<script>alert('Registration successful. You can now login.');</script>";
-        // Redirect to login page
         echo "<script>window.location.href = 'ui-admin.php';</script>";
         exit;
     } else {
-        // Registration failed
         echo "<script>alert('Registration failed. Please try again.');</script>";
-        // Redirect back to registration page
         echo "<script>window.location.href = 'ui-admin-register.php';</script>";
         exit;
     }

@@ -1,11 +1,11 @@
 <?php  
 // export.php
-$connect = mysqli_connect("localhost", "root", "", "ui_library"); // Update your_database_name with the actual name of your database
+$connect = mysqli_connect("localhost", "root", "", "ui_library"); 
 $output = '';
 
 if(isset($_POST["export"]))
 {
-    $query = "SELECT * FROM attendance"; // Update table name if needed
+    $query = "SELECT * FROM attendance"; 
     $result = mysqli_query($connect, $query);
 
     if(mysqli_num_rows($result) > 0)

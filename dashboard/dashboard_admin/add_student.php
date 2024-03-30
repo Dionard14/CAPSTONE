@@ -678,17 +678,15 @@ while ($row = mysqli_fetch_array($getdata)) {
             if (confirm('Are you sure you want to delete this record?')) {
                 // Perform AJAX request to delete the record with the given id_number
                 $.ajax({
-                    url: 'delete_student.php', // Specify your PHP file for handling deletion
+                    url: 'delete_student.php', 
                     method: 'POST',
                     data: { id_number: id_number },
                     success: function (response) {
                         // Handle success response
                         console.log(response);
-                        // Reload the page
                         location.reload();
                     },
                     error: function (xhr, status, error) {
-                        // Handle error response
                         console.error(xhr.responseText);
                     }
                 });
@@ -830,21 +828,19 @@ while ($row = mysqli_fetch_array($getdata)) {
         // Add Student modal process
         $('#addStudentForm').submit(function (event) {
             event.preventDefault(); // Prevent default form submission
-            var formData = $(this).serialize(); // Serialize form data
+            var formData = $(this).serialize(); 
             $.ajax({
-                url: 'add_student_ajax.php', // PHP endpoint for adding a new student
+                url: 'add_student_ajax.php', 
                 method: 'POST',
                 data: formData,
                 success: function (response) {
                     // Handle success response
                     console.log(response);
-                    // Optionally, you can close the modal or perform any other action
+                    // can close the modal
                     $('#addStudentModal').modal('hide');
-                    // Reload the page or update the student list as needed
                     location.reload();
                 },
                 error: function (xhr, status, error) {
-                    // Handle error response
                     console.error(xhr.responseText);
                 }
             });
@@ -859,14 +855,14 @@ while ($row = mysqli_fetch_array($getdata)) {
         data: { id_number: id_number },
         success: function(response) {
             var student = JSON.parse(response);
-            $('#updateStudentId').val(student.id); // Set the student ID in a hidden field
+            $('#updateStudentId').val(student.id); 
             $('#updateStudentIdNumber').val(student.id_number);
             $('#updateStudentFirstName').val(student.fname);
             $('#updateStudentLastName').val(student.lname);
             $('#updateStudentCourse').val(student.course);
             $('#updateStudentYearLevel').val(student.year_level);
             $('#updateStudentEmail').val(student.email);
-            $('#updateStudentModal').modal('show'); // Show the update student modal
+            $('#updateStudentModal').modal('show'); 
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -878,26 +874,23 @@ while ($row = mysqli_fetch_array($getdata)) {
         // Update Student modal process
         $('#updateStudentForm').submit(function (event) {
             event.preventDefault(); // Prevent default form submission
-            var formData = $(this).serialize(); // Serialize form data
+            var formData = $(this).serialize(); 
             $.ajax({
-                url: 'process_update_student.php', // PHP endpoint for updating student details
+                url: 'process_update_student.php', 
                 method: 'POST',
                 data: formData,
                 success: function (response) {
                     // Handle success response
                     console.log(response);
-                    // Optionally, you can close the modal or perform any other action
+                    // can close the modal
                     $('#updateStudentModal').modal('hide');
-                    // Reload the page or update the student list as needed
                     location.reload();
                 },
                 error: function (xhr, status, error) {
-                    // Handle error response
                     console.error(xhr.responseText);
                 }
             });
         });
-    });
 </script>
 
 
