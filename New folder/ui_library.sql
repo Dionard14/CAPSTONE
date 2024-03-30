@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2024 at 03:53 AM
+-- Generation Time: Mar 30, 2024 at 08:43 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -218,7 +218,6 @@ INSERT INTO `students` (`id`, `id_number`, `fname`, `lname`, `course`, `year_lev
 (30, '10', 'Dionard', 'Antioquia', 'CITE', '3', 'dionard24@gmail.com', 'Dionard123', 'uploads/upwork.png', 'uploads/jobs180.png'),
 (18, '12345', 'John Carmelo', 'Flame', 'CAHS', '3', 'carmelo@gmail.com', 'Carmelo123', '', ''),
 (21, '2', 'Dionard', 'Antioquia', 'CITE', '3', 'antioquia@phinmaed.com', 'Dionard123', 'uploads/linkedin.png', ''),
-(25, '233', 'x', 'x', 'Cite', '3', 'dionard2313@gmail.com', 'Dionard14', '', ''),
 (26, '8', 'karen', 'amo', 'CITE', '3', 'karen@phinmaed.com', 'Karen123', 'uploads/wordpressorg.png', 'uploads/7xm.xyz899026.jpg');
 
 -- --------------------------------------------------------
@@ -243,6 +242,7 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `id_number`, `fname`, `lname`, `email`, `password`, `id_front`, `id_back`) VALUES
+(7, '', '', '', 'dionard2313@gmail.com', '', '', ''),
 (4, '123123', 'Nicole', 'Lampa', 'nicole@gmail.com', 'Nicole123', '', ''),
 (3, '123123123', 'Dionard123', 'Antioquia123', '123123123@gmail.com', 'Dionard123', '', '');
 
@@ -318,7 +318,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `approval_lists`
 --
 ALTER TABLE `approval_lists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65465;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65474;
 
 --
 -- AUTO_INCREMENT for table `attendance`
@@ -348,7 +348,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
